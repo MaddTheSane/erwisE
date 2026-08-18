@@ -1,0 +1,145 @@
+head	1.1;
+access
+	kny
+	kss
+	kts
+	tvr;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	92.02.09.16.41.46;	author kny;	state Exp;
+branches;
+next	1.0;
+
+1.0
+date	92.01.22.13.51.39;	author kny;	state Exp;
+branches;
+next	;
+
+
+desc
+@Demo-program for Ui-library.
+@
+
+
+1.1
+log
+@Added demogetpage-callback, cleaned up some things.
+@
+text
+@static char *rcsid = "$Id: uidemo.c,v 1.0 1992/01/22 13:51:39 kny Exp kny $";
+
+#include <stdio.h>
+#include "Ui.h"
+
+
+void demoquit(void);
+void demoinfo(void);
+void demoopen(void);
+void demohelp(void);
+void demogetpage(char *nodename);
+
+
+void main(argc, argv)
+int   argc;
+char *argv[];
+{
+    if (UiInitialize(argc, argv) != UI_OK)
+    {
+	fprintf(stderr, "Error initializing Ui-toolkit\n");
+	exit(-1);
+    }
+
+    UiAttachCallback("Quit", demoquit);
+    UiAttachCallback("Info", demoinfo);
+    UiAttachCallback("Open", demoopen);
+    UiAttachCallback("Help", demohelp);
+
+    UiMainLoop();
+}
+
+
+void demoquit()
+{
+    printf("Quit me harder\n");
+
+    exit(0);
+}
+
+
+void demoinfo()
+{
+    printf("WWW-X-Client-Demo V0.000001ALPHA  (C) Copyright OHT-Erwise\n");
+}
+
+
+void demoopen()
+{
+    UiDisplaySelectionBox(demogetpage);
+}
+
+
+void demohelp()
+{
+    printf("Help my ass\n");
+}
+
+
+void demogetpage(nodename)
+char *nodename;
+{
+    void *hypetext = (void *) NULL;
+
+    printf("Retrieving page %s\n", nodename);
+    UiDisplayPage(nodename, hypetext);
+}
+@
+
+
+1.0
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+static char *rcsid = "$Id$";
+d7 5
+a11 4
+void demoquit(void *parameter);
+void demoinfo(void *parameter);
+void demoopen(void *parameter);
+void demohelp(void *parameter);
+d24 4
+a27 4
+    UiAttachCallback("Quit", demoquit, (void *) "harder");
+    UiAttachCallback("Info", demoinfo, (void *) NULL);
+    UiAttachCallback("Open", demoopen, (void *) NULL);
+    UiAttachCallback("Help", demohelp, (void *) NULL);
+d33 1
+a33 2
+void demoquit(parameter)
+void *parameter;
+d35 1
+a35 1
+    printf("Quit me %s\n", (char *) parameter);
+d41 1
+a41 2
+void demoinfo(parameter)
+void *parameter;
+d47 1
+a47 2
+void demoopen(parameter)
+void *parameter;
+d49 1
+a49 1
+    UiDisplaySelectionBox(NULL);
+d53 1
+a53 2
+void demohelp(parameter)
+void *parameter;
+d56 10
+@
