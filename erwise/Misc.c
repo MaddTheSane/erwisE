@@ -73,7 +73,7 @@ AddPage(Page_t **page, const char *address, HText_t *htext, Page_t *toppage)
 void DeletePage(Page_t **page, char *address)
 {
     Page_t *oldpage = *page;
-
+    
     if (!strcmp((*page)->Address, address)) {
 	*page = (*page)->Next;
 	Free(oldpage);

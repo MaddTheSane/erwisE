@@ -223,7 +223,7 @@ PUBLIC bool HTLoadDocument(HTParentAnchor *anchor,
 
 {
     int	        new_file_number;
-    HTFormat    format;
+    HTFormat    format=WWW_SOURCE;
     HText *	text;
 
     if ((text=(HText *)HTAnchor_document(anchor))) {	/* Already loaded */

@@ -309,28 +309,29 @@ cl_free_connection (ClConnection_t *connection)
 {
   if (connection->address)
     free (connection->address);
-
+  
   if (connection->addr)
     free (connection->addr);
-
+  
   if (connection->command)
     free (connection->command);
-
+  
   if (connection->buffer_first) {
-      cl_data_t *p = connection->buffer_first;
-
-      while (p) {
-
-	  cl_data_t *p2 = p;
-
-	  free (p->freeptr);
-
-	  free (p);
-
-	  p = p2->next;
-	}
+    cl_data_t *p = connection->buffer_first;
+    
+    while (p) {
+      
+      cl_data_t *p2 = p;
+      
+      free (p->freeptr);
+      
+      struct cl_data_s *pnext = p2->next;
+      free (p);
+      
+      p = pnext;
     }
-
+  }
+  
   /*
    * NOTE!
    * anAnchor or diag should not be freed (at least they are not on

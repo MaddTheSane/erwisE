@@ -33,11 +33,13 @@ OpenErwiserc(char *type)
     char *tmpstr;
     char *bustr;
     FILE *fp;
+    char *homeEnv;
+    homeEnv = getenv("HOME");
 
-    if (!getenv("HOME"))
-	return (FILE *) NULL;
+    if (homeEnv == NULL)
+	return NULL;
 
-    tmpstr = strdup(getenv("HOME"));
+    tmpstr = strdup(homeEnv);
 
     tmpstr = (char *) ReAlloc((void *) tmpstr, strlen(tmpstr) +
 			      strlen(ERWISERC) + 2);

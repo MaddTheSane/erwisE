@@ -764,6 +764,7 @@ free_allocated_error:
     }
     
     free (o);
+    o = NULL;
   }
   
   free (newtext);

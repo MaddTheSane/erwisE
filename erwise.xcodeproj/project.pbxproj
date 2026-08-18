@@ -124,7 +124,7 @@
 		55D829D0303426400043B1A0 /* tcp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcp.h; sourceTree = "<group>"; };
 		55D829D1303426400043B1A0 /* WWW.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWW.h; sourceTree = "<group>"; };
 		55D829D3303426400043B1A0 /* Cl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cl.h; sourceTree = "<group>"; };
-		55D829D4303426400043B1A0 /* Cl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Cl.c; sourceTree = "<group>"; };
+		55D829D4303426400043B1A0 /* Cl.c */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.c; path = Cl.c; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		55D829D5303426400043B1A0 /* ClConnection.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClConnection.c; sourceTree = "<group>"; };
 		55D829D6303426400043B1A0 /* ClFTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClFTP.c; sourceTree = "<group>"; };
 		55D829D7303426400043B1A0 /* ClHTTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClHTTP.c; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		55D829EB303426400043B1A0 /* DefaultStyles.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DefaultStyles.c; sourceTree = "<group>"; };
 		55D829EC303426400043B1A0 /* dummy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dummy.c; sourceTree = "<group>"; };
 		55D829ED303426400043B1A0 /* HText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HText.h; sourceTree = "<group>"; };
-		55D829EE303426400043B1A0 /* HText.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HText.c; sourceTree = "<group>"; };
+		55D829EE303426400043B1A0 /* HText.c */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.c; path = HText.c; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		55D829EF303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
 		55D829F0303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		55D829F2303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
