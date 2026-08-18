@@ -50,12 +50,12 @@
 
                AR = ar clq
   BOOTSTRAPCFLAGS =
-               CC = gcc2 -pipe -fstrength-reduce -fpcc-struct-return
+               CC = gcc -pipe -fstrength-reduce
                AS = as
 
          COMPRESS = compress
               CPP = /lib/cpp $(STD_CPP_DEFINES)
-    PREPROCESSCMD = gcc2 -pipe -fstrength-reduce -fpcc-struct-return -E $(STD_CPP_DEFINES)
+    PREPROCESSCMD = gcc -pipe -fstrength-reduce -E $(STD_CPP_DEFINES)
           INSTALL = install
                LD = ld
              LINT = lint
@@ -135,9 +135,9 @@
 # X Window System make variables; this need to be coordinated with rules
 
           PATHSEP = /
-        USRLIBDIR = /v/X11R5/lib
-           BINDIR = /v/X11R5/bin
-          INCROOT = /v/X11R5/include
+        USRLIBDIR = /opt/local/lib
+           BINDIR = /opt/local/bin
+          INCROOT = /opt/local/include
      BUILDINCROOT = $(TOP)
       BUILDINCDIR = $(BUILDINCROOT)/X11
       BUILDINCTOP = ..
@@ -151,7 +151,7 @@
          XINITDIR = $(LIBDIR)/xinit
            XDMDIR = $(LIBDIR)/xdm
            TWMDIR = $(LIBDIR)/twm
-          MANPATH = /v/X11R5/man
+          MANPATH = /opt/local/man
     MANSOURCEPATH = $(MANPATH)/man
         MANSUFFIX = n
      LIBMANSUFFIX = 3
@@ -260,7 +260,8 @@ PICFLAGS = -fPIC
            LINTXI = $(LINTLIBDIR)/llib-lXi.ln
         LINTPHIGS = $(LINTLIBDIR)/llib-lphigs.ln
 
-          DEPLIBS = $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+#           DEPLIBS = $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+          DEPLIBS = 
 
          DEPLIBS1 = $(DEPLIBS)
          DEPLIBS2 = $(DEPLIBS)

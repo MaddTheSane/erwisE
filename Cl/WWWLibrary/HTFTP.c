@@ -64,6 +64,8 @@ BUGS:	@@@  	Limit connection cache size!
 
 #include "HTFTP.h"
 
+#include <unistd.h>
+
 #ifndef IPPORT_FTP
 #define IPPORT_FTP	21
 #endif

@@ -252,10 +252,7 @@ ClCloseConnection (connection)
  * read data from local buffer. If no data on buffer, make normal read
  */
 int
-cl_read_data (fd, data, length)
-     int fd;
-     char *data;
-     int length;
+cl_read_data (int fd, char *data, int length)
 {
   ClConnection_t *p = WWWErwiseConnection;
 

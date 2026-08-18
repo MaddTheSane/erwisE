@@ -45,8 +45,7 @@ static Widget uiprinttextwidget[] =
 };
 
 
-int UiDisplayPrintDialog(type)
-int type;
+int UiDisplayPrintDialog(int type)
 {
     uiPrintGfx_t *printgfx = &uiTopLevel.PrintGfx;
     Widget separatorwdg, tmpwdg;

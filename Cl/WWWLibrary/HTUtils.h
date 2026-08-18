@@ -158,10 +158,10 @@ typedef char	BOOLEAN;		/* Logical value */
 #ifdef __STDC__
 #include <stdarg.h>
 #else
-#include <varargs.h>
+#include <stdarg.h>
 #endif
 #else
-#include <varargs.h>
+#include <stdarg.h>
 #endif /* ERWISE */
 
 #ifdef CURSES

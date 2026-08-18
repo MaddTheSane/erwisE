@@ -15,16 +15,16 @@ static Widget uicreatesblist(Widget formwdg, Widget deletewdg,
 			      Widget separatorwdg);
 static char *uifixselection(char *selection);
 
-static void uiselectionboxokcb(Widget wdg, caddr_t callback,
-			        XmPushButtonCallbackStruct * calldata);
-static void uiselectionboxcancelcb(Widget wdg, caddr_t ignored,
-				  XmPushButtonCallbackStruct * calldata);
-static void uiselectionboxaddcb(Widget wdg, caddr_t ignored,
-				 XmPushButtonCallbackStruct * calldata);
-static void uiselectionboxdeletecb(Widget wdg, caddr_t ignored,
-				  XmPushButtonCallbackStruct * calldata);
-static void uiselectionboxclickcb(Widget wdg, caddr_t ignored,
-				   XmListCallbackStruct * calldata);
+static void uiselectionboxokcb(Widget wdg, void *callback,
+			        void * calldata);
+static void uiselectionboxcancelcb(Widget wdg, void *ignored,
+				  void * calldata);
+static void uiselectionboxaddcb(Widget wdg, void *ignored,
+				 void * calldata);
+static void uiselectionboxdeletecb(Widget wdg, void *ignored,
+				  void * calldata);
+static void uiselectionboxclickcb(Widget wdg, void *ignored,
+				   void * calldata);
 static void uiselectionboxupdateconfig(void);
 
 
@@ -126,7 +126,7 @@ void (*callback) (char *nodename);
 
     okwdg = XmFileSelectionBoxGetChild(fsboxwdg, XmDIALOG_OK_BUTTON);
     XtAddCallback(okwdg, XmNactivateCallback, uiselectionboxokcb,
-		  (caddr_t) callback);
+		   callback);
 
     cancelwdg = XmFileSelectionBoxGetChild(fsboxwdg, XmDIALOG_CANCEL_BUTTON);
     XtAddCallback(cancelwdg, XmNactivateCallback, uiselectionboxcancelcb,
@@ -216,10 +216,7 @@ Widget fsboxwdg;
 
 
 static Widget
- uicreatesblist(formwdg, deletewdg, separatorwdg)
-Widget formwdg;
-Widget deletewdg;
-Widget separatorwdg;
+ uicreatesblist(Widget formwdg, Widget deletewdg, Widget separatorwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -252,8 +249,7 @@ Widget separatorwdg;
 
 
 static char *
- uifixselection(selection)
-char *selection;
+ uifixselection(char *selection)
 {
     char *newselection;
 
@@ -271,10 +267,7 @@ char *selection;
 }
 
 
-static void uiselectionboxokcb(wdg, callback, calldata)
-Widget wdg;
-caddr_t callback;
-XmPushButtonCallbackStruct *calldata;
+static void uiselectionboxokcb(Widget wdg, void *callback, void *calldata)
 {
     Widget textwdg;
     char *selection, *fixedselection;
@@ -291,19 +284,13 @@ XmPushButtonCallbackStruct *calldata;
 }
 
 
-static void uiselectionboxcancelcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmPushButtonCallbackStruct *calldata;
+static void uiselectionboxcancelcb(Widget wdg, void *ignored, void *calldata)
 {
     XtUnmapWidget(XtParent(uiTopLevel.SBGfx.FormWdg));
 }
 
 
-static void uiselectionboxaddcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmPushButtonCallbackStruct *calldata;
+static void uiselectionboxaddcb(Widget wdg, void *ignored, void *calldata)
 {
     Widget textwdg;
     char *selection, *fixedselection;
@@ -340,10 +327,7 @@ XmPushButtonCallbackStruct *calldata;
 }
 
 
-static void uiselectionboxdeletecb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmPushButtonCallbackStruct *calldata;
+static void uiselectionboxdeletecb(Widget wdg, void *ignored, void *calldata)
 {
     int *poslist;
     int poscount;
@@ -366,13 +350,11 @@ XmPushButtonCallbackStruct *calldata;
 }
 
 
-static void uiselectionboxclickcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uiselectionboxclickcb(Widget wdg, void *ignored, void *calldata1)
 {
     Widget textwdg;
     char *selection;
+    XmListCallbackStruct *calldata = calldata1;
 
     XmStringGetLtoR(calldata->item, XmSTRING_DEFAULT_CHARSET, &selection);
     textwdg = XmFileSelectionBoxGetChild(uiTopLevel.SBGfx.FSBoxWdg,

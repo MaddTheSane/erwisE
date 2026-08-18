@@ -50,12 +50,12 @@
 
                AR = ar clq
   BOOTSTRAPCFLAGS =
-               CC = gcc2 -pipe -fstrength-reduce -fpcc-struct-return
+               CC = gcc -pipe 
                AS = as
 
          COMPRESS = compress
               CPP = /lib/cpp $(STD_CPP_DEFINES)
-    PREPROCESSCMD = gcc2 -pipe -fstrength-reduce -fpcc-struct-return -E $(STD_CPP_DEFINES)
+    PREPROCESSCMD = gcc -pipe -E $(STD_CPP_DEFINES)
           INSTALL = install
                LD = ld
              LINT = lint

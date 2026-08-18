@@ -42,3 +42,6 @@ void XlMoveWindow(int newvx, int newvy, HText_t * htext);
 void XlClearWindow(int width, int height, HText_t * htext);
 
 void XlSetCursor(HText_t * htext, HTextObject_t * object);
+
+void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin);
+

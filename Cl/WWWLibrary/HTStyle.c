@@ -10,6 +10,8 @@
 */
 #include "HTStyle.h"
 #include "HTUtils.h"
+#include <string.h>
+#include <stdio.h>
 
 /*	Create a new style
 */

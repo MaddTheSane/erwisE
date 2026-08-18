@@ -35,10 +35,10 @@ static uiActionData_t *uicreatepageactiondata(uiPage_t * page,
 static void uisetcurrentpage(uiPage_t * page);
 static int uideletepageinternal(char *topaddress, HText_t * htext);
 
-static void uipageactivatecb(Widget wdg, uiActionData_t * actiondata,
-			      XmAnyCallbackStruct * calldata);
-static void uipagekludgecb(Widget wdg, uiActionData_t * actiondata,
-			    XEvent * event);
+static void uipageactivatecb(Widget wdg, void * actiondata,
+			      void * calldata);
+static void uipagekludgecb(Widget wdg, void * actiondata,
+			    XEvent * event, char*a1);
 static void uipageexposecb(Widget wdg, uiPage_t * page,
 			    XmDrawingAreaCallbackStruct * calldata);
 static void uipageresizecb(Widget wdg, uiPage_t * page,
@@ -1010,11 +1010,10 @@ HText_t *htext;
 }
 
 
-static void uipageactivatecb(wdg, actiondata, calldata)
-Widget wdg;
-uiActionData_t *actiondata;
-XmAnyCallbackStruct *calldata;
+static void uipageactivatecb(Widget wdg, void *actiondata1, void *calldata1)
 {
+	uiActionData_t *actiondata = actiondata1;
+	XmAnyCallbackStruct *calldata = calldata1;
     uiAction_t *tmpaction;
 
     uiPageInfo.Wdg = wdg;
@@ -1047,11 +1046,9 @@ XmAnyCallbackStruct *calldata;
  *  doesn't support activate. Gawd! Anyway, we have to resort to this:
  */
 
-static void uipagekludgecb(wdg, actiondata, event)
-Widget wdg;
-uiActionData_t *actiondata;
-XEvent *event;
+static void uipagekludgecb(Widget wdg, void *actiondata1, XEvent *event, char *a1)
 {
+	uiActionData_t *actiondata = actiondata1;
     XKeyEvent *kevent = (XKeyEvent *) event;
     XmAnyCallbackStruct tmpstruct;
 
@@ -1187,11 +1184,7 @@ void *parameter;
 }
 
 
-static void uipagescrollbarcb(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagescrollbarcb(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     XmUpdateDisplay(uiPageInfo.CurrentPage->Gfx.DrawAreaWdg);
 

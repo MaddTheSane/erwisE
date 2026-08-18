@@ -2,6 +2,8 @@ static char *rcsid = "$Id: TopLevel.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 
 #include "Includes.h"
 
+extern int UiDisplayInfo(void);
+
 
 void TopQuitCB(topaddress, htext, htextobject, parameter)
 char *topaddress;

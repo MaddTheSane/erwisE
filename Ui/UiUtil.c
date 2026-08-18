@@ -8,9 +8,7 @@ static void uiwarningokcb(Widget wdg, caddr_t callback,
 static void uiwarningcancelcb(Widget wdg, caddr_t callback,
 			       XmListCallbackStruct * calldata);
 
-int UiDisplayWarningDialog(warning, callback)
-char *warning;
-void (*callback) (int button);
+int UiDisplayWarningDialog(char *warning, void (*callback) (int button))
 {
     Widget labelwdg;
     Widget separatorwdg;

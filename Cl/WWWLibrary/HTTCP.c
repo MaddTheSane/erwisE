@@ -9,6 +9,7 @@
 
 #include "HTUtils.h"
 #include "tcp.h"		/* Defines SHORT_NAMES if necessary */
+#include <unistd.h>
 #ifdef SHORT_NAMES
 #define HTInetStatus		HTInStat
 #define HTInetString 		HTInStri
@@ -48,16 +49,6 @@ extern int errno;
 #endif
 #endif
 
-#ifndef VM
-#ifndef vms
-#ifndef NeXT
-#ifndef THINK_C
-extern char *sys_errlist[];		/* see man perror on cernvax */
-extern int sys_nerr;
-#endif  /* think c */
-#endif	/* NeXT */
-#endif  /* vms */
-#endif	/* VM */
 #endif	/* PCNFS */
 
 /*	Report Internet Error

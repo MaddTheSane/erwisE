@@ -197,10 +197,7 @@ int len;
 /*
  * Set up stuff needed to format text intelligently
  */
-void XlFormatTextForPrinting(htext, lmargin, rmargin)
-HText_t *htext;
-int lmargin;
-int rmargin;
+void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin)
 {
     HTextObject_t *p;
     int i, struct_len;

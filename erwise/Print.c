@@ -12,6 +12,7 @@
 #include "Includes.h"
 
 #include <fcntl.h>
+#include <unistd.h>
 
 int PrintTopMargin = 0;
 int PrintBottomMargin = 0;
@@ -21,6 +22,10 @@ int PrintToFile = 0;
 
 char PrintCommand[1024] = "lpr";
 char PrintFileName[1024] = "foobar.www";
+
+//FIXME: find the right way to include these!
+extern void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin);
+extern void HText_free(HText_t * me);
 
 
 /*
@@ -47,6 +52,9 @@ typedef struct PrintLine_s {
 
 } PrintLine_t;
 
+
+static int DoPrint(HText_t *old_htext, int fd, int width, int lmargin, int top, int bottom);
+static int printobject_append(PrintLine_t *line, HTextObject_t *htobject);
 
 
 /*
@@ -90,9 +98,7 @@ PrintLine_t *
 /*
  * Append object to a line. Sort objects according to x position
  */
-int printobject_append(line, htobject)
-PrintLine_t *line;
-HTextObject_t *htobject;
+int printobject_append(PrintLine_t *line, HTextObject_t *htobject)
 {
     PrintObject_t *object = line->Objects;
     PrintObject_t *prev = 0;
@@ -142,6 +148,7 @@ HTextObject_t *htobject;
 
 	}
     }
+    return 0;
 }
 
 
@@ -347,13 +354,7 @@ HText_t *htext;
 /*
  * Handle printing. Format text (ascii) and put it to wanted fd
  */
-int DoPrint(old_htext, fd, width, lmargin, top, bottom)
-HText_t *old_htext;
-int fd;
-int width;
-int lmargin;
-int top;
-int bottom;
+int DoPrint(HText_t *old_htext, int fd, int width, int lmargin, int top, int bottom)
 {
     PrintLine_t *first_line = 0;
 
@@ -459,7 +460,7 @@ int bottom;
 	         * XXXXXX free
 	         */
 		if (!d)
-		    return;
+		    return 0;
 
 		memset(d, ' ', max_x + 1);
 
@@ -523,4 +524,5 @@ int bottom;
      */
 
     HText_free(htext);
+    return 0;
 }

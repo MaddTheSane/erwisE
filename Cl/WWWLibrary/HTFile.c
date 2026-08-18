@@ -34,6 +34,7 @@
 #include "HTTCP.h"
 #include "HTFTP.h"
 #include "HTAnchor.h"
+#include <unistd.h>
 
 PRIVATE char *HTMountRoot = "/Net/";		/* Where to find mounts */
 #ifdef vms

@@ -49,6 +49,8 @@ PUBLIC void HTInitInput ARGS1 (int,file_number)
 
 PUBLIC char HTGetChararcter NOARGS
 {
+extern int cl_read_data (int fd, char *data, int length);
+
     char ch;
     do {
 	if (input_pointer >= input_limit) {

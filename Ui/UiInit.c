@@ -3,13 +3,15 @@ static char *rcsid = "$Id: UiInit.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
 #include "UiIncludes.h"
 
 
+extern int TruthValue(char *value);
+
 static void uisetupdefaults(int argc, char *argv[],
 			     void *(*configpf) (void *table, char *item));
 static Widget uicreatebutton(Widget parentwdg, char *name, int leftpos,
 			      int rightpos);
 
-static void uitopactivatecb(Widget wdg, caddr_t actionname,
-			     XmPushButtonCallbackStruct * calldata);
+static void uitopactivatecb(Widget wdg, void *actionname,
+			     void * calldata);
 
 
 uiTopLevel_t uiTopLevel;
@@ -138,10 +140,7 @@ int rightpos;
 }
 
 
-static void uitopactivatecb(wdg, actionname, calldata)
-Widget wdg;
-caddr_t actionname;
-XmPushButtonCallbackStruct *calldata;
+static void uitopactivatecb(Widget wdg, void *actionname, void *calldata)
 {
     uiAction_t *tmpaction;
 

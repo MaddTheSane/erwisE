@@ -5,7 +5,6 @@
  *  Misc. prototypes (external to library)
  */
 
-extern int fprintf(FILE * stream, char *format,...);
 
 
 /*
@@ -23,6 +22,10 @@ extern void *(*uiConfigSetPF) (void *table, char *item, void *value);
 /*
  *  UiControlPanel.c
  */
+
+void uiConnectionsUpdateDialog(void);
+void uiPrintUpdateDialog(void);
+void uiControlPanelUpdateDialog(void);
 
 
 /*
@@ -83,12 +86,12 @@ extern void uiDialogVariableCB(Widget wdg, caddr_t variablename,
 			        XmAnyCallbackStruct * calldata);
 extern void uiDefineCursor(Cursor cursor);
 extern void uiUndefineCursor(void);
-extern ArgList uiVaSetArgs( /*int *nargs, va_alist*/ );
+extern ArgList uiVaSetArgs(Cardinal *nargs, ...);
 extern XtArgVal uiGetArg(Widget wdg, String resource);
 extern void *uiMalloc(int size);
 extern void *uiReAlloc(void *, int size);
 extern void uiFree(void *ptr);
-extern void uiDisplayWarning(char *text);
-extern void uiDisplayFatal(char *text);
+extern void uiDisplayWarning(const char *text);
+extern void uiDisplayFatal(const char *text);
 extern void uiWidgetPlacement(Widget wdg, int placement);
 extern void (*uiHelpOnActionCB) (char *actionstring);

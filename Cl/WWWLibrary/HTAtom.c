@@ -20,6 +20,7 @@
 #include <stdio.h>
 #endif
 
+#include <string.h>
 PRIVATE HTAtom * hash_table[HASH_SIZE];
 PRIVATE BOOL initialised = NO;
 

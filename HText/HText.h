@@ -157,3 +157,4 @@ typedef struct HTextAnchor
  */
 
 HText_t *HtDuplicate (HText_t * text);
+extern char *HTSearchAddress(char *keywords);

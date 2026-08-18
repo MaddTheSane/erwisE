@@ -1,6 +1,8 @@
 static char *rcsid = "$Id: UiMisc.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
 
 #include "UiIncludes.h"
+#include <X11/IntrinsicP.h>
+#include <stdarg.h>
 
 
 static void uitimeouthandler(XtPointer data, XtIntervalId * id);
@@ -188,7 +190,7 @@ void *data;
 {
     uifdinputcallback = callback;
 
-    return (int) XtAddInput(fd, XtInputReadMask | XtInputExceptMask,
+    return (int) XtAddInput(fd, (XtPointer)(size_t)(XtInputReadMask | XtInputExceptMask),
 			    uifdinputhandler, (caddr_t) data);
 }
 
@@ -480,9 +482,7 @@ void uiUndefineCursor()
 
 
 ArgList
-uiVaSetArgs(nargs, va_alist)
-int *nargs;
-va_dcl
+uiVaSetArgs(Cardinal *nargs, ...)
 {
     static Arg args[50];
     String tmpstr;
@@ -490,7 +490,7 @@ va_dcl
 
     *nargs = 0;
 
-    va_start(pvar);
+    va_start(pvar, nargs);
     tmpstr = va_arg(pvar, String);
     while (tmpstr) {
 	XtSetArg(args[(int) *nargs], tmpstr, va_arg(pvar, XtArgVal));
@@ -518,8 +518,7 @@ String resource;
 
 
 void *
- uiMalloc(size)
-int size;
+ uiMalloc(int size)
 {
     void *tmpptr;
 
@@ -532,9 +531,7 @@ int size;
 
 
 void *
- uiReAlloc(ptr, size)
-void *ptr;
-int size;
+ uiReAlloc(void *ptr, int size)
 {
     void *tmpptr;
 
@@ -548,23 +545,20 @@ int size;
 }
 
 
-void uiFree(ptr)
-void *ptr;
+void uiFree(void *ptr)
 {
     if (ptr)
 	free(ptr);
 }
 
 
-void uiDisplayWarning(text)
-char *text;
+void uiDisplayWarning(const char *text)
 {
     (void) fprintf(stderr, "Ui-warning: %s\n", text);
 }
 
 
-void uiDisplayFatal(text)
-char *text;
+void uiDisplayFatal(const char *text)
 {
     (void) fprintf(stderr, "Ui-fatal: %s\n", text);
 
@@ -572,9 +566,7 @@ char *text;
 }
 
 
-void uiWidgetPlacement(wdg, placement)
-Widget wdg;
-int placement;
+void uiWidgetPlacement(Widget wdg, int placement)
 {
     Window root, child;
     int root_x, root_y, win_x, win_y;
@@ -589,9 +581,7 @@ int placement;
 }
 
 
-static void uitimeouthandler(data, id)
-XtPointer data;
-XtIntervalId *id;
+static void uitimeouthandler(XtPointer data, XtIntervalId *id)
 {
     (*uitimeoutcallback) (data);
 }

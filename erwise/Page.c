@@ -2,10 +2,11 @@ static char *rcsid = "$Id: Page.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 
 #include "Includes.h"
 
-
-void getanddisplaypage(char *topaddress, HText_t * htext,
+extern void 	HText_free(HText_t * me);
+static void getanddisplaypage(char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject);
-int matchingstring(char *word);
+static int matchingstring(char *word);
+static void PageGeneratePopup(Page_t *parentpage, char *topaddress);
 
 
 char FindText[256] = "\0";
@@ -105,8 +106,7 @@ void *parameter;
 }
 
 
-int TruthValue(value)
-char *value;
+int TruthValue(char *value)
 {
     if (value && (!strncasecmp(value, STR_TRUE, strlen(STR_TRUE)) ||
 		  !strncasecmp(value, STR_ON, strlen(STR_ON)) ||
@@ -144,7 +144,8 @@ void *parameter;
 	else
 	    strcpy(PrintFileName, "");
     }
-    UiDisplayPrintDialog(htext);
+//     UiDisplayPrintDialog(htext);
+	UiDisplayPrintDialog(0);
 
     if (update) {
 	UiUpdateVariable("PrintTopMargin");
@@ -373,9 +374,7 @@ void *parameter;
 }
 
 
-PageGeneratePopup(parentpage, topaddress)
-Page_t *parentpage;
-char *topaddress;
+void PageGeneratePopup(Page_t *parentpage, char *topaddress)
 {
     char **items = (char **) NULL;
     int nitems = 0;

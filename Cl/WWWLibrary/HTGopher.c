@@ -26,6 +26,7 @@
 #define GOPHER_WWW		'w'		/* W3 address */
 
 #include <ctype.h>
+#include <unistd.h>
 #include "HTUtils.h"		/* Coding convention macros */
 #include "tcp.h"
 

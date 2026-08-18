@@ -104,3 +104,11 @@ extern int UiDisplayFileSelection(void (*callback) (char *topaddress,
 						     HText_t * htext,
 					     HTextObject_t * htextobject,
 						     void *parameter));
+extern int UiDisplayWarningDialog(char *warning, void (*callback) (int button));
+extern int UiDisplayDefaultsDialog(void);
+extern int UiDisplayConnectionsDialog(char **listitems, void **connections, int nitems, void (*callback) (void *connection));
+extern int UiDisplayPrintDialog(int type);
+extern int UiConnectionsDialogDisplayed(void);
+
+
+

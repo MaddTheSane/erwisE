@@ -19,6 +19,7 @@
 #endif
 
 #include <ctype.h>
+#include <unistd.h>
 #include "HTUtils.h"		/* Coding convention macros */
 #include "tcp.h"
 

@@ -26,11 +26,7 @@ static int uinitems;
 static void (*uiconnectionscallback) (void *connection);
 
 
-int UiDisplayConnectionsDialog(listitems, connections, nitems, callback)
-char **listitems;
-void **connections;
-int nitems;
-void (*callback) (void *connection);
+int UiDisplayConnectionsDialog(char **listitems, void **connections, int nitems, void (*callback) (void *connection))
 {
     uiConnectionsGfx_t *connectionsgfx = &uiTopLevel.ConnectionsGfx;
 
