@@ -24,18 +24,15 @@
 		55D82A28303426400043B1A0 /* HTStyle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C4303426400043B1A0 /* HTStyle.c */; };
 		55D82A29303426400043B1A0 /* HTTCP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C6303426400043B1A0 /* HTTCP.c */; };
 		55D82A2A303426400043B1A0 /* HTTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C8303426400043B1A0 /* HTTP.c */; };
-		55D82A2B303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829CB303426400043B1A0 /* Makefile */; };
 		55D82A2C303426400043B1A0 /* SGML.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829CF303426400043B1A0 /* SGML.c */; };
 		55D82A2D303426400043B1A0 /* Cl.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D4303426400043B1A0 /* Cl.c */; };
 		55D82A2E303426400043B1A0 /* ClConnection.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D5303426400043B1A0 /* ClConnection.c */; };
 		55D82A2F303426400043B1A0 /* ClFTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D6303426400043B1A0 /* ClFTP.c */; };
 		55D82A30303426400043B1A0 /* ClHTTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D7303426400043B1A0 /* ClHTTP.c */; };
 		55D82A31303426400043B1A0 /* ClMisc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D8303426400043B1A0 /* ClMisc.c */; };
-		55D82A32303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829DA303426400043B1A0 /* Makefile */; };
 		55D82A33303426400043B1A0 /* Config.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829DC303426400043B1A0 /* Config.c */; };
 		55D82A34303426400043B1A0 /* Help.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829DE303426400043B1A0 /* Help.c */; };
 		55D82A35303426400043B1A0 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E1303426400043B1A0 /* main.c */; };
-		55D82A36303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E2303426400043B1A0 /* Makefile */; };
 		55D82A37303426400043B1A0 /* Misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E3303426400043B1A0 /* Misc.c */; };
 		55D82A38303426400043B1A0 /* Page.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E4303426400043B1A0 /* Page.c */; };
 		55D82A39303426400043B1A0 /* Print.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E5303426400043B1A0 /* Print.c */; };
@@ -44,8 +41,6 @@
 		55D82A3C303426400043B1A0 /* DefaultStyles.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829EB303426400043B1A0 /* DefaultStyles.c */; };
 		55D82A3D303426400043B1A0 /* dummy.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829EC303426400043B1A0 /* dummy.c */; };
 		55D82A3E303426400043B1A0 /* HText.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829EE303426400043B1A0 /* HText.c */; };
-		55D82A3F303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F0303426400043B1A0 /* Makefile */; };
-		55D82A40303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F3303426400043B1A0 /* Makefile */; };
 		55D82A41303426400043B1A0 /* UiConnections.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F5303426400043B1A0 /* UiConnections.c */; };
 		55D82A42303426400043B1A0 /* UiControlPanel.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F6303426400043B1A0 /* UiControlPanel.c */; };
 		55D82A43303426400043B1A0 /* UiDefaults.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F7303426400043B1A0 /* UiDefaults.c */; };
@@ -61,13 +56,11 @@
 		55D82A4D303426400043B1A0 /* UiSearch.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A04303426400043B1A0 /* UiSearch.c */; };
 		55D82A4E303426400043B1A0 /* UiSelectionBox.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A05303426400043B1A0 /* UiSelectionBox.c */; };
 		55D82A4F303426400043B1A0 /* UiUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A07303426400043B1A0 /* UiUtil.c */; };
-		55D82A50303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A0A303426400043B1A0 /* Makefile */; };
 		55D82A51303426400043B1A0 /* XlFormatText.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A0F303426400043B1A0 /* XlFormatText.c */; };
 		55D82A52303426400043B1A0 /* XlSetup.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A10303426400043B1A0 /* XlSetup.c */; };
 		55D82A53303426400043B1A0 /* XlStyle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A12303426400043B1A0 /* XlStyle.c */; };
 		55D82A54303426400043B1A0 /* XlUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A14303426400043B1A0 /* XlUtil.c */; };
 		55D82A55303426400043B1A0 /* XlWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A15303426400043B1A0 /* XlWindow.c */; };
-		55D82A56303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A18303426400043B1A0 /* Makefile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -195,6 +188,8 @@
 		55D82A15303426400043B1A0 /* XlWindow.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XlWindow.c; sourceTree = "<group>"; };
 		55D82A17303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
 		55D82A18303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D82A57303432EE0043B1A0 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		55D82A58303439E90043B1A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +206,8 @@
 		5578D9663032BFCF00F73A71 = {
 			isa = PBXGroup;
 			children = (
+				55D82A58303439E90043B1A0 /* README.md */,
+				55D82A57303432EE0043B1A0 /* TODO.md */,
 				55D82A19303426400043B1A0 /* erwise */,
 				5578D9703032BFCF00F73A71 /* Products */,
 			);
@@ -468,18 +465,15 @@
 				55D82A28303426400043B1A0 /* HTStyle.c in Sources */,
 				55D82A29303426400043B1A0 /* HTTCP.c in Sources */,
 				55D82A2A303426400043B1A0 /* HTTP.c in Sources */,
-				55D82A2B303426400043B1A0 /* Makefile in Sources */,
 				55D82A2C303426400043B1A0 /* SGML.c in Sources */,
 				55D82A2D303426400043B1A0 /* Cl.c in Sources */,
 				55D82A2E303426400043B1A0 /* ClConnection.c in Sources */,
 				55D82A2F303426400043B1A0 /* ClFTP.c in Sources */,
 				55D82A30303426400043B1A0 /* ClHTTP.c in Sources */,
 				55D82A31303426400043B1A0 /* ClMisc.c in Sources */,
-				55D82A32303426400043B1A0 /* Makefile in Sources */,
 				55D82A33303426400043B1A0 /* Config.c in Sources */,
 				55D82A34303426400043B1A0 /* Help.c in Sources */,
 				55D82A35303426400043B1A0 /* main.c in Sources */,
-				55D82A36303426400043B1A0 /* Makefile in Sources */,
 				55D82A37303426400043B1A0 /* Misc.c in Sources */,
 				55D82A38303426400043B1A0 /* Page.c in Sources */,
 				55D82A39303426400043B1A0 /* Print.c in Sources */,
@@ -488,8 +482,6 @@
 				55D82A3C303426400043B1A0 /* DefaultStyles.c in Sources */,
 				55D82A3D303426400043B1A0 /* dummy.c in Sources */,
 				55D82A3E303426400043B1A0 /* HText.c in Sources */,
-				55D82A3F303426400043B1A0 /* Makefile in Sources */,
-				55D82A40303426400043B1A0 /* Makefile in Sources */,
 				55D82A41303426400043B1A0 /* UiConnections.c in Sources */,
 				55D82A42303426400043B1A0 /* UiControlPanel.c in Sources */,
 				55D82A43303426400043B1A0 /* UiDefaults.c in Sources */,
@@ -505,13 +497,11 @@
 				55D82A4D303426400043B1A0 /* UiSearch.c in Sources */,
 				55D82A4E303426400043B1A0 /* UiSelectionBox.c in Sources */,
 				55D82A4F303426400043B1A0 /* UiUtil.c in Sources */,
-				55D82A50303426400043B1A0 /* Makefile in Sources */,
 				55D82A51303426400043B1A0 /* XlFormatText.c in Sources */,
 				55D82A52303426400043B1A0 /* XlSetup.c in Sources */,
 				55D82A53303426400043B1A0 /* XlStyle.c in Sources */,
 				55D82A54303426400043B1A0 /* XlUtil.c in Sources */,
 				55D82A55303426400043B1A0 /* XlWindow.c in Sources */,
-				55D82A56303426400043B1A0 /* Makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

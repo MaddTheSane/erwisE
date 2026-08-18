@@ -306,6 +306,7 @@ void displaypage(const char *topaddress, HText_t *parenthtext, HText_t *htext, c
     }
     htextobject = htanchor ? htanchor->object : htext->first;
 
+    //FIXME: Use After Free problem?
     while (htextobject && !CanBeCursor(htextobject))
 	htextobject = htextobject->next;
 

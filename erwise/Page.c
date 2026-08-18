@@ -8,7 +8,7 @@ static char *rcsid = "$Id: Page.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 //extern void 	HText_free(HText_t * me);
 extern bool TruthValue(const char *value);
 static void getanddisplaypage(const char *topaddress, HText_t * htext,
-		        HTextObject_t * htextobject);
+			      HTextObject_t * htextobject);
 static bool matchingstring(const char *word);
 static void PageGeneratePopup(Page_t *parentpage, const char *topaddress);
 
