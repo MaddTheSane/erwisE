@@ -3,8 +3,8 @@
 
 #define ERWISERC ".erwiserc"
 
-#define HELP_DIR "file:/p/lib/erwise/help/"
-#define HELP_TOPLEVEL "file:/p/lib/erwise/help/help1.html"
+#define HELP_DIR "file:/usr/share/w3m/"
+#define HELP_TOPLEVEL "file:/usr/share/w3m/w3mhelp.html"
 
 #define AUTOGET    0
 #define NO_AUTOGET 1

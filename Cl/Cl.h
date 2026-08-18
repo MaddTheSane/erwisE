@@ -10,6 +10,8 @@
  *
  */
 
+#include <string.h>
+#include <unistd.h>
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "HText.h"
