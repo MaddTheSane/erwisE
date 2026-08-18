@@ -54,7 +54,7 @@ typedef struct ClConnection_s
   /*
    * Function of this state machine
    */
-  void (**function) ();
+  void (**function) (void);
 
   /*
    * Store junk here (address of data on connect() )
@@ -128,7 +128,7 @@ typedef struct ClConnection_s
 /*
  * Prototypes
  */
-ClConnection_t *ClOpenConnection (char *address);
+ClConnection_t *ClOpenConnection (const char *address);
 
 struct HText *ClReadData (ClConnection_t * connection, int *how_done, int *fd);
 
@@ -136,7 +136,7 @@ void ClSetOptions (ClConnection_t * connection, int argc, char *argv[]);
 
 void ClCloseConnection (ClConnection_t * connection);
 
-int ClCanLoadToFile (char *address);
+int ClCanLoadToFile (const char *address);
 
 void ClSetFileNameForLoadingToFile (char *filename);
 

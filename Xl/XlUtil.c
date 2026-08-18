@@ -62,13 +62,13 @@ bool xl_can_be_cursor(HTextObject_t *htextobject)
     int i;
 
     if (htextobject->paragraph)
-	return FALSE;
+	return false;
 
     for (i = 0; i < htextobject->length; i++)
 	if (htextobject->data[i] != ' ')
-	    return TRUE;
+	    return true;
 
-    return FALSE;
+    return false;
 }
 
 

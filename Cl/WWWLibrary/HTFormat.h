@@ -22,18 +22,18 @@ typedef int HTFormat;
 
 /*	Clear input buffer and set file number
 */
-extern void HTInitInput PARAMS((int file_number));
+extern void HTInitInput(int file_number);
 
 /*	Get next character from buffer
 */
-extern char HTGetChararcter NOPARAMS;
+extern char HTGetChararcter(void);
 
 
 /*	Parse a file given its format
 */
-extern void HTParseFormat PARAMS((
+extern void HTParseFormat(
 	HTFormat	format,
 	HTParentAnchor	*anchor,
-	int 		file_number));
+	int 		file_number);
 
 #endif

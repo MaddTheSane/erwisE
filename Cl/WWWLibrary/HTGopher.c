@@ -66,25 +66,25 @@ PRIVATE HTStyle *textStyle;			/* Text style */
 **	-----------------------------------------
 */
 
-PRIVATE BOOL acceptable[256];
-PRIVATE BOOL acceptable_inited = NO;
+PRIVATE bool acceptable[256];
+PRIVATE bool acceptable_inited = false;
 
-PRIVATE void init_acceptable NOARGS
+PRIVATE void init_acceptable(void)
 {
     unsigned int i;
     char * good = 
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./-_$";
-    for(i=0; i<256; i++) acceptable[i] = NO;
-    for(;*good; good++) acceptable[(unsigned int)*good] = YES;
-    acceptable_inited = YES;
+    for(i=0; i<256; i++) acceptable[i] = false;
+    for(;*good; good++) acceptable[(unsigned int)*good] = true;
+    acceptable_inited = true;
 }
 
-PRIVATE CONST char hex[17] = "0123456789abcdef";
+PRIVATE const char hex[17] = "0123456789abcdef";
 
 /*	Decdoe one hex character
 */
 
-PRIVATE char from_hex ARGS1(char, c)
+PRIVATE char from_hex(char c)
 {
     return 		  (c>='0')&&(c<='9') ? c-'0'
 			: (c>='A')&&(c<='F') ? c-'A'+10
@@ -97,7 +97,7 @@ PRIVATE char from_hex ARGS1(char, c)
 /*	Get Styles from stylesheet
 **	--------------------------
 */
-PRIVATE void get_styles NOARGS
+PRIVATE void get_styles(void)
 {
     if (!heading1Style) heading1Style = HTStyleNamed(styleSheet, "Heading1");
     if (!addressStyle) addressStyle = HTStyleNamed(styleSheet, "Address");
@@ -116,7 +116,7 @@ PRIVATE void get_styles NOARGS
 **	text 	points to the text to be put into the file, 0 terminated.
 **	addr	points to the hypertext refernce address 0 terminated.
 */
-PRIVATE void write_anchor ARGS2(CONST char *,text, CONST char *,addr)
+PRIVATE void write_anchor(const char *text, const char *addr)
 {
     HTChildAnchor 	*anchor;
     HTParentAnchor	*dest;
@@ -138,15 +138,15 @@ PRIVATE void write_anchor ARGS2(CONST char *,text, CONST char *,addr)
 **
 */
 
-PRIVATE void parse_menu ARGS2 (
-	CONST char *,	arg,
-	HTParentAnchor *,anAnchor)
+PRIVATE void parse_menu(
+	const char *	arg,
+	HTParentAnchor *anAnchor)
 {
     char gtype;
     char ch;
     char line[BIG];
     char address[BIG];
-    char *name, *selector;		/* Gopher menu fields */
+    char *name=NULL, *selector=NULL;		/* Gopher menu fields */
     char *host;
     char *port;
     char *p = line;
@@ -249,9 +249,9 @@ PRIVATE void parse_menu ARGS2 (
 **	-------------------------------
 */
 
-PRIVATE void display_index ARGS2 (
-	CONST char *,	arg,
-	HTParentAnchor *,anAnchor)
+PRIVATE void display_index(
+	const char *	arg,
+	HTParentAnchor *anAnchor)
 {
     node_anchor = anAnchor;
     HT = HText_new(anAnchor);
@@ -275,10 +275,10 @@ PRIVATE void display_index ARGS2 (
 **	 Bug:	No decoding of strange data types as yet.
 **
 */
-PUBLIC int HTLoadGopher ARGS3(
-	CONST char *,arg,
-	HTParentAnchor *,anAnchor,
-	int,diag)
+PUBLIC int HTLoadGopher(
+	const char *arg,
+	HTParentAnchor *anAnchor,
+	int diag)
 {
     char *command;			/* The whole command */
     int status;				/* tcp return */

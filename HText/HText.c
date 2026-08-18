@@ -488,7 +488,7 @@ HText_setStyle (struct HText *text, HTStyle *style)
 
 
 
-BOOL 
+bool 
 HText_select (text)
      struct HText *text;
 {
@@ -503,7 +503,7 @@ HText_select (text)
 
 
 
-BOOL 
+bool 
 HText_selectAnchor (struct HText *text, struct HTChildAnchor *anchor)
 {
   HT_DEBUG (("\nHText_selectAnchor\n"));

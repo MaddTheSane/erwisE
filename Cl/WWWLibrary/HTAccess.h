@@ -31,7 +31,7 @@ extern int HTDiag;
 **	--------------------------------------
 **
 */
-extern int HTClose PARAMS((int soc));
+extern int HTClose(int soc);
 
 
 /*		Load a document
@@ -42,16 +42,26 @@ extern int HTClose PARAMS((int soc));
 **        full_address      The address of the file to be accessed.
 **
 **    On Exit,
-**        returns    YES     Success in opening file
-**                   NO      Failure 
+**        returns    true     Success in opening file
+**                   false      Failure 
 **
 */
 
-extern BOOL HTLoadDocument PARAMS((HTParentAnchor * anchor,
-	CONST char * full_address,
-	BOOL	filter));
+extern bool HTLoadDocument(HTParentAnchor * anchor,
+			   const char * full_address,
+			   bool	filter);
 
 
+
+/*!
+ * \brief Load a document from relative name
+ *
+ * \param relative_name     The relative address of the file to be accessed.
+ * \returns
+ * \c true Success in opening file,
+ * \c false Failure
+ */
+extern  bool HTLoadRelative(const char * relative_name);
 
 /*		Load a document from relative name
 **		---------------
@@ -60,28 +70,13 @@ extern BOOL HTLoadDocument PARAMS((HTParentAnchor * anchor,
 **        relative_name     The relative address of the file to be accessed.
 **
 **    On Exit,
-**        returns    YES     Success in opening file
-**                   NO      Failure 
+**        returns    true     Success in opening file
+**                   false      Failure 
 **
 **
 */
 
-extern  BOOL HTLoadRelative PARAMS((CONST char * relative_name));
-
-/*		Load a document from relative name
-**		---------------
-**
-**    On Entry,
-**        relative_name     The relative address of the file to be accessed.
-**
-**    On Exit,
-**        returns    YES     Success in opening file
-**                   NO      Failure 
-**
-**
-*/
-
-extern BOOL HTLoadAbsolute PARAMS((CONST char * addr, BOOL filter));
+extern bool HTLoadAbsolute(const char * addr, bool filter);
 
 
 /*		Load if necessary, and select an anchor
@@ -91,12 +86,12 @@ extern BOOL HTLoadAbsolute PARAMS((CONST char * addr, BOOL filter));
 **        destination      	    The child or parenet anchor to be loaded.
 **
 **    On Exit,
-**        returns    YES     Success
-**                   NO      Failure 
+**        returns    true     Success
+**                   false      Failure 
 **
 */
 
-extern BOOL HTLoadAnchor PARAMS((HTAnchor * destination));
+extern bool HTLoadAnchor(HTAnchor * destination);
 
 /*		Search
 **		------
@@ -108,7 +103,7 @@ extern BOOL HTLoadAnchor PARAMS((HTAnchor * destination));
 **	HTMainAnchor	global must be valid.
 */
 
-extern BOOL HTSearch PARAMS((char * keywords));
+extern bool HTSearch(char * keywords);
 
 
 #endif /* HTACCESS_H */

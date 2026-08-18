@@ -9,8 +9,8 @@
 #define HTGOPHER_H
 
 #include "HTAnchor.h"
-extern int HTLoadGopher PARAMS((const char *arg,
-	HTParentAnchor * anAnchor,
-	int diag));
+extern int HTLoadGopher (const char *arg,
+			 HTParentAnchor * anAnchor,
+			 int diag);
 
 #endif /* HTGOPHER_H */

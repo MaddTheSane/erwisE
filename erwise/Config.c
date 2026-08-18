@@ -2,12 +2,9 @@
 #include "HTStyle.h"
 #include "../HText/HText.h"
 #include "Includes.h"
+#include <stdbool.h>
 
 #define BUFFER_SIZE 79
-#ifndef TRUE
-#define TRUE  1
-#define FALSE 0
-#endif
 
 #define INDENT_STR  "    "
 
@@ -276,19 +273,19 @@ Config_t *table;
 {
     char *line;
     char *id;
-    int done = FALSE;
+    int done = false;
     char **items = (char **) NULL;
     int count = 0;
 
     do {
 	line = readline(fp);
 	if (line[0] == '\0')
-	    done = TRUE;
+	    done = true;
 	else {
 	    id = parseid(line);
 	    switch (getidtype(id, table)) {
 	    case END_OF_BLOCK:
-		done = TRUE;
+		done = true;
 	    case START_OF_BLOCK:
 		break;
 	    default:
@@ -348,11 +345,11 @@ Config_t *table;
 {
     char *id, *value;
     char *line;
-    int done = FALSE;
+    int done = false;
     int ret;
     Config_t *item;
     int blockcount = 0;
-    int unknown = FALSE;
+    int unknown = false;
     char *syncline;
     int syncdone;
 
@@ -371,14 +368,14 @@ Config_t *table;
 		value = parsevalue(line);
 		/* we don't care about this return value... */
 		value = setitemvalue(item, (void *) strdup(value));
-		unknown = FALSE;
+		unknown = false;
 		break;
 	    case BLOCK:
 #ifdef DEBUG_CONFIG
 		printf("block: '%s'\n", id);
 #endif
 		ret = restoreblock(fp, (Config_t *) item->value);
-		unknown = FALSE;
+		unknown = false;
 		break;
 	    case START_OF_BLOCK:
 		if (!unknown)
@@ -387,38 +384,38 @@ Config_t *table;
 #ifdef DEBUG_CONFIG
 		    printf("syncing\n");
 #endif
-		    syncdone = FALSE;
+		    syncdone = false;
 		    while (!syncdone && !feof(fp) && (syncline = readline(fp))) {
 			if (strchr(syncline, '}'))
-			    syncdone = TRUE;
+			    syncdone = true;
 			free(syncline);
 		    }
 		}
-		unknown = FALSE;
+		unknown = false;
 		break;
 	    case END_OF_BLOCK:
 		blockcount--;
 		if (blockcount == 0)
-		    done = TRUE;
+		    done = true;
 		else
 		    fprintf(stderr, "parse error at line %d\n", ConfigLines);
-		unknown = FALSE;
+		unknown = false;
 		break;
 	    case DYNAMIC:
 #ifdef DEBUG_CONFIG
 		printf("dynamic: '%s'\n", id);
 #endif
 		ret = restoredynamicblock(fp, (Config_t *) item->value);
-		unknown = FALSE;
+		unknown = false;
 		break;
 	    case UNKNOWN:
 		fprintf(stderr, "Unknown tag type '%s'\n", id);
-		unknown = TRUE;
+		unknown = true;
 		break;
 	    case EMPTY:
 	    case COMMENT:
 	    default:
-		unknown = FALSE;
+		unknown = false;
 		break;
 	    }
 	}

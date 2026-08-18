@@ -10,8 +10,8 @@
 #define HTNEWS_H
 
 #include "HTAnchor.h"
-extern int HTLoadNews PARAMS((const char *arg,
+extern int HTLoadNews (const char *arg,
 	HTParentAnchor * anAnchor,
-	int diag));
+	int diag);
 
 #endif /* HTNEWS_H */

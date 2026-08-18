@@ -10,8 +10,8 @@
 #include "SGML.h"
 
 extern SGML_dtd HTML_dtd;	/* The DTD */
-extern void HTML_begin PARAMS((HTParentAnchor * anchor));
-extern BOOL HTML_Parse PARAMS((
+extern void HTML_begin(HTParentAnchor * anchor);
+extern bool HTML_Parse(
 	HTParentAnchor * anchor,
-	char (*next_char)() ));
+	char (*next_char)(void) );
 #endif

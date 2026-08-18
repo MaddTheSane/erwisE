@@ -29,7 +29,7 @@
 extern HText_t *HtLocalText;
 
 
-/*
+/*!
  * Poll connecting until connection completes.
  */
 void
@@ -76,7 +76,7 @@ WWWErwiseConnect (void)
 
 
 
-/*
+/*!
  * Instead of connect, this function is called. Store needed data to
  * poll connecting later.
  */
@@ -123,14 +123,13 @@ erwise_connect (int fd, struct sockaddr *addr, int size)
 
 
 
-/*
+/*!
  * Send command to net
  */
-
 void
-WWWErwiseSendCommand ()
+WWWErwiseSendCommand (void)
 {
-  int status;
+  ssize_t status;
 
   CL_DEBUG (("Send Command\n"));
 
@@ -174,16 +173,15 @@ WWWErwiseSendCommand ()
 
 #define ERWISE_BLOCK 8192
 
-/*
+/*!
  * Read data until all data is read
  */
-
 void
-WWWErwiseReadData ()
+WWWErwiseReadData (void)
 {
   char tmp[ERWISE_BLOCK];
 
-  int i;
+  ssize_t i;
 
   i = read (WWWErwiseConnection->fd,
 	    tmp,
@@ -203,7 +201,7 @@ WWWErwiseReadData ()
 
       if (WWWErwiseConnection->load_to_file)
 	{
-	  int st;
+	  ssize_t st;
 
 	  st = write (WWWErwiseConnection->load_to_file_fd,
 		      tmp,
@@ -273,12 +271,11 @@ WWWErwiseReadData ()
 
 
 
-/*
+/*!
  * Parse data that has been read
  */
-
 void
-WWWErwiseParse ()
+WWWErwiseParse (void)
 {
   /*
    * XXXXXX If saving to file, don't parse
@@ -299,26 +296,22 @@ WWWErwiseParse ()
 
 
 
-/*
+/*!
  * If we are loading to file, nothing else needs to be done ...
  */
 void
 WWWErwiseTerminateIfLoadToFile (void)
 {
-  if (WWWErwiseConnection->load_to_file)
-    {
-      HtLocalText = 0;
-
-      while (*WWWErwiseConnection->function)
-	{
-	  WWWErwiseConnection->function++;
+    if (WWWErwiseConnection->load_to_file) {
+	HtLocalText = 0;
+	
+	while (*WWWErwiseConnection->function) {
+	    WWWErwiseConnection->function++;
 	}
-
-      WWWErwiseStatus = CL_COMPLETED;
-
-    }
-  else
-    {
-      WWWErwiseConnection->function++;
+	
+	WWWErwiseStatus = CL_COMPLETED;
+	
+    } else {
+	WWWErwiseConnection->function++;
     }
 }

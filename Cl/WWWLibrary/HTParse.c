@@ -293,11 +293,11 @@ char * HTRelative(aName, relatedName)
 #endif
 {
     char * result = 0;
-    CONST char *p = aName;
-    CONST char *q = relatedName;
-    CONST char * after_access = 0;
-    CONST char * path = 0;
-    CONST char * last_slash = 0;
+    const char *p = aName;
+    const char *q = relatedName;
+    const char * after_access = 0;
+    const char * path = 0;
+    const char * last_slash = 0;
     int slashes = 0;
     
     for(;*p; p++, q++) {	/* Find extent of match */

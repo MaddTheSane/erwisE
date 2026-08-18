@@ -50,11 +50,11 @@ extern HTParentAnchor * HTMainAnchor;	/* Pointer to current text's anchor */
 **
 **	Create hypertext object					HText_new
 */
- extern HText *	HText_new PARAMS((HTParentAnchor * anchor));
+ extern HText *	HText_new(HTParentAnchor * anchor);
 
 /*	Free hypertext object					HText_free
 */
-extern void 	HText_free PARAMS((HText * me));
+extern void 	HText_free(HText * me);
 
 
 /*			Object Building methods
@@ -67,23 +67,23 @@ extern void 	HText_free PARAMS((HText * me));
 */
 extern void HText_beginAppend(HText * text);
 
-extern void HText_endAppend PARAMS((HText * text));
+extern void HText_endAppend(HText * text);
 
 /*	Set the style for future text
 */
-extern void HText_setStyle PARAMS((HText * text, HTStyle * style));
+extern void HText_setStyle(HText * text, HTStyle * style);
 
 /*	Add one character
 */
-extern void HText_appendCharacter PARAMS((HText * text, char ch));
+extern void HText_appendCharacter(HText * text, char ch);
 
 /*	Add a zero-terminated string
 */
-extern void HText_appendText PARAMS((HText * text, CONST char * str));
+extern void HText_appendText(HText * text, const char * str);
 
 /*	New Paragraph
 */
-extern void HText_appendParagraph PARAMS((HText * text));
+extern void HText_appendParagraph(HText * text);
 
 /*	Start/end sensitive text
 **
@@ -92,17 +92,17 @@ extern void HText_appendParagraph PARAMS((HText * text));
 ** is called. Anchors may not be nested.
 */
 
-extern void HText_beginAnchor PARAMS((HText * text, HTChildAnchor * anc));
-extern void HText_endAnchor PARAMS((HText * text));
+extern void HText_beginAnchor(HText * text, HTChildAnchor * anc);
+extern void HText_endAnchor(HText * text);
 
 
 /* 	Dump diagnostics to stderr
 */
-extern void HText_dump PARAMS((HText * me));	
+extern void HText_dump(HText * me);	
 
 /*	Return the anchor associated with this node
 */
-extern HTParentAnchor * HText_nodeAnchor PARAMS((HText * me));
+extern HTParentAnchor * HText_nodeAnchor(HText * me);
 
 
 /*		Browsing functions
@@ -112,8 +112,8 @@ extern HTParentAnchor * HText_nodeAnchor PARAMS((HText * me));
 /*	Bring to front and highlight it
 */
 
-extern BOOL HText_select(HText * text); 
-extern BOOL HText_selectAnchor(HText * text, HTChildAnchor* anchor);
+extern bool HText_select(HText * text); 
+extern bool HText_selectAnchor(HText * text, HTChildAnchor* anchor);
 
 /*		Editing functions
 **		-----------------
@@ -127,40 +127,40 @@ extern BOOL HText_selectAnchor(HText * text, HTChildAnchor* anchor);
 */
 /*	Apply this style to the selection
 */
-extern void HText_applyStyle PARAMS((HText * me, HTStyle *style));
+extern void HText_applyStyle(HText * me, HTStyle *style);
 
 /*	Update all text with changed style.
 */
-extern void HText_updateStyle PARAMS((HText * me, HTStyle *style));
+extern void HText_updateStyle(HText * me, HTStyle *style);
 
 /*	Return style of  selection
 */
-extern HTStyle * HText_selectionStyle PARAMS((
+extern HTStyle * HText_selectionStyle(
 	HText * me,
-	HTStyleSheet* sheet));
+	HTStyleSheet* sheet);
 
 /*	Paste in styled text
 */
-extern void HText_replaceSel PARAMS((HText * me,
-	CONST char *aString, 
-	HTStyle* aStyle));
+extern void HText_replaceSel(HText * me,
+	const char *aString, 
+	HTStyle* aStyle);
 
 /*	Apply this style to the selection and all similarly formatted text
 **	(style recovery only)
 */
-extern void HTextApplyToSimilar PARAMS((HText * me, HTStyle *style));
+extern void HTextApplyToSimilar(HText * me, HTStyle *style);
  
 /*	Select the first unstyled run.
 **	(style recovery only)
 */
-extern void HTextSelectUnstyled PARAMS((HText * me, HTStyleSheet *sheet));
+extern void HTextSelectUnstyled(HText * me, HTStyleSheet *sheet);
 
 
 /*	Anchor handling:
 */
-extern void		HText_unlinkSelection PARAMS((HText * me));
-extern HTAnchor *	HText_referenceSelected PARAMS((HText * me));
-extern HTAnchor *	HText_linkSelTo PARAMS((HText * me, HTAnchor* anchor));
+extern void		HText_unlinkSelection(HText * me);
+extern HTAnchor *	HText_referenceSelected(HText * me);
+extern HTAnchor *	HText_linkSelTo(HText * me, HTAnchor* anchor);
 
 
 #endif /* HTEXT_H */

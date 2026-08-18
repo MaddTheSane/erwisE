@@ -76,10 +76,10 @@ PRIVATE HTStyle *textStyle;			/* Text style */
 **	4.	Compilation time macro DEFAULT_NEWS_HOST
 **	5.	Defualt to "news"
 */
-PRIVATE BOOL initialized = NO;
-PRIVATE BOOL initialize NOARGS
+PRIVATE bool initialized = false;
+PRIVATE bool initialize(void)
 {
-    CONST struct hostent  *phost;	  /* Pointer to host - See netdb.h */
+    const struct hostent  *phost;	  /* Pointer to host - See netdb.h */
     struct sockaddr_in* sin = &soc_address;
 
         
@@ -131,7 +131,7 @@ PRIVATE BOOL initialize NOARGS
 #endif
 	    CTRACE(tfp,
 	      "HTNews: Can't find internet node name `%s'.\n",NewsHost);
-	    return NO;  /* Fail */
+	    return false;  /* Fail */
 	}
 	memcpy(&sin->sin_addr, phost->h_addr, phost->h_length);
     }
@@ -146,7 +146,7 @@ PRIVATE BOOL initialize NOARGS
 
     s = -1;		/* Disconnected */
     
-    return YES;
+    return true;
 }
 
 
@@ -154,7 +154,7 @@ PRIVATE BOOL initialize NOARGS
 /*	Get Styles from stylesheet
 **	--------------------------
 */
-PRIVATE void get_styles NOARGS
+PRIVATE void get_styles(void)
 {
     if (!heading1Style) heading1Style = HTStyleNamed(styleSheet, "Heading1");
     if (!addressStyle) addressStyle = HTStyleNamed(styleSheet, "Address");
@@ -174,7 +174,7 @@ PRIVATE void get_styles NOARGS
 */
 
 
-PRIVATE int response ARGS1(CONST char *,command)
+PRIVATE int response(const char *command)
 {
     int result;    
     char * p = response_text;
@@ -215,12 +215,12 @@ PRIVATE int response ARGS1(CONST char *,command)
 **	template must be already un upper case.
 **	unknown may be in upper or lower or mixed case to match.
 */
-PRIVATE BOOL match ARGS2 (CONST char *,unknown, CONST char *,template)
+PRIVATE bool match(const char *unknown, const char *template)
 {
-    CONST char * u = unknown;
-    CONST char * t = template;
+    const char * u = unknown;
+    const char * t = template;
     for (;*u && *t && (TOUPPER(*u)==*t); u++, t++) /* Find mismatch or end */ ;
-    return (BOOL)(*t==0);		/* OK if end of template */
+    return (bool)(*t==0);		/* OK if end of template */
 }
 
 /*	Find Author's name in mail address
@@ -233,7 +233,7 @@ PRIVATE BOOL match ARGS2 (CONST char *,unknown, CONST char *,template)
 **	" Tim Berners-Lee <tim@online.cern.ch> "
 **  or	" tim@online.cern.ch ( Tim Berners-Lee ) "
 */
-PRIVATE char * author_name ARGS1 (char *,email)
+PRIVATE char * author_name(char *email)
 {
     char *s, *e;
     
@@ -264,12 +264,12 @@ PRIVATE char * author_name ARGS1 (char *,email)
 **	addr	points to the hypertext refernce address,
 **		terminated by white space, comma, NULL or '>' 
 */
-PRIVATE void write_anchor ARGS2(CONST char *,text, CONST char *,addr)
+PRIVATE void write_anchor(const char *text, const char *addr)
 {
     char href[LINE_LENGTH+1];
 		
     {
-    	CONST char * p;
+    	const char * p;
 	strcpy(href,"news:");
 	for(p=addr; *p && (*p!='>') && !WHITE(*p) && (*p!=','); p++);
         strncat(href, addr, p-addr);	/* Make complete hypertext reference */
@@ -294,7 +294,7 @@ PRIVATE void write_anchor ARGS2(CONST char *,text, CONST char *,addr)
 ** On exit,
 **	*text	is NOT any more chopped up into substrings.
 */
-PRIVATE void write_anchors ARGS1 (char *,text)
+PRIVATE void write_anchors(char *text)
 {
     char * start = text;
     char * end;
@@ -315,7 +315,7 @@ PRIVATE void write_anchors ARGS1 (char *,text)
 /*	Abort the connection					abort_socket
 **	--------------------
 */
-PRIVATE void abort_socket NOARGS
+PRIVATE void abort_socket(void)
 {
     if (TRACE) fprintf(stderr,
 	    "HTNews: EOF on read, closing socket %d\n", s);
@@ -338,14 +338,14 @@ PRIVATE void abort_socket NOARGS
 **	s	Global socket number is OK
 **	HT	Global hypertext object is ready for appending text
 */       
-PRIVATE void read_article NOARGS
+PRIVATE void read_article(void)
 {
 
     char line[LINE_LENGTH+1];
     char *references=NULL;			/* Hrefs for other articles */
     char *newsgroups=NULL;			/* Newsgroups list */
     char *p = line;
-    BOOL done = NO;
+    bool done = false;
     
 /*	Read in the HEADer of the article:
 **
@@ -366,7 +366,7 @@ PRIVATE void read_article NOARGS
 
 		if (line[0]=='.') {	
 		    if (line[1]<' ') {		/* End of article? */
-			done = YES;
+			done = true;
 			break;
 		    }
 		
@@ -427,7 +427,7 @@ PRIVATE void read_article NOARGS
 	    if (TRACE) printf("B %s", line);
 	    if (line[0]=='.') {
 		if (line[1]<' ') {		/* End of article? */
-		    done = YES;
+		    done = true;
 		    break;
 		} else {			/* Line starts with dot */
 		    HText_appendText(HT, &line[1]);	/* Ignore first dot */
@@ -475,12 +475,12 @@ PRIVATE void read_article NOARGS
 **	RFC 977 specifies that the line "folding" of RFC850 is not used, so we
 **	do not handle it here.
 */        
-PRIVATE void read_list NOARGS
+PRIVATE void read_list(void)
 {
 
     char line[LINE_LENGTH+1];
     char *p;
-    BOOL done = NO;
+    bool done = false;
     
 /*	Read in the HEADer of the article:
 **
@@ -500,7 +500,7 @@ PRIVATE void read_list NOARGS
 	    if (TRACE) printf("B %s", line);
 	    if (line[0]=='.') {
 		if (line[1]<' ') {		/* End of article? */
-		    done = YES;
+		    done = true;
 		    break;
 		} else {			/* Line starts with dot */
 		    HText_appendText(HT,  &line[1]);
@@ -529,17 +529,16 @@ PRIVATE void read_list NOARGS
 **	want more than one field.
 **
 */
-PRIVATE void read_group ARGS3(
-  CONST char *,groupName,
-  int,first_required,
-  int,last_required
-)
+PRIVATE void read_group(
+  const char *groupName,
+  int first_required,
+  int last_required)
 {
     char line[LINE_LENGTH+1];
     char author[LINE_LENGTH+1];
     char subject[LINE_LENGTH+1];
     char *p;
-    BOOL done;
+    bool done;
 
     char buffer[LINE_LENGTH];
     char *reference=0;			/* Href for article */
@@ -588,7 +587,7 @@ PRIVATE void read_group ARGS3(
 	HText_appendText(HT,  "...)\n");
     }
     
-    done = NO;
+    done = false;
 
 /*#define USE_XHDR*/
 #ifdef USE_XHDR
@@ -613,7 +612,7 @@ PRIVATE void read_group ARGS3(
 		    if (TRACE) printf("X %s", line);
 		    if (line[0]=='.') {
 			if (line[1]<' ') {		/* End of article? */
-			    done = YES;
+			    done = true;
 			    break;
 			} else {			/* Line starts with dot */
 			    	/* Ignore strange line */
@@ -676,7 +675,7 @@ PRIVATE void read_group ARGS3(
 	    if (status == 221) {	/* Head follows - parse it:*/
     
 		p = line;				/* Write pointer */
-		done = NO;
+		done = false;
 		while(!done){
 		    char ch = *p++ = NEXT_CHAR;
 		    if (ch==(char)EOF) {
@@ -776,18 +775,18 @@ PRIVATE void read_group ARGS3(
 /*		Load by name					HTLoadNews
 **		============
 */
-PUBLIC int HTLoadNews ARGS3(
-	CONST char *,arg,
-	HTParentAnchor *,anAnchor,
-	int,diag)
+PUBLIC int HTLoadNews(
+	const char *arg,
+	HTParentAnchor *anAnchor,
+	int diag)
 {
     char command[257];			/* The whole command */
     char groupName[GROUP_NAME_LENGTH];	/* Just the group name */
     int status;				/* tcp return */
     int retries;			/* A count of how hard we have tried */ 
-    BOOL group_wanted;			/* Flag: group was asked for, not article */
-    BOOL list_wanted;			/* Flag: group was asked for, not article */
-    int first, last;			/* First and last articles asked for */
+    bool group_wanted;			/* Flag: group was asked for, not article */
+    bool list_wanted;			/* Flag: group was asked for, not article */
+    int first=0, last=0;		/* First and last articles asked for */
 
     diagnostic = diag;			/* set global flag */
     
@@ -839,7 +838,7 @@ PUBLIC int HTLoadNews ARGS3(
 	
     } /* scope of p1 */
     
-    if (!*arg) return NO;			/* Ignore if no name */
+    if (!*arg) return false;			/* Ignore if no name */
 
     
 /*	Make a hypertext object with an anchor list.
@@ -878,7 +877,7 @@ PUBLIC int HTLoadNews ARGS3(
 		HText_beginAppend(HT);
 		HText_appendText(HT, message);
 		HText_endAppend(HT);
-		return YES;
+		return true;
 	    } else {
 		if (TRACE) printf("HTNews: Connected to news host %s.\n",
 				NewsHost);
@@ -898,7 +897,7 @@ PUBLIC int HTLoadNews ARGS3(
 			     "Sorry, could not retrieve information: ");
 			HText_appendText(HT, response_text);
 			HText_endAppend(HT);
-			return YES;
+			return true;
 		}
 	    }
 	} /* If needed opening */
@@ -928,7 +927,7 @@ PUBLIC int HTLoadNews ARGS3(
         else read_article();
 
 	HText_endAppend(HT);
-	return YES;
+	return true;
 	
     } /* Retry loop */
     
@@ -939,6 +938,6 @@ PUBLIC int HTLoadNews ARGS3(
 /*    NXRunAlertPanel(NULL, "Sorry, could not load `%s'.",
 	    NULL,NULL,NULL, arg);No -- message earlier wil have covered it */
 
-    return YES;
+    return true;
 }
 

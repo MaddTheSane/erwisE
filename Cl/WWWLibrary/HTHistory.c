@@ -13,8 +13,7 @@ static HTList * history;	/* List of visited anchors */
 **		----------------------------
 */
 
-void HTHistory_record
-  ARGS1 (HTAnchor *,destination)
+void HTHistory_record(HTAnchor *destination)
 {
   if (destination) {
     if (! history)
@@ -27,16 +26,15 @@ void HTHistory_record
 **		------------------
 */
 
-HTAnchor * HTHistory_backtrack
-  NOARGS  /* FIXME: Should we add a `sticky' option ? */
+HTAnchor * HTHistory_backtrack(void)
+    /* FIXME: Should we add a `sticky' option ? */
 {
   if (HTHistory_canBacktrack())
     HTList_removeLastObject (history);
   return HTList_lastObject (history);  /* is Home if can't backtrack */
 }
 
-BOOL HTHistory_canBacktrack
-  NOARGS
+bool HTHistory_canBacktrack(void)
 {
   return (HTList_objectAt (history, 1) != NULL);
 }
@@ -48,8 +46,7 @@ BOOL HTHistory_canBacktrack
 **	Positive offset means go towards most recently added children.
 */
 
-HTAnchor * HTHistory_moveBy
- ARGS1 (int,offset)
+HTAnchor * HTHistory_moveBy(int offset)
 {
   HTAnchor * last = HTList_objectAt (history, 1);
   if (! last)
@@ -78,18 +75,17 @@ HTAnchor * HTHistory_moveBy
   }
 }
 
-BOOL HTHistory_canMoveBy
- ARGS1 (int,offset)
+bool HTHistory_canMoveBy(int offset)
 {
   HTAnchor * last = HTList_objectAt (history, 1);
   if (! last)
-    return NO;  /* No last visited node */
+    return false;  /* No last visited node */
   if (last != (HTAnchor *) last->parent) {  /* Was a child */
     HTList * kids = last->parent->children;
     int i = HTList_indexOf (kids, last); 
     return (HTList_objectAt (kids, i - offset) != NULL);
   } else {  /* Was a parent */
-    return NO;  /* FIXME we could possibly follow the next link... */
+    return false;  /* FIXME we could possibly follow the next link... */
   }
 }
 
@@ -102,8 +98,7 @@ BOOL HTHistory_canMoveBy
 **		----------------------------
 */
 
-HTAnchor * HTHistory_read
-  ARGS1 (int,number)
+HTAnchor * HTHistory_read(int number)
 {
   return HTList_objectAt (history, HTList_count (history) - number);
 }
@@ -114,8 +109,7 @@ HTAnchor * HTHistory_read
 **	This reads the anchor and stores it again in the list, except if last.
 */
 
-HTAnchor * HTHistory_recall
-  ARGS1 (int,number)
+HTAnchor * HTHistory_recall(int number)
 {
   HTAnchor * destination =
     HTList_objectAt (history, HTList_count (history) - number);
@@ -144,8 +138,7 @@ int HTHistory_count
 **	one, and it is the one we left from which we want to remember.
 */
 
-void HTHistory_leavingFrom
-  ARGS1 (HTAnchor *,anchor)
+void HTHistory_leavingFrom(HTAnchor *anchor)
 {
   if (HTList_removeLastObject (history))
     HTList_addObject (history, anchor);

@@ -18,8 +18,8 @@
 
 typedef struct {
     char *	name;		/* The (constant) name of the attribute */
-    BOOL	present;	/* Was attribute specified for this tag? */
-    char *	value;		/* Malloced. Valid only if present is YES. */
+    bool	present;	/* Was attribute specified for this tag? */
+    char *	value;		/* Malloced. Valid only if present is true. */
 } attr;
 
 
@@ -58,10 +58,10 @@ struct _tag{
     char * name;		/* The name of the tag */
     attr * attributes;		/* The list of acceptable attributes */
     void * style;		/* Not used by the SGML engine */
-    BOOL  litteral;		/* End only on end tag @@ */		
-    void (*begin) PARAMS((HTTag * t, HTElement * e));	/* Action on begin tag */
-    void (*treat) PARAMS((char c));	/* Action when character is parsed */
-    void (*end) PARAMS((HTTag * t, HTElement * e));	/* Action on </tag> or 0 if empty */
+    bool  litteral;		/* End only on end tag @@ */		
+    void (*begin)(HTTag * t, HTElement * e);	/* Action on begin tag */
+    void (*treat)(char c);	/* Action when character is parsed */
+    void (*end)(HTTag * t, HTElement * e);	/* Action on </tag> or 0 if empty */
 };
 
 /*	Stack of previous tags:
@@ -96,7 +96,7 @@ typedef struct {
 **		The default tag starter has been processed.
 */
 
-extern void  SGML_begin PARAMS((SGML_dtd * dtd));
+extern void  SGML_begin(SGML_dtd * dtd);
 
 
 /*	Crank the SGML parser
@@ -108,7 +108,7 @@ extern void  SGML_begin PARAMS((SGML_dtd * dtd));
 **	c	is the next character of the input stream
 */
 
-extern void  SGML_character PARAMS((SGML_dtd * dtd, char c));
+extern void  SGML_character(SGML_dtd * dtd, char c);
 
 
 /*	Finish the SGML parser
@@ -122,7 +122,7 @@ extern void  SGML_character PARAMS((SGML_dtd * dtd, char c));
 **		more parsing is done.
 */
 
-extern void  SGML_end PARAMS((SGML_dtd * dtd));
+extern void  SGML_end(SGML_dtd * dtd);
 
 
 

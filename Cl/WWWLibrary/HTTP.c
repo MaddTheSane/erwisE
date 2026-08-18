@@ -34,8 +34,8 @@ int WWW_TraceFlag;
 **	read.
 **
 */
-PUBLIC int HTLoadHTTP ARGS4 (CONST char *, arg,
-	CONST char *,	gate, 
+PUBLIC int HTLoadHTTP ARGS4 (const char *, arg,
+	const char *,	gate, 
 	HTAnchor *,	anAnchor,
 	int,		diag)
 {

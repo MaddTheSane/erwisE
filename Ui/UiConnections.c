@@ -19,7 +19,7 @@ static void uiconnectionsclosecb(Widget wdg, caddr_t ignored,
 				  XmListCallbackStruct * calldata);
 
 
-static int uiconnectionsdisplayed = FALSE;
+static int uiconnectionsdisplayed = false;
 static char **uilistitems;
 static void **uiconnections;
 static int uinitems;
@@ -32,7 +32,7 @@ int UiDisplayConnectionsDialog(char **listitems, void **connections, int nitems,
 
     uiconnectionsfreeprevious();
 
-    uiconnectionsdisplayed = TRUE;
+    uiconnectionsdisplayed = true;
     uilistitems = listitems;
     uiconnections = connections;
     uinitems = nitems;
@@ -100,7 +100,7 @@ static Widget
 
     args = uiVaSetArgs(&nargs,
 		       XmNresizePolicy, XmRESIZE_NONE,
-		       XmNautoUnmanage, FALSE, NULL);
+		       XmNautoUnmanage, false, NULL);
     formwdg = XmCreateForm(topwdg, "ConnectionsDialog",
 			   args, nargs);
 
@@ -301,5 +301,5 @@ caddr_t ignored;
 XmListCallbackStruct *calldata;
 {
     XtUnmapWidget(XtParent(uiTopLevel.ConnectionsGfx.FormWdg));
-    uiconnectionsdisplayed = FALSE;
+    uiconnectionsdisplayed = false;
 }

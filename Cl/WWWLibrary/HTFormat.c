@@ -40,14 +40,14 @@ PRIVATE int input_file_number;
 **	many parsers, and on PCs and Macs we should not duplicate
 **	the static buffer area.
 */
-PUBLIC void HTInitInput ARGS1 (int,file_number)
+PUBLIC void HTInitInput(int file_number)
 {
     input_file_number = file_number;
     input_pointer = input_limit = input_buffer;
 }
 
 
-PUBLIC char HTGetChararcter NOARGS
+PUBLIC char HTGetChararcter(void)
 {
 extern int cl_read_data (int fd, char *data, int length);
 
@@ -80,10 +80,10 @@ extern int cl_read_data (int fd, char *data, int length);
 /*	Parse a file given format and file number
 **	------------
 */
-PUBLIC void HTParseFormat ARGS3(
-	HTFormat,format,
-	HTParentAnchor *,anchor,
-	int,file_number)
+PUBLIC void HTParseFormat(
+	HTFormat format,
+	HTParentAnchor *anchor,
+	int file_number)
 {
 /*	Parse the file
 */

@@ -32,13 +32,13 @@ PUBLIC int HTDiag = 0;		/* Diagnostics: load source as text */
 /*	Telnet or "rlogin" access
 **	-------------------------
 */
-PRIVATE int remote_session ARGS2(char *, access, char *, host)
+PRIVATE int remote_session(char *access, char *host)
 {
 	char * user = host;
 	char * hostname = strchr(host, '@');
 	char * port = strchr(host, ':');
 	char   command[256];
-	BOOL rlogin = strcmp(access, "rlogin");
+	bool rlogin = strcmp(access, "rlogin");
 	
 	if (hostname) {
 	    *hostname++ = 0;	/* Split */
@@ -111,27 +111,23 @@ PRIVATE int remote_session ARGS2(char *, access, char *, host)
 #endif
 }
 
-/*	Open a file descriptor for a document
-**	-------------------------------------
-**
-** On entry,
-**	addr		must point to the fully qualified hypertext reference.
-**
-** On exit,
-**	returns		<0	Error has occured.
-**			>=0	Value of file descriptor or socket to be used
-**				 to read data.
-**	*pFormat	Set to the format of the file, if known.
-**			(See WWW.h)
-**
-*/
-PRIVATE int HTOpen ARGS3(
-	CONST char *,addr1,
-	HTFormat *,pFormat,
-	HTParentAnchor *,anchor)
+/*!
+ * \brief Open a file descriptor for a document
+ *
+ * \param addr1 must point to the fully qualified hypertext reference.
+ * \param pFormat After return, set to the format of the file, if known.
+ *			(See WWW.h)
+ * \returns \<0	Error has occured.
+ * >=0	Value of file descriptor or socket to be used
+ *				 to read data.
+ */
+PRIVATE int HTOpen(
+	const char *addr1,
+	HTFormat *pFormat,
+	HTParentAnchor *anchor)
 {
     char * access=0;	/* Name of access method */
-    int status;
+    int status = 0;
     char * gateway;
     char * gateway_parameter;
     char * addr = (char *)malloc(strlen(addr1)+1);
@@ -199,7 +195,7 @@ PRIVATE int HTOpen ARGS3(
 **
 */
 #ifdef ERWISE
-PUBLIC int HTClose ARGS1(int,soc)
+PUBLIC int HTClose(int soc)
 #else
 PRIVATE int HTClose ARGS1(int,soc)
 #endif
@@ -216,21 +212,21 @@ PRIVATE int HTClose ARGS1(int,soc)
 **        full_address      The address of the file to be accessed.
 **
 **    On Exit,
-**        returns    YES     Success in opening file
-**                   NO      Failure 
+**        returns    true     Success in opening file
+**                   false      Failure 
 **
 */
 
-PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
-	CONST char *,full_address,
-	BOOL,	filter)
+PUBLIC bool HTLoadDocument(HTParentAnchor *anchor,
+			   const char *full_address,
+			   bool	filter)
 
 {
     int	        new_file_number;
     HTFormat    format;
     HText *	text;
 
-    if (text=(HText *)HTAnchor_document(anchor)) {	/* Already loaded */
+    if ((text=(HText *)HTAnchor_document(anchor))) {	/* Already loaded */
 #ifdef ERWISE
         /*
          * do NOT do this
@@ -239,11 +235,11 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
 
         WWWErwiseStatus = CL_ALREADY_LOADED;
 
-        return YES;
+        return true;
 #else
         if (TRACE) fprintf(stderr, "HTBrowse: Document already in memory.\n");
         HText_select(text);
-	return YES;
+	return true;
 #endif
     }
     
@@ -284,7 +280,7 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
         WWWErwiseStatus = CL_COMPLETED;
         WWWErwiseConnection->fd = -1;
 #endif
-	return YES;
+	return true;
     }
     
     if (new_file_number == HT_NO_DATA) {
@@ -295,7 +291,7 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
 #ifdef ERWISE
         WWWErwiseStatus = CL_FAILED;
 #endif
-	return NO;
+	return false;
     }
     
     if (new_file_number<0) {		      /* Failure in accessing a file */
@@ -307,12 +303,12 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
 #endif
 #ifdef ERWISE
         WWWErwiseStatus = CL_FAILED;
-        return NO;
+        return false;
 #endif
 	if (!HTMainText){
             exit(2);				/* Can't get first page */
         } else {
-            return NO;
+            return false;
         }
     }
     
@@ -330,7 +326,7 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
     if(WWWErwiseConnection->function) {
         WWWErwiseConnection->fd = new_file_number;
 
-        return YES;
+        return true;
     }
 #endif
 
@@ -338,7 +334,7 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
     
     HTClose(new_file_number);
     
-    return YES;
+    return true;
     
 } /* HTLoadDocument */
 
@@ -350,13 +346,13 @@ PUBLIC BOOL HTLoadDocument ARGS3(HTParentAnchor *,anchor,
 **        relative_name     The relative address of the file to be accessed.
 **
 **    On Exit,
-**        returns    YES     Success in opening file
-**                   NO      Failure 
+**        returns    true     Success in opening file
+**                   false      Failure 
 **
 **
 */
 
-PUBLIC BOOL HTLoadAbsolute ARGS2(CONST char *,addr, BOOL, filter)
+PUBLIC bool HTLoadAbsolute(const char *addr, bool filter)
 {
    return HTLoadDocument(
        		HTAnchor_parent(HTAnchor_findAddress(addr)),
@@ -371,16 +367,16 @@ PUBLIC BOOL HTLoadAbsolute ARGS2(CONST char *,addr, BOOL, filter)
 **        relative_name     The relative address of the file to be accessed.
 **
 **    On Exit,
-**        returns    YES     Success in opening file
-**                   NO      Failure 
+**        returns    true     Success in opening file
+**                   false      Failure 
 **
 **
 */
 
-PUBLIC BOOL HTLoadRelative ARGS1(CONST char *,relative_name)
+PUBLIC bool HTLoadRelative(const char *relative_name)
 {
     char * 		full_address = 0;
-    BOOL       		result;
+    bool       		result;
     char * 		mycopy = 0;
     char * 		stripped = 0;
     char *		current_address =
@@ -392,7 +388,7 @@ PUBLIC BOOL HTLoadRelative ARGS1(CONST char *,relative_name)
     full_address = HTParse(stripped,
 	           current_address,
 		   PARSE_ACCESS|PARSE_HOST|PARSE_PATH|PARSE_PUNCTUATION);
-    result = HTLoadAbsolute(full_address, NO);
+    result = HTLoadAbsolute(full_address, false);
     free(full_address);
     free(current_address);
     return result;
@@ -406,32 +402,32 @@ PUBLIC BOOL HTLoadRelative ARGS1(CONST char *,relative_name)
 **        destination      	    The child or parenet anchor to be loaded.
 **
 **    On Exit,
-**        returns    YES     Success
-**                   NO      Failure 
+**        returns    true     Success
+**                   false      Failure 
 **
 */
 
-PUBLIC BOOL HTLoadAnchor ARGS1(HTAnchor *,destination)
+PUBLIC bool HTLoadAnchor(HTAnchor *destination)
 {
     HTParentAnchor * parent;
 
-    if (!destination) return NO;	/* No link */
+    if (!destination) return false;	/* No link */
     
     parent  = HTAnchor_parent(destination);
     
     if ( /* HTAnchor_document (parent) == NULL) { */ parent != HTMainAnchor)	{	/* If not already loaded */
-        BOOL result;
+        bool result;
         char * address = HTAnchor_address((HTAnchor*) parent);
-	result = HTLoadDocument(parent, address, NO);
+	result = HTLoadDocument(parent, address, false);
 	free(address);
-	if (!result) return NO;
+	if (!result) return false;
     }
     
     if (destination != (HTAnchor *)parent)	/* If child anchor */
         HText_selectAnchor(HTMainText, 
 		(HTChildAnchor*)destination); /* Double display? @@ */
 		
-    return YES;
+    return true;
 	
 } /* HTLoadAnchor */
 
@@ -447,13 +443,13 @@ PUBLIC BOOL HTLoadAnchor ARGS1(HTAnchor *,destination)
 **	HTMainAnchor	global must be valid.
 */
 
-PUBLIC BOOL HTSearch ARGS1(char *,keywords)
+PUBLIC bool HTSearch ARGS1(char *,keywords)
 
 {
     char * p;	          /* pointer to first non-blank */
     char * q, *s;
     char * address = HTAnchor_address((HTAnchor*)HTMainAnchor);
-    BOOL result;
+    bool result;
     
     p = HTStrip(keywords);
     for (q=p; *q; q++)
@@ -478,7 +474,7 @@ PUBLIC BOOL HTSearch ARGS1(char *,keywords)
  * Why everything is so hardcoded ???? 
  */
 
-PUBLIC char *HTSearchAddress ARGS1(char *,keywords)
+PUBLIC char *HTSearchAddress(char *keywords)
 {
     char * p;             /* pointer to first non-blank */
     char * q, *s;

@@ -9,7 +9,7 @@
 
 #include "tcp.h"	/* For TOUPPER  ! */
 
-static void 		(*contents_treatment) PARAMS((char c));
+static void 		(*contents_treatment)(char c);
 static HTTag 		*current_tag;
 static attr 		*current_attribute;
 static HTChunk		*string =0;
@@ -18,7 +18,7 @@ static HTElement	*element_stack;
 /*	Handle Attribute
 **	----------------
 */
-PUBLIC CONST char * SGML_default = "";
+const char * SGML_default = "";
 
 #ifdef __STDC__
 PRIVATE void handle_attribute_name(const char * s)
@@ -40,7 +40,7 @@ PRIVATE void handle_attribute_name(s)
         current_attribute = 0;	/* Invalid */
 	return;
     }
-    current_attribute->present = YES;
+    current_attribute->present = true;
     if (current_attribute->value) {
         free(current_attribute->value);
 	current_attribute->value = 0;
@@ -98,7 +98,7 @@ PRIVATE void handle_entity(s,entities, term)
 	fprintf(stderr, "SGML: Unknown entity %s\n", s); 
     (*contents_treatment)('&');
     {
-	CONST char *p;
+	const char *p;
 	for (p=s; *p; p++) {
 	    (*contents_treatment)(*p);
 	}
@@ -192,7 +192,7 @@ PRIVATE enum sgml_state { S_text, S_litteral, S_tag, S_tag_gap,
 		S_attr, S_attr_gap, S_equals, S_value,
 		  S_quoted, S_end, S_entity, S_junk_tag} state;
 
-PUBLIC void SGML_begin  ARGS1(SGML_dtd *,dtd)
+PUBLIC void SGML_begin(SGML_dtd *dtd)
 {
     if (!string) string = HTChunkCreate(128);	/* Grow by this much */
     
@@ -200,12 +200,12 @@ PUBLIC void SGML_begin  ARGS1(SGML_dtd *,dtd)
     start_element(dtd->default_tag);	/* Start document */
 }
 
-PUBLIC void SGML_end  ARGS1(SGML_dtd *,dtd)
+PUBLIC void SGML_end(SGML_dtd *dtd)
 {
     end_element(dtd->default_tag);	/* End document */
 }
 
-PUBLIC void SGML_character ARGS2(SGML_dtd *,dtd, char,c)
+PUBLIC void SGML_character(SGML_dtd *dtd, char c)
 
 {
     switch(state) {
@@ -288,7 +288,7 @@ PUBLIC void SGML_character ARGS2(SGML_dtd *,dtd, char,c)
 	    }
 	    
 	    for (a = current_tag->attributes; a->name; a++ ) {
-		a->present = NO;
+		a->present = false;
 	    }
 	    string->size = 0;
 	    current_attribute = (attr *) 0;

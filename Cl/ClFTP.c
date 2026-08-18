@@ -24,15 +24,11 @@
 
 #define IPPORT_FTP 21
 
-/*
+/*!
  * Erwise's own ftp load function. Setup all things to be done
  */
-
-PUBLIC int HTFTP_open_file_read
-ARGS2 (
-	char *, name,
-	HTParentAnchor *, anchor
-)
+PUBLIC int HTFTP_open_file_read(const char * name,
+				HTParentAnchor * anchor)
 {
   int status;
 
@@ -41,7 +37,7 @@ ARGS2 (
    */
 
   {
-    static void (*functions[]) () =
+    static void (*functions[]) (void) =
     {
       WWWErwiseConnect,
       WWWErwiseSetSelect,
@@ -121,7 +117,7 @@ ARGS2 (
  */
 
 void
-WWWErwiseFtpUser ()
+WWWErwiseFtpUser (void)
 {
   CL_DEBUG (("FTP: send user\n"));
 
@@ -131,7 +127,7 @@ WWWErwiseFtpUser ()
 }
 
 void
-WWWErwiseFtpPass ()
+WWWErwiseFtpPass (void)
 {
   char tmp[8192], hostname[1024];
 
@@ -150,7 +146,7 @@ WWWErwiseFtpPass ()
 }
 
 void
-WWWErwiseFtpPassive ()
+WWWErwiseFtpPassive (void)
 {
   CL_DEBUG (("FTP: send pasv\n"));
 
@@ -160,7 +156,7 @@ WWWErwiseFtpPassive ()
 }
 
 void
-WWWErwiseFtpBinary ()
+WWWErwiseFtpBinary (void)
 {
   CL_DEBUG (("FTP: set binary\n"));
 
@@ -170,18 +166,18 @@ WWWErwiseFtpBinary ()
 }
 
 
-/*
- * Get junk commands return when the are accomplished
- */
 
 #define ERWISE_BL_SIZE   8192
 
+/*!
+ * Get junk commands return when the are accomplished
+ */
 void
-WWWErwiseFtpGetCommand ()
+WWWErwiseFtpGetCommand (void)
 {
   char tmp[ERWISE_BL_SIZE];
 
-  int i;
+  ssize_t i;
 
   i = NETREAD (WWWErwiseConnection->fd, tmp, ERWISE_BL_SIZE);
 
@@ -204,18 +200,18 @@ WWWErwiseFtpGetCommand ()
   WWWErwiseConnection->function++;
 
 }
-/*
+
+/*!
  * Get return code from passive command
  */
-
 void
-WWWErwiseFtpGetPassive ()
+WWWErwiseFtpGetPassive (void)
 {
   char tmp[1024], *p;
   int a1, a2, a3, a4;
   int p1, p2, port;
 
-  int i;
+  ssize_t i;
 
   i = NETREAD (WWWErwiseConnection->fd, tmp, 1024);
 

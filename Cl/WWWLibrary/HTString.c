@@ -14,10 +14,10 @@
 /*	Strings of any length
 **	---------------------
 */
-PUBLIC int strcasecomp ARGS2 (CONST char*,a, CONST char *,b)
+PUBLIC int strcasecomp (const char*a, const char *b)
 {
-	CONST char *p =a;
-	CONST char *q =b;
+	const char *p =a;
+	const char *q =b;
 	for(p=a, q=b; *p && *q; p++, q++) {
 	    int diff = TOLOWER(*p) - TOLOWER(*q);
 	    if (diff) return diff;
@@ -31,10 +31,10 @@ PUBLIC int strcasecomp ARGS2 (CONST char*,a, CONST char *,b)
 /*	With count limit
 **	----------------
 */
-PUBLIC int strncasecomp ARGS3(CONST char*,a, CONST char *,b, int,n)
+PUBLIC int strncasecomp(const char*a, const char *b, int n)
 {
-	CONST char *p =a;
-	CONST char *q =b;
+	const char *p =a;
+	const char *q =b;
 	
 	for(p=a, q=b;; p++, q++) {
 	    int diff;
@@ -49,8 +49,7 @@ PUBLIC int strncasecomp ARGS3(CONST char*,a, CONST char *,b, int,n)
 
 /*	Allocate a new copy of a string, and returns it
 */
-PUBLIC char * HTSACopy
-  ARGS2 (char **,dest, CONST char *,src)
+PUBLIC char * HTSACopy(char **dest, const char *src)
 {
   if (*dest) free(*dest);
   if (! src)
@@ -63,12 +62,11 @@ PUBLIC char * HTSACopy
   return *dest;
 }
 
-PUBLIC char * HTSACat
-  ARGS2 (char **,dest, CONST char *,src)
+PUBLIC char * HTSACat(char **dest, const char *src)
 {
   if (src && *src) {
     if (*dest) {
-      int length = strlen (*dest);
+      size_t length = strlen (*dest);
       *dest = (char *) realloc (*dest, length + strlen(src) + 1);
       if (*dest == NULL) outofmem(__FILE__, "HTSACat");
       strcpy (*dest + length, src);

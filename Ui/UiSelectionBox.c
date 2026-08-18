@@ -61,16 +61,16 @@ int UiDisplaySelectionBox(void (*callback) (char *nodename))
     if (!uiSelectionArray) {
 	dummystr = XmStringCreateSimple(" ");
 	XmListAddItem(uiTopLevel.SBGfx.ListWdg, dummystr, 0);
-	XtSetSensitive(uiTopLevel.SBGfx.ListWdg, FALSE);
+	XtSetSensitive(uiTopLevel.SBGfx.ListWdg, false);
 	XmStringFree(dummystr);
-	uidummy = TRUE;
+	uidummy = true;
     } else {
 	while (uiSelectionArray[i]) {
 	    dummystr = XmStringCreateSimple(uiSelectionArray[i++]);
 	    XmListAddItem(uiTopLevel.SBGfx.ListWdg, dummystr, 0);
 	    XmStringFree(dummystr);
 	}
-	uidummy = FALSE;
+	uidummy = false;
     }
 
     return UI_OK;
@@ -91,7 +91,7 @@ static Widget
 
     args = uiVaSetArgs(&nargs,
 		       XmNresizePolicy, XmRESIZE_NONE,
-		       XmNautoUnmanage, FALSE, NULL);
+		       XmNautoUnmanage, false, NULL);
     formwdg = XmCreateForm(topwdg, "SelectionBox",
 			   args, nargs);
 
@@ -306,14 +306,14 @@ static void uiselectionboxaddcb(Widget wdg, void *ignored, void *calldata)
 	selectionstr = XmStringCreateSimple(fixedselection);
 	if (uidummy) {
 	    XmListDeletePos(uiTopLevel.SBGfx.ListWdg, 1);
-	    XtSetSensitive(uiTopLevel.SBGfx.ListWdg, TRUE);
-	    uidummy = FALSE;
+	    XtSetSensitive(uiTopLevel.SBGfx.ListWdg, true);
+	    uidummy = false;
 	}
 	if (XmListGetSelectedPos(uiTopLevel.SBGfx.ListWdg, &poslist,
 				 &poscount)) {
 	    XmListDeselectPos(uiTopLevel.SBGfx.ListWdg, poslist[0]);
 	    XmListAddItem(uiTopLevel.SBGfx.ListWdg, selectionstr, poslist[0]);
-	    XmListSelectPos(uiTopLevel.SBGfx.ListWdg, poslist[0] + 1, FALSE);
+	    XmListSelectPos(uiTopLevel.SBGfx.ListWdg, poslist[0] + 1, false);
 	    XtFree(poslist);
 	} else
 	    XmListAddItem(uiTopLevel.SBGfx.ListWdg, selectionstr, 0);
@@ -335,15 +335,15 @@ static void uiselectionboxdeletecb(Widget wdg, void *ignored, void *calldata)
     /* We should have only one selected item */
     if (XmListGetSelectedPos(uiTopLevel.SBGfx.ListWdg, &poslist, &poscount)) {
 	XmListDeletePos(uiTopLevel.SBGfx.ListWdg, poslist[0]);
-	XmListSelectPos(uiTopLevel.SBGfx.ListWdg, poslist[0], FALSE);
+	XmListSelectPos(uiTopLevel.SBGfx.ListWdg, poslist[0], false);
 	XtFree(poslist);
     }
     if (!uiGetArg(uiTopLevel.SBGfx.ListWdg, XmNitemCount)) {
 	dummystr = XmStringCreateSimple(" ");
 	XmListAddItem(uiTopLevel.SBGfx.ListWdg, dummystr, 0);
 	XmStringFree(dummystr);
-	XtSetSensitive(uiTopLevel.SBGfx.ListWdg, FALSE);
-	uidummy = TRUE;
+	XtSetSensitive(uiTopLevel.SBGfx.ListWdg, false);
+	uidummy = true;
     }
     uiselectionboxupdateconfig();
 }

@@ -22,8 +22,8 @@
 extern  int  WWW_TraceFlag;        	/* Off unless -v option given */
 extern  int  HTScreenWidth;		/* By default */
 extern  int  HTScreenHeight;		/* Undefined */
-extern BOOL  display_anchors;		/* anchor will be shown in text? */
-extern  BOOL interactive;       	/*  e.g. shows prompts etc */
+extern bool  display_anchors;		/* anchor will be shown in text? */
+extern  bool interactive;       	/*  e.g. shows prompts etc */
 
 					   
 extern FILE * logfile;			/* File to output one-liners to */

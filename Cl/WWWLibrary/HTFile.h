@@ -14,49 +14,37 @@
 **	E.g.	$(HOME)/WWW/news/1234@cernvax.cern.ch
 **		$(HOME)/WWW/http/crnvmc/FIND/xx.xxx.xx
 */
-#ifdef __STDC__
 extern char * HTLocalName(const char * name);
-#else
-extern char * HTLocalName();
-#endif
 
 /*	Make a WWW name from a full local path name
 **
 */
-extern char * WWW_nameOfFile PARAMS((const char * name));
+extern char * WWW_nameOfFile(const char * name);
 
 
 /*	Generate the name of a cache file
 */
 
-extern char * HTCacheFileName PARAMS((CONST char * name));
+extern char * HTCacheFileName(const char * name);
 
 
 /*	Determine file format from file name
 **	------------------------------------
 */
 
-#ifdef __STDC__
 extern int HTFileFormat(const char * filename);
-#else
-extern int HTFileFormat();
-#endif	
 
 
 /*	Determine write access to a file
 //	--------------------------------
 //
 // On exit,
-//	return value	YES if file can be accessed and can be written to.
+//	return value	true if file can be accessed and can be written to.
 //
 //	Isn't there a quicker way?
 */
 
-#ifdef __STDC__
-extern BOOL HTEditable(const char * filename);
-#else
-extern BOOL HTEditable();
-#endif
+extern bool HTEditable(const char * filename);
 
 
 /*	Open a file descriptor for a document
@@ -73,11 +61,9 @@ extern BOOL HTEditable();
 **			(See WWW.h)
 **
 */
-extern int HTOpenFile
-PARAMS
-((
+extern int HTOpenFile(
   const char * addr,
   HTFormat * pFormat,
   HTParentAnchor * anchor
-));
+);
 

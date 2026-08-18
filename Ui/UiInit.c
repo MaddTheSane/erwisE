@@ -65,8 +65,8 @@ void UiMainLoop(void)
 int PlaceValue(void *value)
 {
     if (value && !strncasecmp(value, "mouse", strlen("mouse")))
-	return TRUE;
-    return FALSE;
+	return true;
+    return false;
 }
 
 

@@ -38,7 +38,7 @@ int UiDisplayControlPanel()
 		       XmNwidth, 280,
 		       XmNheight, 180,
 		       XmNresizePolicy, XmRESIZE_NONE,
-		       XmNautoUnmanage, FALSE, NULL);
+		       XmNautoUnmanage, false, NULL);
     controlpanelgfx->FormWdg = uicreatecpform();
     controlpanelgfx->SearchWdg = uicreatecpbutton(controlpanelgfx->FormWdg,
 					      "Search", "Search", 0, 25);
@@ -93,7 +93,7 @@ static Widget
 
     args = uiVaSetArgs(&nargs,
 		       XmNresizePolicy, XmRESIZE_NONE,
-		       XmNautoUnmanage, FALSE, NULL);
+		       XmNautoUnmanage, false, NULL);
     formwdg = XmCreateForm(topwdg, "ControlPanel", args, nargs);
 
     return formwdg;

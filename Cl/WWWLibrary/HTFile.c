@@ -51,7 +51,7 @@ PRIVATE char *HTCacheRoot = "/tmp/W3_Cache_";   /* Where to cache things */
 **
 ** Bug:	Returns pointer to static -- non-reentrant
 */
-PRIVATE char * vms_name(CONST char * nn, CONST char * fn)
+PRIVATE char * vms_name(const char * nn, const char * fn)
 {
 
 /*	We try converting the filename into Files-11 syntax. That is, we assume
@@ -121,7 +121,7 @@ PRIVATE char * vms_name(CONST char * nn, CONST char * fn)
 ** On exit,
 **	returns	a malloc'ed string which must be freed by the caller.
 */
-PUBLIC char * HTCacheFileName ARGS1(CONST char *,name)
+PUBLIC char * HTCacheFileName(const char *name)
 {
     char * access = HTParse(name, "", PARSE_ACCESS);
     char * host = HTParse(name, "", PARSE_HOST);
@@ -143,7 +143,7 @@ PUBLIC char * HTCacheFileName ARGS1(CONST char *,name)
 **	----------------------------------------
 */
 #ifdef NOT_IMPLEMENTED
-PRIVATE int HTCreatePath ARGS1(CONST char *,path)
+PRIVATE int HTCreatePath ARGS1(const char *,path)
 {
     return -1;
 }
@@ -159,7 +159,7 @@ PRIVATE int HTCreatePath ARGS1(CONST char *,path)
 ** On exit,
 **	returns	a malloc'ed string which must be freed by the caller.
 */
-PUBLIC char * HTLocalName ARGS1(CONST char *,name)
+PUBLIC char * HTLocalName(const char *name)
 {
     char * access = HTParse(name, "", PARSE_ACCESS);
     char * host = HTParse(name, "", PARSE_HOST);
@@ -183,7 +183,7 @@ PUBLIC char * HTLocalName ARGS1(CONST char *,name)
 	}
     } else {  /* other access */
 	char * result;
-        CONST char * home =  (CONST char*)getenv("HOME");
+        const char * home =  (const char*)getenv("HOME");
 	if (!home) home = "/tmp"; 
 	result = (char *)malloc(
 		strlen(home)+strlen(access)+strlen(host)+strlen(path)+6+1);
@@ -205,7 +205,7 @@ PUBLIC char * HTLocalName ARGS1(CONST char *,name)
 **	the general case.
 */
 
-PUBLIC char * WWW_nameOfFile ARGS1 (CONST char *,name)
+PUBLIC char * WWW_nameOfFile(const char *name)
 {
     char * result;
 #ifdef NeXT
@@ -237,9 +237,9 @@ PUBLIC char * WWW_nameOfFile ARGS1 (CONST char *,name)
 **
 */
 
-PUBLIC HTFormat HTFileFormat ARGS1 (CONST char *,filename)
+PUBLIC HTFormat HTFileFormat(const char *filename)
 {
-    CONST char * extension;
+    const char * extension;
     for (extension=filename+strlen(filename);
 	(extension>filename) &&
 		(*extension != '.') &&
@@ -261,7 +261,7 @@ PUBLIC HTFormat HTFileFormat ARGS1 (CONST char *,filename)
 //	--------------------------------
 //
 // On exit,
-//	return value	YES if file can be accessed and can be written to.
+//	return value	true if file can be accessed and can be written to.
 //
 // Bugs:
 //	1.	No code for non-unix systems.
@@ -278,10 +278,10 @@ PUBLIC HTFormat HTFileFormat ARGS1 (CONST char *,filename)
 #define NO_GROUPS
 #endif
 
-PUBLIC BOOL HTEditable ARGS1 (CONST char *,filename)
+PUBLIC bool HTEditable(const char *filename)
 {
 #ifdef NO_GROUPS
-    return NO;		/* Safe answer till we find the correct algorithm */
+    return false;		/* Safe answer till we find the correct algorithm */
 #else
 	gid_t 	groups[NGROUPS];	
     uid_t	myUid;
@@ -290,7 +290,7 @@ PUBLIC BOOL HTEditable ARGS1 (CONST char *,filename)
     int		i;
         
     if (stat(filename, &fileStatus))		/* Get details of filename */
-    	return NO;				/* Can't even access file! */
+    	return false;				/* Can't even access file! */
 
     ngroups = getgroups(NGROUPS, groups);	/* Groups to which I belong  */
     myUid = geteuid();				/* Get my user identifier */
@@ -305,21 +305,21 @@ PUBLIC BOOL HTEditable ARGS1 (CONST char *,filename)
     }
     
     if (fileStatus.st_mode & 0002)		/* I can write anyway? */
-    	return YES;
+    	return true;
 	
     if ((fileStatus.st_mode & 0200)		/* I can write my own file? */
      && (fileStatus.st_uid == myUid))
-    	return YES;
+    	return true;
 
     if (fileStatus.st_mode & 0020)		/* Group I am in can write? */
     {
    	for (i=0; i<ngroups; i++) {
             if (groups[i] == fileStatus.st_gid)
-	        return YES;
+	        return true;
 	}
     }
     if (TRACE) printf("\tFile is not editable.\n");
-    return NO;					/* If no excuse, can't do */
+    return false;					/* If no excuse, can't do */
 #endif
 }
 
@@ -338,13 +338,10 @@ PUBLIC BOOL HTEditable ARGS1 (CONST char *,filename)
 **			(See WWW.h)
 **
 */
-int HTOpenFile
-ARGS3
-(
- CONST char *,addr,
- HTFormat *,pFormat,
- HTParentAnchor *,anchor
-)
+int HTOpenFile(
+ const char *addr,
+ HTFormat *pFormat,
+ HTParentAnchor *anchor)
 {
     char * filename;
     int fd = -1;		/* Unix file descriptor number = INVALID */
@@ -551,5 +548,4 @@ ARGS3
     if (fd<0) printf("Can't open `%s', errno=%d\n", filename, errno);
     free(filename);
     return fd;
-
 }

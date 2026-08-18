@@ -37,7 +37,7 @@ int UiDisplayWarningDialog(char *warning, void (*callback) (int button))
 
 	args = uiVaSetArgs(&nargs,
 			   XmNresizePolicy, XmRESIZE_NONE,
-			   XmNautoUnmanage, FALSE, NULL);
+			   XmNautoUnmanage, false, NULL);
 	formwdg = XmCreateForm(topwdg, "WarningDialog", args, nargs);
 
 	warningstr = XmStringCreateSimple(warning);

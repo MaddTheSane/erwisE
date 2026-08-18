@@ -97,7 +97,7 @@ static Widget
 
     args = uiVaSetArgs(&nargs,
 		       XmNresizePolicy, XmRESIZE_NONE,
-		       XmNautoUnmanage, FALSE, NULL);
+		       XmNautoUnmanage, false, NULL);
     formwdg = XmCreateForm(topwdg, "Search", args, nargs);
 
     return formwdg;

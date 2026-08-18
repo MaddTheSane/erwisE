@@ -248,7 +248,7 @@ void UiDisplayPopup(void (*callback) (char *address, char *topaddress, char *par
 	XtRealizeWidget(pmwdg);
 	XtMapWidget(pmwdg);
 
-	XGrabPointer(XtDisplay(pmwdg), XtWindow(pmwdg), TRUE, 0,
+	XGrabPointer(XtDisplay(pmwdg), XtWindow(pmwdg), true, 0,
 		     GrabModeAsync, GrabModeAsync, XtWindow(pmwdg),
 		     uiArrowCursor, CurrentTime);
 

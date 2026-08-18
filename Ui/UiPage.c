@@ -452,7 +452,7 @@ char *title;
     } else
 	uicreatepageform(page, title, (Widget) NULL);
 
-    page->Visible = TRUE;
+    page->Visible = true;
     pagegfx->MenuWdg = uicreatepagemenu(page, pagegfx->FormWdg);
     XtManageChild(pagegfx->MenuWdg);
     pagegfx->ControlWdg = uicreatepagecontrol(page, pagegfx->FormWdg, title);
@@ -846,7 +846,7 @@ Widget bottomwdg;
     actiondata = uicreatepageactiondata(page, "PageInput");
     XtAddCallback(drawwdg, XmNinputCallback, (XtCallbackProc) uipageactivatecb,
 		  (caddr_t) actiondata);
-    XtAddEventHandler(drawwdg, KeyPressMask, FALSE, uipagekludgecb,
+    XtAddEventHandler(drawwdg, KeyPressMask, false, uipagekludgecb,
 		      (caddr_t) actiondata);
     UiAttachCallback("PageInput", uipageinputcb, (void *) NULL);
 
@@ -1003,7 +1003,7 @@ HText_t *htext;
 	if (page->Gfx.TopWdg == topwdg) {
 	    if (page->Visible)
 		XtDestroyWidget(page->Gfx.FormWdg);
-	    page->Visible = FALSE;
+	    page->Visible = false;
 	}
 	page = page->Next;
     }

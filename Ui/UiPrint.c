@@ -113,7 +113,7 @@ static Widget
 
     args = uiVaSetArgs(&nargs,
 		       XmNresizePolicy, XmRESIZE_NONE,
-		       XmNautoUnmanage, FALSE, NULL);
+		       XmNautoUnmanage, false, NULL);
     formwdg = XmCreateForm(topwdg, "Print", args, nargs);
 
     return formwdg;

@@ -37,7 +37,7 @@ typedef struct {
 ** On exit,
 **	returns		A chunk pointer to the new chunk,
 */
-extern HTChunk * HTChunkCreate PARAMS((int growby));
+extern HTChunk * HTChunkCreate(int growby);
 
 
 /*	Clear a chunk
@@ -48,7 +48,7 @@ extern HTChunk * HTChunkCreate PARAMS((int growby));
 ** On exit,
 **	*ch	The size of the chunk is zero.
 */
-extern void HTChunkClear PARAMS((HTChunk * ch));
+extern void HTChunkClear(HTChunk * ch);
 
 
 /*	Ensure a chunk has a certain space in
@@ -60,7 +60,7 @@ extern void HTChunkClear PARAMS((HTChunk * ch));
 ** On exit,
 **	*ch	Has size at least s
 */
-extern void HTChunkEnsure PARAMS((HTChunk * ch, int s));
+extern void HTChunkEnsure(HTChunk * ch, int s);
 
 
 /*	Append a character to a  chunk
@@ -72,7 +72,7 @@ extern void HTChunkEnsure PARAMS((HTChunk * ch, int s));
 **	*ch	Is one character bigger
 */
 
-extern void HTChunkPutc PARAMS((HTChunk * ch, char c));
+extern void HTChunkPutc(HTChunk * ch, char c);
 
 /*	Append a string to a  chunk
 **
@@ -83,7 +83,7 @@ extern void HTChunkPutc PARAMS((HTChunk * ch, char c));
 **	*ch	Is bigger by strlen(s)
 */
 
-extern void HTChunkPuts PARAMS((HTChunk * ch, const char *s));
+extern void HTChunkPuts(HTChunk * ch, const char *s);
 
 
 /*	Append a zero character to a  chunk
@@ -94,4 +94,4 @@ extern void HTChunkPuts PARAMS((HTChunk * ch, const char *s));
 **	*ch	Is one character bigger
 */
 
-extern void HTChunkTerminate PARAMS((HTChunk * ch));
+extern void HTChunkTerminate(HTChunk * ch);

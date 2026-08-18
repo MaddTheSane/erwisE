@@ -31,39 +31,39 @@ PRIVATE HTChunk title = { 0, 128, 0, 0 };	/* Grow by 128 */
 
 /*	Forward declarations of routines for DTD
 */
-PRIVATE void no_change PARAMS((HTTag * t, HTElement * e));
-PRIVATE void begin_litteral PARAMS((HTTag * t, HTElement * e));
-PRIVATE void begin_element PARAMS((HTTag * t, HTElement * e));
-PRIVATE void end_element PARAMS((HTTag * t, HTElement * e));
-PRIVATE void begin_document PARAMS((HTTag * t, HTElement * e));
-PRIVATE void end_document PARAMS((HTTag * t, HTElement * e));
-PRIVATE void begin_anchor PARAMS((HTTag * t, HTElement * e));
-PRIVATE void end_anchor PARAMS((HTTag * t, HTElement * e));
-PRIVATE void begin_list PARAMS((HTTag * t, HTElement * e));
-PRIVATE void list_element PARAMS((HTTag * t, HTElement * e));
-PRIVATE void end_list PARAMS((HTTag * t, HTElement * e));
-PRIVATE void begin_glossary PARAMS((HTTag * t, HTElement * e));
-PRIVATE void end_glossary PARAMS((HTTag * t, HTElement * e));
+PRIVATE void no_change(HTTag * t, HTElement * e);
+PRIVATE void begin_litteral(HTTag * t, HTElement * e);
+PRIVATE void begin_element(HTTag * t, HTElement * e);
+PRIVATE void end_element(HTTag * t, HTElement * e);
+PRIVATE void begin_document(HTTag * t, HTElement * e);
+PRIVATE void end_document(HTTag * t, HTElement * e);
+PRIVATE void begin_anchor(HTTag * t, HTElement * e);
+PRIVATE void end_anchor(HTTag * t, HTElement * e);
+PRIVATE void begin_list(HTTag * t, HTElement * e);
+PRIVATE void list_element(HTTag * t, HTElement * e);
+PRIVATE void end_list(HTTag * t, HTElement * e);
+PRIVATE void begin_glossary(HTTag * t, HTElement * e);
+PRIVATE void end_glossary(HTTag * t, HTElement * e);
 
 PRIVATE int got_styles = 0;
-PRIVATE void get_styles NOPARAMS;
+PRIVATE void get_styles (void);
 
-PRIVATE	BOOL		style_change;
+PRIVATE	bool		style_change;
 PRIVATE HTStyle *	new_style;
 PRIVATE HTStyle *	old_style;
-PRIVATE BOOL		in_word;  /* Have just had a non-white character */
+PRIVATE bool		in_word;  /* Have just had a non-white character */
 
 /*	Style buffering avoids dummy paragraph begin/ends.
 */
 #define UPDATE_STYLE if (style_change) { \
 	HText_setStyle(text, new_style); \
 	old_style = new_style; \
-	style_change = NO; }
+	style_change = false; }
 
-PRIVATE void change_style ARGS1(HTStyle *,style)
+PRIVATE void change_style(HTStyle *style)
 {
     if (new_style!=style) {
-    	style_change = YES /* was old_style == new_style */ ;
+    	style_change = true /* was old_style == new_style */ ;
 	new_style = style;
     }
 }
@@ -74,12 +74,7 @@ PRIVATE void change_style ARGS1(HTStyle *,style)
 
 /*	Accumulate a character of title
 */
-#ifdef __STDC__
 static void accumulate_string(char c)
-#else
-static void accumulate_string(c)
-    char c;
-#endif
 {
     HTChunkPutc(&title, c);
 }
@@ -87,12 +82,12 @@ static void accumulate_string(c)
 
 /*		Clear the title
 */
-PRIVATE  void clear_string ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE  void clear_string(HTTag *t, HTElement *e)
 {
     HTChunkClear(&title);
 }
 
-PRIVATE void set_title ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void set_title(HTTag *t, HTElement *e)
 {
     HTChunkTerminate(&title);
     HTAnchor_setTitle(node_anchor, title.data);
@@ -100,12 +95,12 @@ PRIVATE void set_title ARGS2(HTTag *,t, HTElement *,e)
 
 /*		Character handling
 */
-PRIVATE void set_index ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void set_index(HTTag *t, HTElement *e)
 {
     HTAnchor_setIndex(node_anchor);
 }
 
-PRIVATE void pass_character ARGS1(char, c)
+PRIVATE void pass_character(char c)
 {
     if (style_change) {
         if ((c=='\n') || (c==' ')) return;	/* Ignore it */
@@ -114,51 +109,51 @@ PRIVATE void pass_character ARGS1(char, c)
     if (c=='\n') {
         if (in_word) {
 	    HText_appendCharacter(text, ' ');
-	    in_word = NO;
+	    in_word = false;
 	}
     } else {
         HText_appendCharacter(text, c);
-	in_word = YES;
+	in_word = true;
     }
 }
 
-PRIVATE void litteral_text ARGS1(char, c)
+PRIVATE void litteral_text(char c)
 {
 /*	We guarrantee that the style is up-to-date in begin_litteral
 */
     HText_appendCharacter(text, c);		/* @@@@@ */
 }
 
-PRIVATE void ignore_text ARGS1(char, c)
+PRIVATE void ignore_text(char c)
 {
     /* Do nothing */
 }
 
-PRIVATE void set_next_id  ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void set_next_id(HTTag *t, HTElement *e)
 {
     /* @@@@@  Bad SGML anyway */
 }
 
-PRIVATE void new_paragraph  ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void new_paragraph(HTTag *t, HTElement *e)
 {
     UPDATE_STYLE;
     HText_appendParagraph(text);
-    in_word = NO;
+    in_word = false;
 }
 
-PRIVATE void term ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void term(HTTag *t, HTElement *e)
 {
     if (!style_change) {
         HText_appendParagraph(text);
-	in_word = NO;
+	in_word = false;
     }
 }
 
-PRIVATE void definition ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void definition(HTTag *t, HTElement *e)
 {
     UPDATE_STYLE;
     pass_character('\t');	/* Just tab out one stop */
-    in_word = NO;
+    in_word = false;
 }
 
 /*		Our Static DTD for HTML
@@ -235,17 +230,17 @@ static HTTag tags[] = {
 #define P_TAG 20
     { "P"	, no_attr, 0, 0, new_paragraph, pass_character, 0 },
 #define XMP_TAG 21
-  { "XMP"	, no_attr, 0, YES, begin_litteral, litteral_text, end_element },
+  { "XMP"	, no_attr, 0, true, begin_litteral, litteral_text, end_element },
 #define LISTING_TAG 22
-  { "LISTING"	, no_attr, 0, YES,begin_litteral, litteral_text, end_element },
+  { "LISTING"	, no_attr, 0, true,begin_litteral, litteral_text, end_element },
 #define PLAINTEXT_TAG 23
-  { "PLAINTEXT", no_attr, 0, YES, begin_litteral, litteral_text, end_element },
+  { "PLAINTEXT", no_attr, 0, true, begin_litteral, litteral_text, end_element },
 #define COMMENT_TAG 24
-    { "COMMENT", no_attr, 0, YES, no_change, ignore_text, no_change },
+    { "COMMENT", no_attr, 0, true, no_change, ignore_text, no_change },
     { 0, 0, 0, 0,  0, 0 , 0}	/* Terminate list */
 };
 
-PUBLIC SGML_dtd HTML_dtd = { tags, &default_tag, entities };
+SGML_dtd HTML_dtd = { tags, &default_tag, entities };
 
 
 /*		Flattening the style structure
@@ -260,7 +255,7 @@ a sequence of styles.
 /*	Anchor handling
 **	---------------
 */
-PRIVATE void begin_anchor ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void begin_anchor(HTTag *t, HTElement *e)
 {
     HTChildAnchor * source = HTAnchor_findChildAndLink(
     	node_anchor,						/* parent */
@@ -274,8 +269,8 @@ PRIVATE void begin_anchor ARGS2(HTTag *,t, HTElement *,e)
     HText_beginAnchor(text, source);
 }
 
-PRIVATE void end_anchor ARGS2(HTTag *,	 t,
-			HTElement *,	e)
+PRIVATE void end_anchor(HTTag *	 t,
+			HTElement *	e)
 {
     UPDATE_STYLE;
     HText_endAnchor(text);
@@ -285,85 +280,85 @@ PRIVATE void end_anchor ARGS2(HTTag *,	 t,
 /*	General SGML Element Handling
 **	-----------------------------
 */
-PRIVATE void begin_element ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void begin_element(HTTag *t, HTElement *e)
 {
     change_style((HTStyle*)(t->style));
 }
-PRIVATE void no_change ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void no_change(HTTag *t, HTElement *e)
 {
     /* Do nothing */;
 }
-PRIVATE void begin_litteral ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void begin_litteral(HTTag *t, HTElement *e)
 {
     change_style(t->style);
     UPDATE_STYLE;
 }
-PRIVATE void end_element ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void end_element(HTTag *t, HTElement *e)
 {
     if (e) change_style(e->tag->style);
 }
 
 /*			Lists
 */
-PRIVATE void begin_list ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void begin_list(HTTag *t, HTElement *e)
 {
     change_style(list_attr[LIST_COMPACT].present
     		? list_compact_style
 		: (HTStyle*)(t->style));
-    in_word = NO;
+    in_word = false;
 }
 
-PRIVATE void end_list ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void end_list(HTTag *t, HTElement *e)
 {
     change_style(e->tag->style);
-    in_word = NO;
+    in_word = false;
 }
 
-PRIVATE void list_element  ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void list_element(HTTag *t, HTElement *e)
 {
     if (e->tag != &tags[DIR_TAG])
 	HText_appendParagraph(text);
     else
         HText_appendCharacter(text, '\t');	/* Tab @@ nl for UL? */
-    in_word = NO;
+    in_word = false;
 }
 
 
-PRIVATE void begin_glossary ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void begin_glossary(HTTag *t, HTElement *e)
 {
     change_style(glossary_attr[GLOSSARY_COMPACT].present
     		? glossary_compact_style
 		: glossary_style);
-    in_word = NO;
+    in_word = false;
 }
 
-PRIVATE void end_glossary ARGS2(HTTag *,t, HTElement *,e)
+PRIVATE void end_glossary(HTTag *t, HTElement *e)
 {
     change_style(e->tag->style);
-    in_word = NO;
+    in_word = false;
 }
 
 
 /*	Begin and End document
 **	----------------------
 */
-PUBLIC void HTML_begin ARGS1(HTParentAnchor *,anchor)
+PUBLIC void HTML_begin(HTParentAnchor *anchor)
 {
     node_anchor = anchor;
 }
 
-PRIVATE void begin_document ARGS2(HTTag *, t, HTElement *, e)
+PRIVATE void begin_document(HTTag *t, HTElement *e)
 {
     if (!got_styles) get_styles();
     text = HText_new(node_anchor);
     HText_beginAppend(text);
     HText_setStyle(text, default_tag.style);
     old_style = 0;
-    style_change = NO;
-    in_word = NO;
+    style_change = false;
+    in_word = false;
 }
 
-PRIVATE void end_document ARGS2(HTTag *, t, HTElement *, e)
+PRIVATE void end_document(HTTag *t, HTElement *e)
 {
     HText_endAppend(text);
 
@@ -372,9 +367,9 @@ PRIVATE void end_document ARGS2(HTTag *, t, HTElement *, e)
 /*	Get Styles from style sheet
 **	---------------------------
 */
-PRIVATE void get_styles NOARGS
+PRIVATE void get_styles(void)
 {
-    got_styles = YES;
+    got_styles = true;
     
     tags[P_TAG].style =
     default_tag.style =		HTStyleNamed(styleSheet, "Normal");
@@ -406,24 +401,18 @@ PRIVATE void get_styles NOARGS
 **	This version takes a pointer to the routine to call
 **	to get each character.
 */
-BOOL HTML_Parse
-#ifdef __STDC__
-  (HTParentAnchor * anchor, char (*next_char)() )
-#else
-  (anchor, next_char)
-    HTParentAnchor * anchor;
-    char (*next_char)();
-#endif
+bool HTML_Parse
+  (HTParentAnchor * anchor, char (*next_char)(void) )
 {
-        HTML_begin(anchor);
-	SGML_begin(&HTML_dtd);
-	for(;;) {
-	    char character;
-	    character = (*next_char)();
-	    if (character == (char)EOF) break;
-    
-	    SGML_character(&HTML_dtd, character);           
-         }
-	SGML_end(&HTML_dtd);
-	return YES;
+    HTML_begin(anchor);
+    SGML_begin(&HTML_dtd);
+    for(;;) {
+	char character;
+	character = (*next_char)();
+	if (character == (char)EOF) break;
+	
+	SGML_character(&HTML_dtd, character);
+    }
+    SGML_end(&HTML_dtd);
+    return true;
 }

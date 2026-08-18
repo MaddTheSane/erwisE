@@ -6,11 +6,11 @@
 
 #include "HTUtils.h"
 
-extern int strcasecomp  PARAMS((CONST char *a, CONST char *b));
-extern int strncasecomp PARAMS((CONST char *a, CONST char *b, int n));
+extern int strcasecomp (const char *a, const char *b);
+extern int strncasecomp(const char *a, const char *b, int n);
 
-extern char * HTSACopy PARAMS ((char **dest, CONST char *src));
-extern char * HTSACat  PARAMS ((char **dest, CONST char *src));
+extern char * HTSACopy(char **dest, const char *src);
+extern char * HTSACat (char **dest, const char *src);
 
 /* Enable the old macro-like calling methods */
 #define StrAllocCopy(dest, src) HTSACopy (&(dest), src)

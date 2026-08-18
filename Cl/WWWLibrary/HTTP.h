@@ -21,19 +21,15 @@
 **		<0	Error.
 **
 */
-#ifdef __STDC__
 extern int HTTP_Get(const char * arg);
-#else
-extern int HTTP_Get();
-#endif
 
 /*	Load Document using HTTP
 **	------------------------
 */
 
-extern int HTLoadHTTP PARAMS((CONST char *arg,
-	CONST char * gateway,
-	HTParentAnchor * anAnchor,
-	int diag));
+extern int HTLoadHTTP (const char *arg,
+		       const char * gateway,
+		       HTParentAnchor * anAnchor,
+		       int diag);
 
 #endif /* HTTP_H */

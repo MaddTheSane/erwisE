@@ -12,7 +12,7 @@
 #include <stdio.h>
 #endif
 
-HTList * HTList_new NOARGS
+HTList * HTList_new(void)
 {
   HTList *newList = (HTList *)malloc (sizeof (HTList));
   if (newList == NULL) outofmem(__FILE__, "HTList_new");
@@ -21,16 +21,16 @@ HTList * HTList_new NOARGS
   return newList;
 }
 
-void HTList_delete ARGS1(HTList *,this)
+void HTList_delete(HTList *this)
 {
   HTList *current;
-  while (current = this) {
+  while ((current = this)) {
     this = this->next;
     free (current);
   }
 }
 
-void HTList_addObject ARGS2(HTList *,this, void *,newObject)
+void HTList_addObject(HTList *this, void *newObject)
 {
   if (this) {
     HTList *newNode = (HTList *)malloc (sizeof (HTList));
@@ -41,10 +41,10 @@ void HTList_addObject ARGS2(HTList *,this, void *,newObject)
   }
   else
     if (TRACE) printf ("HTList: Trying to add object %p to a nonexisting list\n",
-		       newObject);
+                       newObject);
 }
 
-BOOL HTList_removeObject ARGS2(HTList *,this, void *,oldObject)
+bool HTList_removeObject(HTList *this, void *oldObject)
 {
   if (this) {
     HTList *previous;
@@ -52,16 +52,16 @@ BOOL HTList_removeObject ARGS2(HTList *,this, void *,oldObject)
       previous = this;
       this = this->next;
       if (this->object == oldObject) {
-	previous->next = this->next;
-	free (this);
-	return YES;  /* Success */
+        previous->next = this->next;
+        free (this);
+        return true;  /* Success */
       }
     }
   }
-  return NO;  /* object not found or NULL list */
+  return false;  /* object not found or NULL list */
 }
 
-void * HTList_removeLastObject ARGS1 (HTList *,this)
+void * HTList_removeLastObject(HTList *this)
 {
   if (this && this->next) {
     HTList *lastNode = this->next;
@@ -69,11 +69,12 @@ void * HTList_removeLastObject ARGS1 (HTList *,this)
     this->next = lastNode->next;
     free (lastNode);
     return lastObject;
-  } else  /* Empty list */
+  } else { /* Empty list */
     return NULL;
+  }
 }
 
-void * HTList_removeFirstObject ARGS1 (HTList *,this)
+void * HTList_removeFirstObject(HTList *this)
 {
   if (this && this->next) {
     HTList * prevNode;
@@ -86,40 +87,46 @@ void * HTList_removeFirstObject ARGS1 (HTList *,this)
     prevNode->next = NULL;
     free (this);
     return firstObject;
-  } else  /* Empty list */
+  } else { /* Empty list */
     return NULL;
+  }
 }
 
-int HTList_count ARGS1 (HTList *,this)
+int HTList_count(HTList *this)
 {
   int count = 0;
-  if (this)
-    while (this = this->next)
+  if (this) {
+    while ((this = this->next)) {
       count++;
+    }
+  }
   return count;
 }
 
-int HTList_indexOf ARGS2(HTList *,this, void *,object)
+int HTList_indexOf(HTList *this, void *object)
 {
   if (this) {
     int position = 0;
-    while (this = this->next) {
-      if (this->object == object)
-	return position;
+    while ((this = this->next)) {
+      if (this->object == object) {
+        return position;
+      }
       position++;
     }
   }
   return -1;  /* Object not in the list */
 }
 
-void * HTList_objectAt ARGS2 (HTList *,this, int,position)
+void * HTList_objectAt (HTList *this, int position)
 {
-  if (position < 0)
+  if (position < 0) {
     return NULL;
+  }
   if (this) {
-    while (this = this->next) {
-      if (position == 0)
-	return this->object;
+    while ((this = this->next)) {
+      if (position == 0) {
+        return this->object;
+      }
       position--;
     }
   }

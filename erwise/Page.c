@@ -15,7 +15,7 @@ static void PageGeneratePopup(Page_t *parentpage, char *topaddress);
 char FindText[256] = "\0";
 char SearchText[256] = "\0";
 int SearchDepth = 1;
-int SearchCase = FALSE;
+int SearchCase = false;
 
 
 static int SearchDialogType;
@@ -110,8 +110,8 @@ int TruthValue(char *value)
     if (value && (!strncasecmp(value, STR_TRUE, strlen(STR_TRUE)) ||
 		  !strncasecmp(value, STR_ON, strlen(STR_ON)) ||
 		  !strncasecmp(value, STR_YES, strlen(STR_YES))))
-	return TRUE;
-    return FALSE;
+	return true;
+    return false;
 }
 
 
@@ -122,11 +122,11 @@ HTextObject_t *htextobject;
 void *parameter;
 {
     static void *table = (void *) NULL;
-    int update = FALSE;
+    int update = false;
     char *configstr;
 
     if (!table) {
-	update = TRUE;
+	update = true;
 	table = ConfigGetValue((void *) NULL, C_PRINT);
 	PrintTopMargin = atoi((char *) ConfigGetValue(table, C_TOPMARGIN));
 	PrintBottomMargin =
@@ -727,11 +727,11 @@ char *word;
     while (tmpptr && strlen(tmpptr) >= searchlength) {
 	if (SearchCase) {
 	    if (!strncmp(tmpptr, SearchText, searchlength))
-		return TRUE;
+		return true;
 	} else if (!strncasecmp(tmpptr, SearchText, searchlength))
-	    return TRUE;
+	    return true;
 	tmpptr++;
     }
 
-    return FALSE;
+    return false;
 }

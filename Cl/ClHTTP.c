@@ -25,17 +25,15 @@
 
 
 
-/*
- * We want that loading won't kill the whole f*king client.
+/*!
+ * We want that loading won't kill the whole f\*king client.
  *
  * This is a kludge ;)
  */
-
-PUBLIC int HTLoadHTTP
-ARGS4 (CONST char *, arg,
-       CONST char *, gate,
-       HTAnchor *, anAnchor,
-       int, diag)
+PUBLIC int HTLoadHTTP(const char * arg,
+		      const char * gate,
+		      HTAnchor * anAnchor,
+		      int diag)
 {
   /*
    * Most code from old loading function

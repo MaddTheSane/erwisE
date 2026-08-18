@@ -18,7 +18,7 @@
  */
 
 void
-WWWErwiseSetPoll ()
+WWWErwiseSetPoll (void)
 {
   CL_DEBUG (("SetPoll\n"));
 
@@ -28,7 +28,7 @@ WWWErwiseSetPoll ()
 }
 
 void
-WWWErwiseSetSelect ()
+WWWErwiseSetSelect (void)
 {
   CL_DEBUG (("SetSelect\n"));
 

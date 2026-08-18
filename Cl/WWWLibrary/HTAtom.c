@@ -22,7 +22,7 @@
 
 #include <string.h>
 PRIVATE HTAtom * hash_table[HASH_SIZE];
-PRIVATE BOOL initialised = NO;
+PRIVATE bool initialised = false;
 
 #ifdef __STDC__
 PUBLIC HTAtom * HTAtom_for(const char * string)
@@ -32,7 +32,7 @@ PUBLIC HTAtom * HTAtom_for(string)
 #endif
 {
     int hash;
-    CONST char * p;
+    const char * p;
     HTAtom * a;
     
     /*		First time around, clear hash table
@@ -41,7 +41,7 @@ PUBLIC HTAtom * HTAtom_for(string)
         int i;
 	for (i=0; i<HASH_SIZE; i++)
 	    hash_table[i] = (HTAtom *) 0;
-	initialised = YES;
+	initialised = true;
     }
     
     /*		Generate hash function

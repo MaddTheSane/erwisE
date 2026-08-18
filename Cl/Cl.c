@@ -28,21 +28,19 @@ extern HText_t *HtLocalText;
 int WWWErwiseStatus;
 ClConnection_t *WWWErwiseConnection;
 
-void cl_free_connection ();
+static void cl_free_connection (ClConnection_t *connection);
 
-/*
+/*!
  * Where to load this file ?
  */
 
 char *WWWErwiseFileLoadName = 0;
 
-/*
+/*!
  * Open connection. Allocate strutures.
  */
-
 ClConnection_t *
-ClOpenConnection (address)
-     char *address;
+ClOpenConnection (const char *address)
 {
   int status;
   ClConnection_t *p = (ClConnection_t *) malloc (sizeof (*p));
@@ -115,18 +113,15 @@ ClOpenConnection (address)
 }
 
 
-/*
+/*!
  * Read data or poll connection opening
  */
 struct HText *
-ClReadData (connection, how_done, fd)
-     ClConnection_t *connection;
-     int *how_done;
-     int *fd;
+ClReadData (ClConnection_t *connection, int *how_done, int *fd)
 {
   int continues;
 
-  void (*tmpf) ();
+  void (*tmpf) (void);
 
   WWWErwiseStatus = CL_CONTINUES;
 
@@ -215,13 +210,11 @@ ClReadData (connection, how_done, fd)
 }
 
 
-/*
+/*!
  * User wants to terminate a connection
  */
-
 void
-ClCloseConnection (connection)
-     ClConnection_t *connection;
+ClCloseConnection (ClConnection_t *connection)
 {
   if (connection->load_to_file)
     {
@@ -250,7 +243,7 @@ ClCloseConnection (connection)
 
 
 
-/*
+/*!
  * read data from local buffer. If no data on buffer, make normal read
  */
 int
@@ -308,13 +301,11 @@ cl_read_data (int fd, char *data, int length)
 
 
 
-/*
+/*!
  * Free everything connection structure has malloced (and not yet freed)
  */
-
 void
-cl_free_connection (connection)
-     ClConnection_t *connection;
+cl_free_connection (ClConnection_t *connection)
 {
   if (connection->address)
     free (connection->address);
@@ -325,12 +316,10 @@ cl_free_connection (connection)
   if (connection->command)
     free (connection->command);
 
-  if (connection->buffer_first)
-    {
+  if (connection->buffer_first) {
       cl_data_t *p = connection->buffer_first;
 
-      while (p)
-	{
+      while (p) {
 
 	  cl_data_t *p2 = p;
 
@@ -350,12 +339,11 @@ cl_free_connection (connection)
 }
 
 
-/*
+/*!
  * Return true if loading to file is supported with this address
  */
 int
-ClCanLoadToFile (address)
-     char *address;
+ClCanLoadToFile (const char *address)
 {
   char *access;
 
@@ -388,12 +376,11 @@ ClCanLoadToFile (address)
 }
 
 
-/*
+/*!
  * Are we loading this connection to file ?
  */
 int
-ClConnectionOnLoadToFileMode (connection)
-     ClConnection_t *connection;
+ClConnectionOnLoadToFileMode (ClConnection_t *connection)
 {
   if (!connection)
     return 0;

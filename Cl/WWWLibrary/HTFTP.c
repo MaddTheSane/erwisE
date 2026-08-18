@@ -127,8 +127,7 @@ PRIVATE char * data_write_pointer;
 /*	Procedure: Read a character from the data connection
 **	----------------------------------------------------
 */
-PRIVATE char next_data_char
-NOARGS
+PRIVATE char next_data_char(void)
 {
     int status;
     if (data_read_pointer >= data_write_pointer) {
@@ -280,7 +279,7 @@ PRIVATE int response(cmd)
 **	It ensures that all connections are logged in if they exist.
 **	It ensures they have the port number transferred.
 */
-PRIVATE int get_connection ARGS1 (CONST char *,arg)
+PRIVATE int get_connection(const char *arg)
 {
     struct hostent * phost;		/* Pointer to host -- See netdb.h */
     struct sockaddr_in soc_address;	/* Binary network address */
@@ -603,7 +602,7 @@ PRIVATE int get_listen_socket()
 /*	Get Styles from stylesheet
 **	--------------------------
 */
-PRIVATE void get_styles NOARGS
+PRIVATE void get_styles(void)
 {
     if (!h1Style) h1Style = HTStyleNamed(styleSheet, "Heading1");
     if (!h2Style) h2Style = HTStyleNamed(styleSheet, "Heading2");
@@ -622,11 +621,7 @@ PRIVATE void get_styles NOARGS
 **	returns		HT_LOADED if OK
 **			<0 if error.
 */
-PRIVATE int read_directory
-ARGS2 (
-  HTParentAnchor *,	parent,
-  CONST char *,			address
-)
+PRIVATE int read_directory(HTParentAnchor *parent, const char *address)
 {
   HText * HT = HText_new (parent);
   char *filename = HTParse(address, "", PARSE_PATH + PARSE_PUNCTUATION);
@@ -712,11 +707,11 @@ ARGS2 (
 */
 PUBLIC int HTFTP_open_file_read
 ARGS2 (
-  CONST char *,			name,
+  const char *,			name,
   HTParentAnchor *,	anchor
 )
 {
-    BOOL isDirectory = NO;
+    bool isDirectory = false;
     int status;
     int retry;			/* How many times tried? */
     
@@ -816,7 +811,7 @@ ARGS2 (
 	  sprintf(command, "CWD %s\r\n", filename);
 	  status = response(command);
 	  if (status == 2) {  /* Successed : let's NAME LIST it */
-	    isDirectory = YES;
+	    isDirectory = true;
 	    sprintf(command, "NLST\r\n");
 	    status = response (command);
 	  }
@@ -855,14 +850,13 @@ ARGS2 (
 **	-------------------------------------------------------------
 **
 */
-PUBLIC int HTFTP_close_file
-ARGS1 (int,soc)
+PUBLIC int HTFTP_close_file(int soc)
 {
     int status;
-
+    
     if (soc!=data_soc) {
-        if (TRACE) printf("HTFTP: close socket %d: (not FTP data socket).\n",
-		soc);
+	if (TRACE) printf("HTFTP: close socket %d: (not FTP data socket).\n",
+			  soc);
 	return NETCLOSE(soc);
     }
     status = NETCLOSE(data_soc);
