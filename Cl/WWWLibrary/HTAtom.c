@@ -24,12 +24,7 @@
 PRIVATE HTAtom * hash_table[HASH_SIZE];
 PRIVATE bool initialised = false;
 
-#ifdef __STDC__
 PUBLIC HTAtom * HTAtom_for(const char * string)
-#else
-PUBLIC HTAtom * HTAtom_for(string)
-    char * string;
-#endif
 {
     int hash;
     const char * p;
@@ -54,7 +49,7 @@ PUBLIC HTAtom * HTAtom_for(string)
     */
     for (a=hash_table[hash]; a; a=a->next) {
 	if (0==strcmp(a->name, string)) {
-    	    if (TRACE) printf("HTAtom: Old atom %d for `&s'\n", a, string);
+    	    if (TRACE) printf("HTAtom: Old atom %d for `%s'\n", a, string);
 	    return a;				/* Found: return it */
 	}
     }
@@ -68,7 +63,7 @@ PUBLIC HTAtom * HTAtom_for(string)
     strcpy(a->name, string);
     a->next = hash_table[hash];		/* Put onto the head of list */
     hash_table[hash] = a;
-    if (TRACE) printf("HTAtom: New atom %d for `&s'\n", a, string);
+    if (TRACE) printf("HTAtom: New atom %d for `%s'\n", a, string);
     return a;
 }
 

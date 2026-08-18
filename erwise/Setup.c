@@ -3,16 +3,16 @@ static char *rcsid = "$Id: Setup.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 #include "Includes.h"
 
 
-void attachtoplevelcallbacks(void);
-void attachpagecallbacks(void);
-void attachhierarchycallbacks(void);
-void attachsearchcallbacks(void);
-void bindpagevariables(void);
-void bindsearchvariables(void);
-void bindprintvariables(void);
+static void attachtoplevelcallbacks(void);
+static void attachpagecallbacks(void);
+static void attachhierarchycallbacks(void);
+static void attachsearchcallbacks(void);
+static void bindpagevariables(void);
+static void bindsearchvariables(void);
+static void bindprintvariables(void);
 
 
-void AttachCallbacks()
+void AttachCallbacks(void)
 {
     attachtoplevelcallbacks();
     attachpagecallbacks();
@@ -23,9 +23,7 @@ void AttachCallbacks()
 
 
 char *
- parse_key(type, item)
-int *type;
-char *item;
+parse_key(int *type, char *item)
 {
     char *p;
 
@@ -66,7 +64,7 @@ char *item;
 
 typedef struct erwise_key_bindings_s {
     char *itemname;
-    void (*callback) (char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter);
+    void (*callback) (const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter);
     void *data;
 } erwise_key_bindings_t;
 
@@ -86,7 +84,7 @@ erwise_key_bindings_t erwise_keys[] =
 };
 
 
-void BindKeys()
+void BindKeys(void)
 {
     void *table;
     char *item;
@@ -112,7 +110,7 @@ void BindKeys()
 }
 
 
-void BindVariables()
+void BindVariables(void)
 {
     bindpagevariables();
     bindsearchvariables();
@@ -120,7 +118,7 @@ void BindVariables()
 }
 
 
-void attachtoplevelcallbacks()
+void attachtoplevelcallbacks(void)
 {
     UiAttachCallback("Quit", TopQuitCB, (void *) NULL);
     UiAttachCallback("Info", TopInfoCB, (void *) NULL);
@@ -129,7 +127,7 @@ void attachtoplevelcallbacks()
 }
 
 
-void attachpagecallbacks()
+void attachpagecallbacks(void)
 {
     UiAttachCallback("Search", PageSearchCB, (void *) NULL);
     UiAttachCallback("Copy", PageCopyCB, (void *) NULL);
@@ -156,7 +154,7 @@ void attachpagecallbacks()
 }
 
 
-void attachhierarchycallbacks()
+void attachhierarchycallbacks(void)
 {
     UiAttachCallback("Connections", ConnectionsCB, (void *) NULL);
     UiAttachCallback("Controlpanel", ControlPanelCB, (void *) NULL);
@@ -165,20 +163,20 @@ void attachhierarchycallbacks()
 }
 
 
-void attachsearchcallbacks()
+void attachsearchcallbacks(void)
 {
     UiAttachCallback("SearchBackward", SearchBackwardCB, (void *) NULL);
     UiAttachCallback("SearchForward", SearchForwardCB, (void *) NULL);
 }
 
 
-void bindpagevariables()
+void bindpagevariables(void)
 {
     UiBindVariable("FindText", (void *) FindText, uiVTstring);
 }
 
 
-void bindsearchvariables()
+void bindsearchvariables(void)
 {
     UiBindVariable("SearchText", (void *) SearchText, uiVTstring);
     UiBindVariable("SearchDepth", (void *) &SearchDepth, uiVTint);
@@ -186,7 +184,7 @@ void bindsearchvariables()
 }
 
 
-void bindprintvariables()
+void bindprintvariables(void)
 {
     UiBindVariable("PrintTopMargin", (void *) &PrintTopMargin, uiVTint);
     UiBindVariable("PrintBottomMargin", (void *) &PrintBottomMargin, uiVTint);

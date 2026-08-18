@@ -27,7 +27,7 @@
 
 #define HT_NO_DATA -9999
 
-PUBLIC int HTDiag = 0;		/* Diagnostics: load source as text */
+int HTDiag = 0;		/* Diagnostics: load source as text */
 
 /*	Telnet or "rlogin" access
 **	-------------------------

@@ -129,4 +129,4 @@ PRIVATE HTStyle HTStyleHeading7 =
 PRIVATE HTStyleSheet sheet =
 {"default.style", &HTStyleHeading7};	/* sheet */
 
-PUBLIC HTStyleSheet *styleSheet = &sheet;
+HTStyleSheet *styleSheet = &sheet;

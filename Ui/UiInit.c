@@ -3,7 +3,7 @@ static char *rcsid = "$Id: UiInit.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
 #include "UiIncludes.h"
 
 
-extern int TruthValue(char *value);
+extern bool TruthValue(const char *value);
 
 static void uisetupdefaults(int argc, char *argv[],
 			     void *(*configpf) (void *table, char *item));
@@ -62,7 +62,7 @@ void UiMainLoop(void)
 }
 
 
-int PlaceValue(void *value)
+bool PlaceValue(void *value)
 {
     if (value && !strncasecmp(value, "mouse", strlen("mouse")))
 	return true;
@@ -76,7 +76,7 @@ static void uisetupdefaults(int argc, char *argv[],
     uiGlobalSettings_t *gs = &uiTopLevel.GlobalSettings;
     void *table;
 
-    if (table = configpf((void *) NULL, C_GLOBALSETTINGS)) {
+    if ((table = configpf((void *) NULL, C_GLOBALSETTINGS))) {
 	gs->TopMargin = atoi((char *) configpf(table, C_TOPMARGIN));
 	gs->BottomMargin = atoi((char *) configpf(table, C_BOTTOMMARGIN));
 	gs->LeftMargin = atoi((char *) configpf(table, C_LEFTMARGIN));
@@ -100,7 +100,7 @@ static void uisetupdefaults(int argc, char *argv[],
     } else
 	uiDisplayWarning("failed to get configurations for global settings");
 
-    if (table = configpf((void *) NULL, C_DEFAULTS))
+    if ((table = configpf((void *) NULL, C_DEFAULTS)))
 	uiSelectionArray = (char **) configpf(table, C_DEFAULTSTABLE);
     else
 	uiDisplayWarning("failed to get configurations for selection");
@@ -111,7 +111,7 @@ static void uisetupdefaults(int argc, char *argv[],
 
 
 static Widget
- uicreatebutton(Widget parentwdg, char *name, int leftpos,
+uicreatebutton(Widget parentwdg, char *name, int leftpos,
 				int rightpos)
 {
     Widget tmpwdg;
@@ -136,15 +136,15 @@ static Widget
 static void uitopactivatecb(Widget wdg, void *actionname, void *calldata)
 {
     uiAction_t *tmpaction;
-
-	if ((tmpaction = uiFindAction((char *) actionname))) {
-		if (uiHelpOnActionCB) {
-			(*uiHelpOnActionCB) (actionname);
-			uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
-		} else {
-			(*tmpaction->Callback) ((char *) NULL, (HText_t *) NULL,
-									(HTextObject_t *) NULL,
-									tmpaction->Parameter);
-		}
+    
+    if ((tmpaction = uiFindAction((char *) actionname))) {
+	if (uiHelpOnActionCB) {
+	    (*uiHelpOnActionCB) (actionname);
+	    uiHelpOnActionCB = NULL;
+	} else {
+	    (*tmpaction->Callback) ((char *) NULL, (HText_t *) NULL,
+				    (HTextObject_t *) NULL,
+				    tmpaction->Parameter);
 	}
+    }
 }

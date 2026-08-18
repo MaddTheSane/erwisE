@@ -5,29 +5,27 @@ static char *rcsid = "$Id: UiPageSettings.c,v 1.1 1992/03/26 18:13:50 kny Exp kn
 
 static void uibindpsvariables(void);
 static void uiupdatepsvariables(void);
-static Widget uicreatepsformdialog();
+static Widget uicreatepsformdialog(void);
 static Widget uicreatepslabel(Widget parent);
-static Widget
- uicreatepsmargin(Widget parent, Widget topwdg, char *name,
-		   int position);
+static Widget uicreatepsmargin(Widget parent, Widget topwdg, char *name,
+			       int position);
 static Widget uicreatepsseparator(Widget formwdg, Widget topwdg);
 static Widget uicreatepsusefixed(Widget parent, Widget topwdg);
 static Widget uicreatepssinglepage(Widget parent, Widget topwdg);
 static void uicreatepsbuttons(Widget formwdg, Widget topwdg);
 
-static void uipagesettingsmargincb(char *address, HText_t * htext,
-				    HTextObject_t * htextobject,
-				    void *parameter);
-static void uipagesettingsusefixedcb(char *address, HText_t * htext,
-				      HTextObject_t * htextobject,
-				      void *parameter);
-static void uipagesettingsbuttoncb(char *address, HText_t * htext,
-				    HTextObject_t * htextobject,
-				    void *parameter);
+static void uipagesettingsmargincb(const char *address, HText_t * htext,
+				   HTextObject_t * htextobject,
+				   void *parameter);
+static void uipagesettingsusefixedcb(const char *address, HText_t * htext,
+				     HTextObject_t * htextobject,
+				     void *parameter);
+static void uipagesettingsbuttoncb(const char *address, HText_t * htext,
+				   HTextObject_t * htextobject,
+				   void *parameter);
 
 
-int UiDisplayPageSettingsDialog(type)
-int type;
+int UiDisplayPageSettingsDialog(int type)
 {
     uiPageSettingsGfx_t *psgfx = &uiTopLevel.PageSettingsGfx;
     Widget separatorwdg;
@@ -79,7 +77,7 @@ int type;
 }
 
 
-void uiPageSettingsUpdateDialog()
+void uiPageSettingsUpdateDialog(void)
 {
     if (uiTopLevel.PageSettingsGfx.FormWdg) {
 	if (uiPageInfo.CurrentPage) {
@@ -91,7 +89,7 @@ void uiPageSettingsUpdateDialog()
 }
 
 
-static void uibindpsvariables()
+static void uibindpsvariables(void)
 {
     UiBindVariable("TopMargin",
 		   (void *) &uiPageInfo.CurrentPage->Settings.TopMargin,
@@ -118,7 +116,7 @@ static void uibindpsvariables()
 }
 
 
-static void uiupdatepsvariables()
+static void uiupdatepsvariables(void)
 {
     UiUpdateVariable("TopMargin");
     UiUpdateVariable("BottomMargin");
@@ -132,7 +130,7 @@ static void uiupdatepsvariables()
 
 
 static Widget
- uicreatepsformdialog()
+uicreatepsformdialog(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -155,8 +153,7 @@ static Widget
 
 
 static Widget
- uicreatepslabel(formwdg)
-Widget formwdg;
+uicreatepslabel(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -199,11 +196,7 @@ static Widget uipstextwidget[] =
 };
 
 static Widget
- uicreatepsmargin(formwdg, topwdg, name, pos)
-Widget formwdg;
-Widget topwdg;
-char *name;
-int pos;
+uicreatepsmargin(Widget formwdg, Widget topwdg, char *name, int pos)
 {
     ArgList args;
     Cardinal nargs;
@@ -249,14 +242,14 @@ int pos;
 		       XmNrightPosition, 95,
 		       XmNbottomAttachment, XmATTACH_FORM, NULL);
     margindownwdg = XmCreateArrowButtonGadget(marginformwdg,
-					 uiactiondata[callnr].ActionName,
+					      (void*)uiactiondata[callnr].ActionName,
 					      args, nargs);
     uiactiondata[callnr].Page = uiPageInfo.CurrentPage;
     XtAddCallback(margindownwdg, XmNactivateCallback,
 		  (XtCallbackProc) uiDialogActivateCB,
 		  (caddr_t) & uiactiondata[callnr]);
     UiAttachCallback(uiactiondata[callnr].ActionName, uipagesettingsmargincb,
-		     uiactiondata[callnr].ActionName);
+		     (void*)uiactiondata[callnr].ActionName);
     callnr++;
     XtManageChild(margindownwdg);
 
@@ -276,7 +269,7 @@ int pos;
 		  (XtCallbackProc) uiDialogActivateCB,
 		  (caddr_t) & uiactiondata[callnr]);
     UiAttachCallback(uiactiondata[callnr].ActionName, uipagesettingsmargincb,
-		     uiactiondata[callnr].ActionName);
+		     (void*)uiactiondata[callnr].ActionName);
     callnr++;
     XtManageChild(marginupwdg);
 
@@ -304,9 +297,7 @@ int pos;
 
 
 static Widget
- uicreatepsseparator(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+uicreatepsseparator(Widget formwdg, Widget topwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -327,9 +318,7 @@ Widget topwdg;
 
 
 static Widget
- uicreatepsusefixed(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+uicreatepsusefixed(Widget formwdg, Widget topwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -429,9 +418,7 @@ Widget topwdg;
 
 
 static Widget
- uicreatepssinglepage(formwdg, usefixedwdg)
-Widget formwdg;
-Widget usefixedwdg;
+uicreatepssinglepage(Widget formwdg, Widget usefixedwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -459,9 +446,7 @@ Widget usefixedwdg;
 }
 
 
-static void uicreatepsbuttons(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+static void uicreatepsbuttons(Widget formwdg, Widget topwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -527,11 +512,7 @@ Widget topwdg;
 }
 
 
-static void uipagesettingsmargincb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagesettingsmargincb(const char *address, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     int i;
     Widget textwdg;
@@ -540,7 +521,7 @@ void *parameter;
     char tmpbuffer[4];
 
     for (i = 0; i < 8; i++)
-	if (!strcmp(uiactiondata[i].ActionName, (char *) parameter)) {
+	if (!strcmp(uiactiondata[i].ActionName, (const char *) parameter)) {
 	    textwdg = uipstextwidget[i / 2];
 	    text = XmTextGetString(textwdg);
 	    margin = atoi(text);
@@ -562,11 +543,7 @@ void *parameter;
 }
 
 
-static void uipagesettingsusefixedcb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagesettingsusefixedcb(const char *address, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     Widget textwdg = uiTopLevel.PageSettingsGfx.UseFixedTextWdg;
     char *fixedtext;
@@ -594,11 +571,7 @@ void *parameter;
 }
 
 
-static void uipagesettingsbuttoncb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagesettingsbuttoncb(const char *address, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     uiPage_t *page = uiPageInfo.CurrentPage;
 

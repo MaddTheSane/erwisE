@@ -187,7 +187,7 @@ WWWErwiseReadData (void)
 	    tmp,
 	    ERWISE_BLOCK);
 
-  CL_DEBUG (("got %d bytes\n", i));
+    CL_DEBUG (("got %zd bytes\n", i));
 
   /*
    * Append data to (memory) buffer or to file.

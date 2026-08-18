@@ -25,11 +25,7 @@
 ** On exit,
 **	returns		A pointer to a malloc'd string which MUST BE FREED
 */
-#ifdef __STDC__
 extern char * HTParse(const char * aName, const char * relatedName, int wanted);
-#else
-extern char * HTParse();
-#endif
 
 /*	Strip white space off a string
 **	------------------------------
@@ -38,11 +34,7 @@ extern char * HTParse();
 **	Return value points to first non-white character, or to 0 if none.
 **	All trailing white space is OVERWRITTEN with zero.
 */
-#ifdef __STDC__
 extern char * HTStrip(char * s);
-#else
-extern char * HTStrip();
-#endif
 
 /*	        Simplify a filename
 **		-------------------
@@ -57,11 +49,7 @@ extern char * HTStrip();
 **	Thus, 	/etc/junk/../fred 	becomes	/etc/fred
 **		/etc/junk/./fred	becomes	/etc/junk/fred
 */
-#ifdef __STDC__
 extern void HTSimplify(char * filename);
-#else
-extern void HTSimplify();
-#endif
 
 /*		Make Relative Name
 **		------------------
@@ -80,8 +68,4 @@ extern void HTSimplify();
 **	responsible for freeing the resulting name later.
 **
 */
-#ifdef __STDC__
 extern char * HTRelative(const char * aName, const char *relatedName);
-#else
-extern char * HTRelative();
-#endif

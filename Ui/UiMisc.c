@@ -14,19 +14,19 @@ static void uipopupcb(Widget wdg, char *address,
 		       XmAnyCallbackStruct * calldata);
 
 
-void (*uiHelpOnActionCB) (char *actionstring) = NULL;
+void (*uiHelpOnActionCB) (const char *actionstring) = NULL;
 
 static void (*uitimeoutcallback) (void *data);
 static void (*uifdinputcallback) (void *data);
 
 static XtInputId uiinputid;
-static void (*uipopupcallback) (char *address, char *topaddress,
-				 char *parentaddress);
-static char *uipopuptopaddress;
+static void (*uipopupcallback) (const char *address, const char *topaddress,
+				const char *parentaddress);
+static const char *uipopuptopaddress;
 
 
 int UiAttachCallback(const char *actionname,
-		     void (*callback) (char *address, HText_t * htext,
+		     void (*callback) (const char *address, HText_t * htext,
 				       HTextObject_t * htextobject, void *parameter), void *parameter)
 {
     uiAction_t *tmpaction;
@@ -54,7 +54,7 @@ int UiAttachCallback(const char *actionname,
 
 
 int UiBindKey(const char *keyname, int modifier,
-	      void (*callback) (char *address, HText_t * htext,
+	      void (*callback) (const char *address, HText_t * htext,
 				HTextObject_t * htextobject, void *parameter), void *parameter)
 {
     uiKey_t *tmpkey;
@@ -150,7 +150,7 @@ int UiUpdateVariable(const char *varname)
 }
 
 
-void UiGetNextAction(void (*helponactioncb) (char *actionstring))
+void UiGetNextAction(void (*helponactioncb) (const char *actionstring))
 {
     uiHelpOnActionCB = helponactioncb;
 }
@@ -206,7 +206,7 @@ void UiAddStringToCutBuffer(char *data)
 }
 
 
-void UiDisplayPopup(void (*callback) (char *address, char *topaddress, char *parentaddress), char *topaddress, char **items, int nitems)
+void UiDisplayPopup(void (*callback) (const char *address, const char *topaddress, const char *parentaddress), const char *topaddress, char **items, int nitems)
 {
     Widget topwdg = uiPageInfo.CurrentPage->Gfx.TopWdg;
     ArgList args;
@@ -332,7 +332,7 @@ void uiDialogActivateCB(Widget wdg, uiActionData_t *actiondata, XmAnyCallbackStr
 	uiDefineCursor(uiBusyCursor);
 	if (uiHelpOnActionCB) {
 	    (*uiHelpOnActionCB) (actiondata->ActionName);
-	    uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+	    uiHelpOnActionCB = NULL;
 	} else
 	    (*tmpaction->Callback) (actiondata->Page->Hierarchy->Address,
 				    actiondata->Page->HText,

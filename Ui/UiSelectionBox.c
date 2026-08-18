@@ -5,8 +5,8 @@ static char *rcsid = "$Id: UiSelectionBox.c,v 1.3 1992/03/26 18:13:50 kny Exp $"
 
 static Widget uicreatesbformdialog(void);
 static Widget
- uicreatesbfsbox(Widget formwdg,
-		  void (*callback) (char *nodename));
+uicreatesbfsbox(Widget formwdg,
+		void (*callback) (const char *nodename));
 static Widget uicreatesbseparator(Widget formwdg, Widget fsboxwdg);
 static Widget uicreatesbadd(Widget formwdg, Widget fsboxwdg,
 			     Widget separatorwdg);
@@ -35,7 +35,7 @@ char **uiSelectionArray;
 static int uidummy;
 
 
-int UiDisplaySelectionBox(void (*callback) (char *nodename))
+int UiDisplaySelectionBox(void (*callback) (const char *nodename))
 {
     uiSelectionBoxGfx_t *sbgfx = &uiTopLevel.SBGfx;
     XmString dummystr;
@@ -78,7 +78,7 @@ int UiDisplaySelectionBox(void (*callback) (char *nodename))
 
 
 static Widget
- uicreatesbformdialog()
+uicreatesbformdialog(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -100,9 +100,7 @@ static Widget
 
 
 static Widget
- uicreatesbfsbox(formwdg, callback)
-Widget formwdg;
-void (*callback) (char *nodename);
+uicreatesbfsbox(Widget formwdg, void (*callback) (const char *nodename))
 {
     ArgList args;
     Cardinal nargs;
@@ -137,9 +135,7 @@ void (*callback) (char *nodename);
 
 
 static Widget
- uicreatesbseparator(formwdg, fsboxwdg)
-Widget formwdg;
-Widget fsboxwdg;
+uicreatesbseparator(Widget formwdg, Widget fsboxwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -161,10 +157,7 @@ Widget fsboxwdg;
 
 
 static Widget
- uicreatesbadd(formwdg, fsboxwdg, separatorwdg)
-Widget formwdg;
-Widget fsboxwdg;
-Widget separatorwdg;
+uicreatesbadd(Widget formwdg, Widget fsboxwdg, Widget separatorwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -189,9 +182,7 @@ Widget separatorwdg;
 
 
 static Widget
- uicreatesbdelete(formwdg, fsboxwdg)
-Widget formwdg;
-Widget fsboxwdg;
+uicreatesbdelete(Widget formwdg, Widget fsboxwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -215,7 +206,7 @@ Widget fsboxwdg;
 
 
 static Widget
- uicreatesblist(Widget formwdg, Widget deletewdg, Widget separatorwdg)
+uicreatesblist(Widget formwdg, Widget deletewdg, Widget separatorwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -363,7 +354,7 @@ static void uiselectionboxclickcb(Widget wdg, void *ignored, void *calldata1)
 }
 
 
-static void uiselectionboxupdateconfig()
+static void uiselectionboxupdateconfig(void)
 {
     Widget listwdg = uiTopLevel.SBGfx.ListWdg;
     int nitems, i;

@@ -77,7 +77,7 @@ void * HTList_removeLastObject(HTList *this)
 void * HTList_removeFirstObject(HTList *this)
 {
   if (this && this->next) {
-    HTList * prevNode;
+    HTList * prevNode = NULL;
     void *firstObject;
     while (this->next) {
       prevNode = this;

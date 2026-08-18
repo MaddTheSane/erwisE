@@ -182,7 +182,7 @@ PRIVATE int response(const char *command)
         int status = NETWRITE(s, command, (int)strlen(command));
 	if (status<0){
 	    if (TRACE) fprintf(stderr,
-	        "HTNews: Unable to send `%s'. Disconnecting.\n");
+	        "HTNews: Unable to send `%s'. Disconnecting.\n", command);
 	    NETCLOSE(s);
 	    s = -1;
 	    return status;
@@ -439,7 +439,7 @@ PRIVATE void read_article(void)
 */
 		char *l = line;
 		char * p;
-		while (p=strchr(l, '<')) {
+		while ((p=strchr(l, '<'))) {
 		    char *q  = strchr(p,'>');
 		    char *at = strchr(p, '@');
 		    if (q && at && at<q) {

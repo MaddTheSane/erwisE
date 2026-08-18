@@ -87,11 +87,7 @@ extern int WWW_TraceFlag;
 #include "HTString.h"  /* String utilities */
 
 #ifndef ERWISE_UI
-#ifdef __STDC__
 #include <stdarg.h>
-#else
-#include <stdarg.h>
-#endif
 #else
 #include <stdarg.h>
 #endif /* ERWISE */

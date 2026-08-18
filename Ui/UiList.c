@@ -26,15 +26,11 @@ static uiPage_t *uilistpage = (uiPage_t *) NULL;
 static char **uilistitems;
 static char **uiaddresses;
 static int uinitems;
-static void (*uilistcallback) (char *topaddress, char *address,
-			        char *parentaddress);
+static void (*uilistcallback) (const char *topaddress, const char *address,
+			       const char *parentaddress);
 
 
-int UiDisplayListDialog(listitems, addresses, nitems, callback)
-char **listitems;
-char **addresses;
-int nitems;
-void (*callback) (char *topaddress, char *address, char *parentaddress);
+int UiDisplayListDialog(char **listitems, char **addresses, int nitems, void (*callback) (const char *topaddress, const char *address, const char *parentaddress))
 {
     uiListGfx_t *listgfx = &uiTopLevel.ListGfx;
 
@@ -77,8 +73,7 @@ void (*callback) (char *topaddress, char *address, char *parentaddress);
 }
 
 
-void uiListUpdateDialog(page)
-uiPage_t *page;
+void uiListUpdateDialog(uiPage_t *page)
 {
     if (uiTopLevel.ListGfx.FormWdg && (page == uilistpage)) {
 	uilistfreeprevious();
@@ -90,7 +85,7 @@ uiPage_t *page;
 
 
 static Widget
- uicreatelistform()
+uicreatelistform(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -113,8 +108,7 @@ static Widget
 
 
 static Widget
- uicreatelistlabel(formwdg)
-Widget formwdg;
+uicreatelistlabel(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -137,8 +131,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatelistopen(formwdg)
-Widget formwdg;
+uicreatelistopen(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -161,8 +154,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatelistclose(formwdg)
-Widget formwdg;
+uicreatelistclose(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -185,9 +177,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatelistseparator(formwdg, bottomwdg)
-Widget formwdg;
-Widget bottomwdg;
+uicreatelistseparator(Widget formwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -208,7 +198,7 @@ Widget bottomwdg;
 
 
 static Widget
- uicreatelistlist(Widget formwdg, Widget topwdg, Widget bottomwdg)
+uicreatelistlist(Widget formwdg, Widget topwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -239,7 +229,7 @@ static Widget
 }
 
 
-void uilistfreeprevious()
+void uilistfreeprevious(void)
 {
     if (uilistpage && uinitems) {
 	uiFree((void *) uiaddresses);
@@ -252,9 +242,7 @@ void uilistfreeprevious()
 }
 
 
-static void uilistsetitems(listitems, nitems)
-char **listitems;
-int nitems;
+static void uilistsetitems(char **listitems, int nitems)
 {
     Widget listwdg = uiTopLevel.ListGfx.ListWdg;
     int i;
@@ -262,21 +250,20 @@ int nitems;
 
     XmListDeleteAllItems(listwdg);
     if (nitems) {
-	for (i = 0; i < nitems; i++)
+	for (i = 0; i < nitems; i++) {
 	    tmpstr[i] = XmStringCreateSimple(listitems[i]);
+	}
 
 	XmListAddItems(listwdg, tmpstr, nitems, 0);
-	for (i = 0; i < nitems; i++)
+	for (i = 0; i < nitems; i++) {
 	    XmStringFree(tmpstr[i]);
+	}
 	uiFree((void *) tmpstr);
     }
 }
 
 
-static void uilistopencb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uilistopencb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     Widget listwdg = uiTopLevel.ListGfx.ListWdg;
     int *poslist;
@@ -288,7 +275,7 @@ XmListCallbackStruct *calldata;
 	    uiDefineCursor(uiBusyCursor);
 	    if (uiHelpOnActionCB) {
 		(*uiHelpOnActionCB) ("Get page");
-		uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+		uiHelpOnActionCB = NULL;
 	    } else {
 		parentaddress =
 		    HTAnchor_address((HTAnchor *)

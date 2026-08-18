@@ -252,6 +252,7 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
     p = htext->first;
 
     while (p) {
+	HTextObject_t *pnext = p->next;
 
 	/*
          * Allocate space for Xl specific object part
@@ -331,7 +332,7 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
 
 	    free(p);
 	}
-	p = p->next;
+	p = pnext;
 
     }
 

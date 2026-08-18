@@ -23,8 +23,6 @@
 #include "XlFormatText.h"
 #include "XlStyle.h"
 
-static int xl_character_width(HTextObject_t *p);
-
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 /*!
@@ -199,7 +197,7 @@ void xl_modify_objects(HTextObject_t *p_start, HTextObject_t *p_end, int right, 
 
 	offset = (right - (p_last->x + p_last->width)) / 2;
 
-	for (p; p != p_end; p = p->next) {
+	for (p = p_start; p != p_end; p = p->next) {
 	    p->x += offset;
 	}
 	break;

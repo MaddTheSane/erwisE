@@ -315,7 +315,7 @@ WWWErwiseFtpGetPassive (void)
  * Make data channel connection
  */
 void
-WWWErwiseFtpDataChannel ()
+WWWErwiseFtpDataChannel (void)
 {
   /*
    * Set data flow port to secondary so that it can be closed properly
@@ -431,7 +431,7 @@ cl_start_connection (char *host, ClConnection_t *connection, int port)
  */
 
 void
-WWWErwiseFtpCheckForError ()
+WWWErwiseFtpCheckForError (void)
 {
   fd_set readfds;
   fd_set exceptionfds;

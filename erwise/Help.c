@@ -34,16 +34,16 @@ static struct anchorstr_st {
     NULL, NULL
 };
 
-static void helponactioncb(char *actionstring);
+static void helponactioncb(const char *actionstring);
 
 
-void HelpOnFunctionCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
+void HelpOnFunctionCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiGetNextAction(helponactioncb);
 }
 
 
-void HelpManualCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
+void HelpManualCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     if (!FindPage(Pages, HELP_TOPLEVEL))
 	AddPage(&Pages, HELP_TOPLEVEL, (HText_t *) NULL, (Page_t *) NULL);
@@ -52,7 +52,7 @@ void HelpManualCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, 
 }
 
 
-static void helponactioncb(char *actionstring)
+static void helponactioncb(const char *actionstring)
 {
     int i;
     char *addressstring;

@@ -6,10 +6,11 @@ static char *rcsid = "$Id: Page.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 #include "Includes.h"
 
 //extern void 	HText_free(HText_t * me);
-static void getanddisplaypage(char *topaddress, HText_t * htext,
+extern bool TruthValue(const char *value);
+static void getanddisplaypage(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject);
-static int matchingstring(char *word);
-static void PageGeneratePopup(Page_t *parentpage, char *topaddress);
+static bool matchingstring(const char *word);
+static void PageGeneratePopup(Page_t *parentpage, const char *topaddress);
 
 
 char FindText[256] = "\0";
@@ -26,17 +27,13 @@ static HText_t *CopyHText;
 static HTextObject_t *CopyHTextObject;
 
 
-void PageSearchCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
+void PageSearchCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplaySearchDialog(SearchDialogType);
 }
 
 
-void PageCopyCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageCopyCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     CopyHTextObject = htextobject;
     CopyTopAddress = strdup(topaddress);
@@ -44,11 +41,7 @@ void *parameter;
 }
 
 
-void PageListCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageListCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     int i = 0, j, stringlength;
     char **items = (char **) NULL;
@@ -57,7 +50,7 @@ void *parameter;
     HTAnchor *tmpanchor, *destanchor;
 
     while (tmphtextobject)
-	if (tmpanchor = (HTAnchor *) tmphtextobject->anchor) {
+	if ((tmpanchor = (HTAnchor *) tmphtextobject->anchor)) {
 	    addresses = (char **) ReAlloc((void *) addresses,
 					  ++i * sizeof(char *));
 	    destanchor =
@@ -84,11 +77,7 @@ void *parameter;
 }
 
 
-void PageLoadToFileCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageLoadToFileCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTAnchor *destanchor;
 
@@ -105,7 +94,7 @@ void *parameter;
 }
 
 
-int TruthValue(char *value)
+bool TruthValue(const char *value)
 {
     if (value && (!strncasecmp(value, STR_TRUE, strlen(STR_TRUE)) ||
 		  !strncasecmp(value, STR_ON, strlen(STR_ON)) ||
@@ -115,11 +104,7 @@ int TruthValue(char *value)
 }
 
 
-void PagePrintCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PagePrintCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     static void *table = (void *) NULL;
     int update = false;
@@ -133,15 +118,17 @@ void *parameter;
 	    atoi((char *) ConfigGetValue(table, C_BOTTOMMARGIN));
 	PrintLeftMargin = atoi((char *) ConfigGetValue(table, C_LEFTMARGIN));
 	PrintWidth = atoi((char *) ConfigGetValue(table, C_WIDTH));
-	if (configstr = (char *) ConfigGetValue(table, C_COMMAND))
+	if ((configstr = (char *) ConfigGetValue(table, C_COMMAND))) {
 	    strcpy(PrintCommand, configstr);
-	else
+	} else {
 	    strcpy(PrintCommand, "");
+	}
 	PrintToFile = TruthValue((char *) ConfigGetValue(table, C_PRINTTOFILE));
-	if (configstr = (char *) ConfigGetValue(table, C_FILENAME))
+	if ((configstr = (char *) ConfigGetValue(table, C_FILENAME))) {
 	    strcpy(PrintFileName, configstr);
-	else
+	} else {
 	    strcpy(PrintFileName, "");
+	}
     }
 //     UiDisplayPrintDialog(htext);
 	UiDisplayPrintDialog(0);
@@ -158,21 +145,13 @@ void *parameter;
 }
 
 
-void PageSettingsCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageSettingsCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplayPageSettingsDialog(PageSettingsDialogType);
 }
 
 
-void PageCloseCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageCloseCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     char *address = HTAnchor_address((HTAnchor *) htext->node_anchor);
     Page_t *toppage, *page;
@@ -195,11 +174,7 @@ void *parameter;
 }
 
 
-void PagePrevWordCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PagePrevWordCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTextObject_t *tmphtextobject;
 
@@ -216,11 +191,7 @@ void *parameter;
 }
 
 
-void PageNextWordCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageNextWordCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTextObject_t *tmphtextobject;
 
@@ -237,11 +208,7 @@ void *parameter;
 }
 
 
-void PagePrevTagCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PagePrevTagCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTextAnchor_t *tmphtanchor;
     HTAnchor *tmpanchor, *destanchor;
@@ -273,18 +240,14 @@ void *parameter;
 
     UiSetCursor(topaddress, htext, htextobject);
 
-    if ((int) parameter == NO_AUTOGET)
+    if ((uintptr_t) parameter == NO_AUTOGET)
 	return;
 
     getanddisplaypage(topaddress, htext, htextobject);
 }
 
 
-void PageNextTagCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageNextTagCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTAnchor *tmpanchor;
     HTextObject_t *newhtextobject;
@@ -309,28 +272,20 @@ void *parameter;
 
     UiSetCursor(topaddress, htext, htextobject);
 
-    if ((int) parameter == NO_AUTOGET)
+    if ((uintptr_t) parameter == NO_AUTOGET)
 	return;
 
     getanddisplaypage(topaddress, htext, htextobject);
 }
 
 
-void PageHomeCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageHomeCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     StartLoading(topaddress, topaddress, (char *) NULL);
 }
 
 
-void PageRecallCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageRecallCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     Page_t *toppage, *page;
     int i = 0;
@@ -349,11 +304,7 @@ void *parameter;
 }
 
 
-void PageBackCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageBackCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     char *address = HTAnchor_address((HTAnchor *) htext->node_anchor);
     Page_t *toppage, *parentpage, *page;
@@ -361,7 +312,7 @@ void *parameter;
     toppage = FindPage(Pages, topaddress);
     page = FindPage(toppage->Children, address);
 
-    if (parentpage = page->Parents) {
+    if ((parentpage = page->Parents)) {
 	if (parentpage->Next)
 	    PageGeneratePopup(parentpage, topaddress);
 	else {
@@ -373,7 +324,7 @@ void *parameter;
 }
 
 
-void PageGeneratePopup(Page_t *parentpage, char *topaddress)
+void PageGeneratePopup(Page_t *parentpage, const char *topaddress)
 {
     char **items = (char **) NULL;
     int nitems = 0;
@@ -389,9 +340,7 @@ void PageGeneratePopup(Page_t *parentpage, char *topaddress)
 
 
 HTextObject_t *
- FindHTextObject(htext, address)
-HText_t *htext;
-char *address;
+FindHTextObject(HText_t *htext, char *address)
 {
     HTextObject_t *newhtextobject;
     HTAnchor *destanchor;
@@ -411,11 +360,7 @@ char *address;
 }
 
 
-void PagePrevPageCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PagePrevPageCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     char *address = HTAnchor_address((HTAnchor *) htext->node_anchor);
     Page_t *toppage, *parentpage, *page;
@@ -424,7 +369,7 @@ void *parameter;
     toppage = FindPage(Pages, topaddress);
     page = FindPage(toppage->Children, address);
 
-    if (parentpage = page->Parents) {
+    if ((parentpage = page->Parents)) {
 	if (parentpage->Next)
 	    PageGeneratePopup(parentpage, topaddress);
 	while (parentpage->Next)
@@ -441,11 +386,7 @@ void *parameter;
 }
 
 
-void PageNextPageCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageNextPageCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     char *address = HTAnchor_address((HTAnchor *) htext->node_anchor);
     Page_t *toppage, *parentpage, *page;
@@ -454,7 +395,7 @@ void *parameter;
     toppage = FindPage(Pages, topaddress);
     page = FindPage(toppage->Children, address);
 
-    if (parentpage = page->Parents) {
+    if ((parentpage = page->Parents)) {
 	if (parentpage->Next)
 	    PageGeneratePopup(parentpage, topaddress);
 	while (parentpage->Next)
@@ -471,72 +412,63 @@ void *parameter;
 }
 
 
-void PageGetPageCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageGetPageCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     if (!htextobject || !htextobject->anchor)
 	return;
 
-    if (parameter)
+    if (parameter) {
 	ClSetFileNameForLoadingToFile((char *) parameter);
+    }
 
     getanddisplaypage(topaddress, htext, htextobject);
 }
 
 
-void PageClickCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageClickCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTextObject_t *tmphtextobject = htext->first;
     int state = 0;
 
     if (CopyHTextObject && !strcmp(topaddress, CopyTopAddress)
-	&& htext == CopyHText)
+	&& htext == CopyHText) {
 	while (tmphtextobject) {
 	    if (tmphtextobject == CopyHTextObject ||
 		tmphtextobject == htextobject)
 		state += 1 + (CopyHTextObject == htextobject);
 	    switch (state) {
-	    case 2:
-		if (tmphtextobject->data)
-		    UiAddStringToCutBuffer(tmphtextobject->data);
-		else
-		    UiAddStringToCutBuffer("\n");
-		UiAddStringToCutBuffer((char *) NULL);
-		tmphtextobject = (HTextObject_t *) NULL;
-		Free(CopyTopAddress);
-		break;
-	    case 1:
-		if (tmphtextobject->data)
-		    UiAddStringToCutBuffer(tmphtextobject->data);
-		else
-		    UiAddStringToCutBuffer("\n");
-		/* Fall through */
-	    default:
-		tmphtextobject = tmphtextobject->next;
+		case 2:
+		    if (tmphtextobject->data)
+			UiAddStringToCutBuffer(tmphtextobject->data);
+		    else
+			UiAddStringToCutBuffer("\n");
+		    UiAddStringToCutBuffer((char *) NULL);
+		    tmphtextobject = (HTextObject_t *) NULL;
+		    Free(CopyTopAddress);
+		    break;
+		case 1:
+		    if (tmphtextobject->data)
+			UiAddStringToCutBuffer(tmphtextobject->data);
+		    else
+			UiAddStringToCutBuffer("\n");
+		    /* Fall through */
+		default:
+		    tmphtextobject = tmphtextobject->next;
 	    }
 	}
+    }
 
     CopyHTextObject = (HTextObject_t *) NULL;
 }
 
 
-void IndexFindCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void IndexFindCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     char *newaddress;
 
-    if (!FindText[0])
+    if (!FindText[0]) {
 	return;
+    }
 
     HTMainAnchor = htext->node_anchor;	/* Kludguality */
     newaddress = (char *) HTSearchAddress(FindText);	/* missa proto, meeTu? */
@@ -547,16 +479,12 @@ void *parameter;
 }
 
 
-static char *hiertopaddress;
+static const char *hiertopaddress;
 static HText_t *hierhtext;
 static HTextObject_t *hierhtextobject;
 static void *hierparameter;
 
-void HierarchyCloseCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void HierarchyCloseCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     hiertopaddress = topaddress;
     hierhtext = htext;
@@ -567,18 +495,13 @@ void *parameter;
 }
 
 
-void HierarchyNukeCB(button)
-int button;
+void HierarchyNukeCB(int button)
 {
     HierarchyClose(hiertopaddress, hierhtext, hierhtextobject, hierparameter);
 }
 
 
-void HierarchyClose(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void HierarchyClose(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     Page_t *toppage;
 
@@ -599,11 +522,7 @@ void *parameter;
 }
 
 
-void SearchBackwardCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void SearchBackwardCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTextObject_t *newhtextobject;
 
@@ -619,11 +538,7 @@ void *parameter;
 }
 
 
-void SearchForwardCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void SearchForwardCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTextObject_t *newhtextobject;
 
@@ -639,11 +554,7 @@ void *parameter;
 }
 
 
-void ConnectionsCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void ConnectionsCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     Connection_t *tmpconnection = Connections;
     char **listitems = (char **) NULL;
@@ -664,8 +575,7 @@ void *parameter;
 }
 
 
-void KillCB(connection)
-void *connection;
+void KillCB(void *connection)
 {
     Connection_t *tmpconnection = (Connection_t *) connection;
 
@@ -682,30 +592,20 @@ void *connection;
 }
 
 
-void ControlPanelCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void ControlPanelCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplayControlPanel();
 }
 
 
-void DefaultsCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void DefaultsCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplayDefaultsDialog();
 }
 
 
-void getanddisplaypage(topaddress, htext, htextobject)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
+void getanddisplaypage(const char *topaddress, HText_t * htext,
+		       HTextObject_t * htextobject)
 {
     HTAnchor *destanchor;
 
@@ -718,18 +618,19 @@ HTextObject_t *htextobject;
 }
 
 
-int matchingstring(word)
-char *word;
+bool matchingstring(const char *word)
 {
-    char *tmpptr = word;
-    int searchlength = strlen(SearchText);
+    const char *tmpptr = word;
+    size_t searchlength = strlen(SearchText);
 
     while (tmpptr && strlen(tmpptr) >= searchlength) {
 	if (SearchCase) {
-	    if (!strncmp(tmpptr, SearchText, searchlength))
+	    if (!strncmp(tmpptr, SearchText, searchlength)) {
 		return true;
-	} else if (!strncasecmp(tmpptr, SearchText, searchlength))
+	    }
+	} else if (!strncasecmp(tmpptr, SearchText, searchlength)) {
 	    return true;
+	}
 	tmpptr++;
     }
 

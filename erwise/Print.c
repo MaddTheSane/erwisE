@@ -10,6 +10,8 @@
  */
 
 #include "Includes.h"
+#include <X11/Xlib.h>
+#include "Xl.h"
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -22,10 +24,6 @@ int PrintToFile = 0;
 
 char PrintCommand[1024] = "lpr";
 char PrintFileName[1024] = "foobar.www";
-
-//FIXME: find the right way to include these!
-extern void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin);
-//extern void HText_free(HText_t * me);
 
 
 /*
@@ -57,11 +55,11 @@ static int DoPrint(HText_t *old_htext, int fd, int width, int lmargin, int top, 
 static int printobject_append(PrintLine_t *line, HTextObject_t *htobject);
 
 
-/*
+/*!
  * Allocate new PrintObject.
  */
-PrintObject_t *
- new_print_object()
+static PrintObject_t *
+new_print_object(void)
 {
     PrintObject_t *p;
 
@@ -76,11 +74,11 @@ PrintObject_t *
 }
 
 
-/*
+/*!
  * Allocate new PrintLine.
  */
-PrintLine_t *
- new_print_line()
+static PrintLine_t *
+new_print_line(void)
 {
     PrintLine_t *p;
 
@@ -156,9 +154,7 @@ int printobject_append(PrintLine_t *line, HTextObject_t *htobject)
  * Check on which line object should be appended
  */
 PrintLine_t *
- print_check_line_append(first, object)
-PrintLine_t *first;
-HTextObject_t *object;
+print_check_line_append(PrintLine_t *first, HTextObject_t *object)
 {
     PrintLine_t *p;
     PrintLine_t *new_line;
@@ -249,8 +245,7 @@ HTextObject_t *object;
 /*
  * Print using this command
  */
-int erwise_popen(command)
-char *command;
+int erwise_popen(char *command)
 {
     int fd[2];
 

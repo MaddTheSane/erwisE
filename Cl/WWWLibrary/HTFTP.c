@@ -151,12 +151,7 @@ PRIVATE char next_data_char(void)
 /*	Close an individual connection
 **
 */
-#ifdef __STDC__
 PRIVATE int close_connection(connection * con)
-#else
-PRIVATE int close_connection(con)
-    connection *con;
-#endif
 {
     connection * scan;
     int status = NETCLOSE(con->socket);
@@ -194,12 +189,7 @@ PRIVATE int close_connection(con)
 **	returns:  The first digit of the reply type,
 **		  or negative for communication failure.
 */
-#ifdef __STDC__
 PRIVATE int response(char * cmd)
-#else
-PRIVATE int response(cmd)
-    char * cmd;
-#endif
 {
     int result;				/* Three-digit decimal code */
     char	continuation;
@@ -452,11 +442,7 @@ PRIVATE int get_connection(const char *arg)
 **
 **
 */
-#ifdef __STDC__
 PRIVATE int close_master_socket(void)
-#else
-PRIVATE int close_master_socket()
-#endif
 {
     int status;
     FD_CLR(master_socket, &open_sockets);
@@ -482,11 +468,7 @@ PRIVATE int close_master_socket()
 **	master_socket	is socket number if good, else negative.
 **	port_number	is valid if good.
 */
-#ifdef __STDC__
 PRIVATE int get_listen_socket(void)
-#else
-PRIVATE int get_listen_socket()
-#endif
 {
     struct sockaddr_in soc_address;	/* Binary network address */
     struct sockaddr_in* sin = &soc_address;
@@ -887,13 +869,7 @@ PUBLIC int HTFTP_close_file(int soc)
 
 PUBLIC int WWW_TraceFlag;
 
-#ifdef __STDC__
 int main(int argc, char*argv[])
-#else
-int main(argc, argv)
-	int argc;
-	char *argv[];
-#endif
 {
     
     int arg;			/* Argument number */

@@ -21,17 +21,14 @@ static void uirecallclosecb(Widget wdg, caddr_t ignored,
 			     XmListCallbackStruct * calldata);
 
 
-static char *uitopaddress = (char *) NULL;
+static const char *uitopaddress = (char *) NULL;
 static char **uilistitems;
 static int uinitems;
-static void (*uirecallcallback) (char *topaddress, char *address,
-				  char *parentaddress);
+static void (*uirecallcallback) (const char *topaddress, const char *address,
+				 const char *parentaddress);
 
 
-int UiDisplayRecallDialog(listitems, nitems, callback)
-char **listitems;
-int nitems;
-void (*callback) (char *topaddress, char *address, char *parentaddress);
+int UiDisplayRecallDialog(char **listitems, int nitems, void (*callback) (const char *topaddress, const char *address, const char *parentaddress))
 {
     uiRecallGfx_t *recallgfx = &uiTopLevel.RecallGfx;
 
@@ -74,7 +71,7 @@ void (*callback) (char *topaddress, char *address, char *parentaddress);
 }
 
 
-void uiRecallUpdateDialog()
+void uiRecallUpdateDialog(void)
 {
     if (!uiPageInfo.CurrentPage && uiTopLevel.RecallGfx.FormWdg) {
 	uirecallfreeprevious();
@@ -86,7 +83,7 @@ void uiRecallUpdateDialog()
 
 
 static Widget
- uicreaterecallform()
+uicreaterecallform(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -109,8 +106,7 @@ static Widget
 
 
 static Widget
- uicreaterecalllabel(formwdg)
-Widget formwdg;
+uicreaterecalllabel(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -133,8 +129,7 @@ Widget formwdg;
 
 
 static Widget
- uicreaterecallopen(formwdg)
-Widget formwdg;
+uicreaterecallopen(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -157,8 +152,7 @@ Widget formwdg;
 
 
 static Widget
- uicreaterecallclose(formwdg)
-Widget formwdg;
+uicreaterecallclose(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -181,9 +175,7 @@ Widget formwdg;
 
 
 static Widget
- uicreaterecallseparator(formwdg, bottomwdg)
-Widget formwdg;
-Widget bottomwdg;
+uicreaterecallseparator(Widget formwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -204,10 +196,7 @@ Widget bottomwdg;
 
 
 static Widget
- uicreaterecalllist(formwdg, topwdg, bottomwdg)
-Widget formwdg;
-Widget topwdg;
-Widget bottomwdg;
+uicreaterecalllist(Widget formwdg, Widget topwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -238,7 +227,7 @@ Widget bottomwdg;
 }
 
 
-void uirecallfreeprevious()
+void uirecallfreeprevious(void)
 {
     if (uitopaddress && uinitems) {
 	while (uinitems--)
@@ -249,9 +238,7 @@ void uirecallfreeprevious()
 }
 
 
-static void uirecallsetitems(listitems, nitems)
-char **listitems;
-int nitems;
+static void uirecallsetitems(char **listitems, int nitems)
 {
     Widget listwdg = uiTopLevel.RecallGfx.ListWdg;
     int i;
@@ -259,21 +246,20 @@ int nitems;
 
     XmListDeleteAllItems(listwdg);
     if (nitems) {
-	for (i = 0; i < nitems; i++)
+	for (i = 0; i < nitems; i++) {
 	    tmpstr[i] = XmStringCreateSimple(listitems[i]);
+	}
 
 	XmListAddItems(listwdg, tmpstr, nitems, 0);
-	for (i = 0; i < nitems; i++)
+	for (i = 0; i < nitems; i++) {
 	    XmStringFree(tmpstr[i]);
+	}
 	uiFree((void *) tmpstr);
     }
 }
 
 
-static void uirecallopencb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uirecallopencb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     Widget listwdg = uiTopLevel.RecallGfx.ListWdg;
     int *poslist;
@@ -284,10 +270,11 @@ XmListCallbackStruct *calldata;
 	    uiDefineCursor(uiBusyCursor);
 	    if (uiHelpOnActionCB) {
 		(*uiHelpOnActionCB) ("Get page");
-		uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
-	    } else
+		uiHelpOnActionCB = NULL;
+	    } else {
 		(*uirecallcallback) (uilistitems[poslist[0] - 1],
 				     uitopaddress, (char *) NULL);
+	    }
 
 	    uiUndefineCursor();
 
@@ -296,10 +283,7 @@ XmListCallbackStruct *calldata;
 }
 
 
-static void uirecallclosecb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uirecallclosecb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     XtUnmapWidget(XtParent(uiTopLevel.RecallGfx.FormWdg));
 }

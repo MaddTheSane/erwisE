@@ -3,14 +3,13 @@ static char *rcsid = "$Id$";
 #include "UiIncludes.h"
 
 static Widget uicreatecpform(void);
-static Widget
- uicreatecpbutton(Widget parentwdg, char *name, char *actionname,
-		   int leftpos, int rightpos);
+static Widget uicreatecpbutton(Widget parentwdg, char *name, char *actionname,
+			       int leftpos, int rightpos);
 static Widget uicreatecpclosebutton(Widget parentwdg);
 static Widget uicreatecplabel(Widget parentwdg, Widget rightwdg);
 static Widget uicreatecplist(Widget parentwdg, Widget bottomwdg,
 			      Widget topwdg);
-static void uicpclosecb(char *address, HText_t * htext,
+static void uicpclosecb(const char *address, HText_t * htext,
 			 HTextObject_t * htextobject, void *parameter);
 static void uicpclickcb(Widget wdg, caddr_t ignored,
 			 XmListCallbackStruct * calldata);
@@ -19,7 +18,7 @@ static void uicpclickcb(Widget wdg, caddr_t ignored,
 //uiTopLevel_t uiTopLevel;
 
 
-int UiDisplayControlPanel()
+int UiDisplayControlPanel(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -67,7 +66,7 @@ int UiDisplayControlPanel()
 }
 
 
-void uiControlPanelUpdateDialog()
+void uiControlPanelUpdateDialog(void)
 {
     if (uiTopLevel.ControlPanelGfx.FormWdg) {
 	if (uiPageInfo.CurrentPage) {
@@ -78,7 +77,7 @@ void uiControlPanelUpdateDialog()
 
 
 static Widget
- uicreatecpform()
+uicreatecpform(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -101,12 +100,7 @@ static Widget
 
 
 static Widget
- uicreatecpbutton(parentwdg, name, actionname, leftpos, rightpos)
-Widget parentwdg;
-char *name;
-char *actionname;
-int leftpos;
-int rightpos;
+uicreatecpbutton(Widget parentwdg, char *name, char *actionname, int leftpos, int rightpos)
 {
     Widget tmpwdg;
     uiActionData_t *actiondata = uiMalloc(sizeof(*actiondata));
@@ -131,8 +125,7 @@ int rightpos;
 
 
 static Widget
- uicreatecpclosebutton(parentwdg)
-Widget parentwdg;
+uicreatecpclosebutton(Widget parentwdg)
 {
     Widget tmpwdg;
     static uiActionData_t actiondata;
@@ -157,9 +150,7 @@ Widget parentwdg;
 
 
 static Widget
- uicreatecplabel(parentwdg, rightwdg)
-Widget parentwdg;
-Widget rightwdg;
+uicreatecplabel(Widget parentwdg, Widget rightwdg)
 {
     Widget tmpwdg;
 
@@ -183,10 +174,7 @@ Widget rightwdg;
 
 
 static Widget
- uicreatecplist(formwdg, topwdg, bottomwdg)
-Widget formwdg;
-Widget topwdg;
-Widget bottomwdg;
+uicreatecplist(Widget formwdg, Widget topwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -223,10 +211,7 @@ Widget bottomwdg;
 }
 
 
-static void uicpclickcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uicpclickcb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     char *selection;
 
@@ -234,11 +219,7 @@ XmListCallbackStruct *calldata;
 }
 
 
-static void uicpclosecb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uicpclosecb(const char *addressaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     XtUnmapWidget(XtParent(uiTopLevel.ControlPanelGfx.FormWdg));
 }

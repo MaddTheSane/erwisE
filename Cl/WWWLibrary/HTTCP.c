@@ -54,12 +54,7 @@ extern int errno;
 /*	Report Internet Error
 **	---------------------
 */
-#ifdef __STDC__
 PUBLIC int HTInetStatus(char *where)
-#else
-PUBLIC int HTInetStatus(where)
-    char    *where;
-#endif
 {
     CTRACE(tfp, "TCP: Error %d in `errno' after call to %s() failed.\n\t%s\n",
 	    errno,  where,
@@ -72,6 +67,10 @@ PUBLIC int HTInetStatus(where)
 #define ER_NO_TRANS_DONE
 #endif
 #ifdef NeXT
+	    strerror(errno));
+#define ER_NO_TRANS_DONE
+#endif
+#ifdef __APPLE__
 	    strerror(errno));
 #define ER_NO_TRANS_DONE
 #endif
@@ -106,16 +105,9 @@ PUBLIC int HTInetStatus(where)
 **	*pp	    points to first unread character
 **	*pstatus    points to status updated iff bad
 */
-#ifdef __STDC__
 PUBLIC unsigned int HTCardinal(int *pstatus,
 	char		**pp,
 	unsigned int	max_value)
-#else
-PUBLIC unsigned int HTCardinal(pstatus, pp, max_value)
-   int			*pstatus;
-   char			**pp;
-   unsigned int		max_value;
-#endif
 {
     int   n;
     if ( (**pp<'0') || (**pp>'9')) {	    /* Null string is error */
@@ -142,15 +134,10 @@ PUBLIC unsigned int HTCardinal(pstatus, pp, max_value)
 **	returns	a pointer to a static string which must be copied if
 **		it is to be kept.
 */
-#ifdef __STDC__
 PUBLIC const char * HTInetString(struct sockaddr_in* sin)
-#else
-PUBLIC char * HTInetString(sin)
-    struct sockaddr_in *sin;
-#endif
 {
     static char string[16];
-    sprintf(string, "%d.%d.%d.%d",
+    snprintf(string, sizeof(string), "%d.%d.%d.%d",
 	    (int)*((unsigned char *)(&sin->sin_addr)+0),
 	    (int)*((unsigned char *)(&sin->sin_addr)+1),
 	    (int)*((unsigned char *)(&sin->sin_addr)+2),
@@ -171,13 +158,7 @@ PUBLIC char * HTInetString(sin)
 **	*sin	is filled in. If no port is specified in str, that
 **		field is left unchanged in *sin.
 */
-#ifdef __STDC__
 PUBLIC int HTParseInet(struct sockaddr_in* sin, const char *str)
-#else
-PUBLIC int HTParseInet(sin, str)
-    struct sockaddr_in *sin;
-    char *str;
-#endif
 {
     char *port;
     char host[256];
@@ -188,7 +169,7 @@ PUBLIC int HTParseInet(sin, str)
 
 /*	Parse port number if present
 */    
-    if (port=strchr(host, ':')) {
+    if ((port=strchr(host, ':'))) {
     	*port++ = 0;		/* Chop off port */
         if (port[0]>='0' && port[0]<='9') {
 #ifdef unix
@@ -243,11 +224,7 @@ PUBLIC int HTParseInet(sin, str)
 **	-------------------------------------------
 **
 */
-#ifdef __STDC__
 PRIVATE void get_host_details(void)
-#else
-PRIVATE void get_host_details()
-#endif
 
 #ifndef MAXHOSTNAMELEN
 #define MAXHOSTNAMELEN 64		/* Arbitrary limit */
@@ -280,11 +257,7 @@ PRIVATE void get_host_details()
 #endif
 }
 
-#ifdef __STDC__
 PUBLIC const char * HTHostName(void)
-#else
-PUBLIC char * HTHostName()
-#endif
 {
     get_host_details();
     return hostname;

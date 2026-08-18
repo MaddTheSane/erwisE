@@ -4,17 +4,16 @@ static char *rcsid = "$Id$";
 
 static void uibinddefaultsvariables(void);
 static void uiupdatedefaultsvariables(void);
-static Widget uicreatedefaultsformdialog();
+static Widget uicreatedefaultsformdialog(void);
 static Widget uicreatedefaultslabel(Widget parent, Widget bottomwdg);
-static Widget
- uicreatedefaultsitem(char *name, Widget parent,
-		       Widget bottomwdg);
+static Widget uicreatedefaultsitem(char *name, Widget parent,
+				   Widget bottomwdg);
 static Widget uicreatedefaultsclose(Widget parent);
-static void uidefaultsclosecb(char *address, HText_t * htext,
-			   HTextObject_t * htextobject, void *parameter);
+static void uidefaultsclosecb(const char *address, HText_t * htext,
+			      HTextObject_t * htextobject, void *parameter);
 
 
-int UiDisplayDefaultsDialog()
+int UiDisplayDefaultsDialog(void)
 {
     uiDefaultsGfx_t *defaultsgfx = &uiTopLevel.DefaultsGfx;
 
@@ -57,7 +56,7 @@ int UiDisplayDefaultsDialog()
 }
 
 
-void uiDefaultsUpdateDialog()
+void uiDefaultsUpdateDialog(void)
 {
     if (uiTopLevel.DefaultsGfx.FormWdg) {
 	if (uiPageInfo.CurrentPage) {
@@ -69,7 +68,7 @@ void uiDefaultsUpdateDialog()
 }
 
 
-static void uibinddefaultsvariables()
+static void uibinddefaultsvariables(void)
 {
     UiBindVariable("Page Settings window",
 	       (void *) &uiTopLevel.GlobalSettings.PageSettingsPlacement,
@@ -89,7 +88,7 @@ static void uibinddefaultsvariables()
 }
 
 
-static void uiupdatedefaultsvariables()
+static void uiupdatedefaultsvariables(void)
 {
     UiUpdateVariable("Page Settings window");
     UiUpdateVariable("Recall window");
@@ -100,7 +99,7 @@ static void uiupdatedefaultsvariables()
 
 
 static Widget
- uicreatedefaultsformdialog()
+uicreatedefaultsformdialog(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -122,9 +121,7 @@ static Widget
 }
 
 static Widget
- uicreatedefaultslabel(parent, bottomwdg)
-Widget parent;
-Widget bottomwdg;
+uicreatedefaultslabel(Widget parent, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -150,10 +147,7 @@ Widget bottomwdg;
 
 
 static Widget
- uicreatedefaultsitem(name, parent, bottomwdg)
-char *name;
-Widget parent;
-Widget bottomwdg;
+uicreatedefaultsitem(char *name, Widget parent, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -190,8 +184,7 @@ Widget bottomwdg;
 
 
 static Widget
- uicreatedefaultsclose(parent)
-Widget parent;
+uicreatedefaultsclose(Widget parent)
 {
     ArgList args;
     Cardinal nargs;
@@ -229,24 +222,17 @@ Widget parent;
 }
 
 
-static void setplacementvalue(uiconfigsetfp, table, item, placementvalue)
-void *(*uiconfigsetfp) (void *table, char *item, void *value);
-void *table;
-char *item;
-int placementvalue;
+static void setplacementvalue(void *(*uiconfigsetfp) (void *table, char *item, void *value), void *table, char *item, int placementvalue)
 {
-    if (placementvalue)
+    if (placementvalue) {
 	uiconfigsetfp(table, item, "Mouse");
-    else
+    } else {
 	uiconfigsetfp(table, item, "Fixed");
+    }
 }
 
 
-static void uidefaultsclosecb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uidefaultsclosecb(const char *address, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     uiGlobalSettings_t *gs = &uiTopLevel.GlobalSettings;
     void *table;

@@ -10,25 +10,25 @@ int main(int argc, char *argv[])
 
     ConfigInit();
 
-    if (fp = OpenErwiserc("r")) {
+    if ((fp = OpenErwiserc("r"))) {
 	ConfigRestore(fp);
 	fclose(fp);
     }
-    if (UiInitialize(argc, argv, ConfigGetValue, ConfigSetValue) != UI_OK)
+    if (UiInitialize(argc, argv, ConfigGetValue, ConfigSetValue) != UI_OK) {
 	DisplayFatal("Error initializing Ui-toolkit");
+    }
 
     AttachCallbacks();
     BindKeys();
     BindVariables();
 
     UiMainLoop();
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
 #define RCPOSTFIX ".old"
 FILE *
- OpenErwiserc(type)
-char *type;
+OpenErwiserc(char *type)
 {
     char *tmpstr;
     char *bustr;

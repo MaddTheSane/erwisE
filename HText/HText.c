@@ -328,7 +328,7 @@ HText_appendCharacter (struct HText *text, char ch)
 
 
 HTextAnchor_t *
-htext_new_anchor ()
+htext_new_anchor (void)
 {
   HTextAnchor_t *p;
 
@@ -353,9 +353,7 @@ htext_new_anchor ()
 /*      Start an anchor field
 */
 void 
-HText_beginAnchor (text, anc)
-     struct HText *text;
-     HTChildAnchor *anc;
+HText_beginAnchor (struct HText *text, HTChildAnchor *anc)
 {
   HT_DEBUG (("\nHText_beginAnchor [%s]\n", anc->tag));
 
@@ -410,8 +408,7 @@ HText_beginAnchor (text, anc)
  */
 
 void 
-HText_endAnchor (text)
-     struct HText *text;
+HText_endAnchor (struct HText *text)
 {
   HT_DEBUG (("\nHText_endAnchor\n"));
 
@@ -428,11 +425,9 @@ HText_endAnchor (text)
 
 
 void 
-HText_appendText (text, str)
-     struct HText *text;
-     char *str;
+HText_appendText (struct HText *text, const char *str)
 {
-  register char *p;
+  register const char *p;
 
   HT_DEBUG (("HText_appendText by characters\n"));
 
@@ -450,8 +445,7 @@ HText_appendText (text, str)
  */
 
 void 
-HText_endAppend (text)
-     struct HText *text;
+HText_endAppend (struct HText *text)
 {
   HT_DEBUG (("HText_endAppend"));
 
@@ -489,8 +483,7 @@ HText_setStyle (struct HText *text, HTStyle *style)
 
 
 bool 
-HText_select (text)
-     struct HText *text;
+HText_select (struct HText *text)
 {
   HT_DEBUG (("\nHText_select ??????\n"));
   /*
@@ -690,95 +683,90 @@ ht_memdup (char *data, int len)
  */
 
 HText_t *
-HtDuplicate (text)
-     HText_t *text;
+HtDuplicate (HText_t *text)
 {
   HText_t *newtext;
-  HTextObject_t *o, *p;
+  HTextObject_t *o, *p = NULL;
   HTextObject_t *p_old = 0;
-
+  
   newtext = (HText_t *) malloc (sizeof (*newtext));
-
-  if (!newtext)
+  
+  if (!newtext) {
     return 0;
-
+  }
+  
   memset (newtext, 0, sizeof (*newtext));
-
+  
   o = text->first;
-
+  
   /*
    * Allocate new htext -page info
    */
-  if (o)
-    {
-      p = newtext->first = (HTextObject_t *) malloc (sizeof (*p));
-
-      if (!p)
-	{
-
-	  free (newtext);
-
-	  return 0;
-	}
+  if (o) {
+    p = newtext->first = (HTextObject_t *) malloc (sizeof (*p));
+    
+    if (!p) {
+      
+      free (newtext);
+      
+      return 0;
     }
-
-  while (o)
+  }
+  
+  while (o) {
+    memset (p, 0, sizeof (*p));
+    
+    p->paragraph = o->paragraph;
+    
+    p->length = o->length;
+    
+    p->style = o->style;
+    
+    p->data = (char *) ht_memdup (o->data, o->length);
+    
+    if (!p->data)
     {
-      memset (p, 0, sizeof (*p));
-
-      p->paragraph = o->paragraph;
-
-      p->length = o->length;
-
-      p->style = o->style;
-
-      p->data = (char *) ht_memdup (o->data, o->length);
-
-      if (!p->data)
-	{
-
-	  goto free_allocated_error;
-	}
-
-      p->prev = p_old;
-
-      if (o->next)
-	{
-
-	  p_old = p;
-
-	  p = (HTextObject_t *) malloc (sizeof (*p));
-
-	  if (!p)
-	    {
-
-	      goto free_allocated_error;
-	    }
-
-	  p_old->next = p;
-	}
-
-      o = o->next;
+      
+      goto free_allocated_error;
     }
-
+    
+    p->prev = p_old;
+    
+    if (o->next) {
+      
+      p_old = p;
+      
+      p = (HTextObject_t *) malloc (sizeof (*p));
+      
+      if (!p) {
+	
+	goto free_allocated_error;
+      }
+      
+      p_old->next = p;
+    }
+    
+    o = o->next;
+  }
+  
   newtext->last = p;
-
+  
   return newtext;
-
+  
 free_allocated_error:
-
+  
   o = newtext->first;
-
-  while (o)
-    {
-
-      if (o->data)
-	free (o->data);
-
-      free (o);
+  
+  while (o) {
+    
+    if (o->data) {
+      free (o->data);
     }
-
+    
+    free (o);
+  }
+  
   free (newtext);
-
+  
   return 0;
 }

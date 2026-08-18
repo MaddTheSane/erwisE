@@ -6,21 +6,21 @@ static char *rcsid = "$Id$";
 static Widget uicreateprintformdialog(void);
 static Widget uicreateprintcmd(Widget formwdg);
 static Widget
- uicreateprintmargin(Widget formwdg, Widget topwdg,
-		      char *name, char *labeltext, int pos);
+uicreateprintmargin(Widget formwdg, Widget topwdg,
+		    const char *name, const char *labeltext, int pos);
 static Widget uicreateprintseparator(Widget formwdg, Widget topwdg);
 static Widget uicreateprintwidth(Widget formwdg, Widget topwdg);
 static Widget uicreateprintfile(Widget formwdg, Widget topwdg);
 static void uicreateprintbuttons(Widget formwdg, Widget topwdg);
-static void uiprintmargincb(char *address, HText_t * htext,
-			     HTextObject_t * htextobject,
-			     void *parameter);
-static void uiprintwidthcb(char *address, HText_t * htext,
+static void uiprintmargincb(const char *address, HText_t * htext,
 			    HTextObject_t * htextobject,
 			    void *parameter);
-static void uiprintbuttoncb(char *address, HText_t * htext,
-			     HTextObject_t * htextobject,
-			     void *parameter);
+static void uiprintwidthcb(const char *address, HText_t * htext,
+			   HTextObject_t * htextobject,
+			   void *parameter);
+static void uiprintbuttoncb(const char *address, HText_t * htext,
+			    HTextObject_t * htextobject,
+			    void *parameter);
 
 
 static uiActionData_t uiactiondata[8] =
@@ -87,7 +87,7 @@ int UiDisplayPrintDialog(int type)
 }
 
 
-void uiPrintUpdateDialog()
+void uiPrintUpdateDialog(void)
 {
     if (uiTopLevel.PrintGfx.FormWdg) {
 	if (uiPageInfo.CurrentPage) {
@@ -121,12 +121,7 @@ static Widget
 
 
 static Widget
- uicreateprintmargin(formwdg, topwdg, name, labeltext, pos)
-Widget formwdg;
-Widget topwdg;
-char *name;
-char *labeltext;
-int pos;
+uicreateprintmargin(Widget formwdg, Widget topwdg, const char *name, const char *labeltext, int pos)
 {
     ArgList args;
     Cardinal nargs;
@@ -179,7 +174,7 @@ int pos;
 		  (XtCallbackProc) uiDialogActivateCB,
 		  (caddr_t) & uiactiondata[callnr]);
     UiAttachCallback(uiactiondata[callnr].ActionName, uiprintmargincb,
-		     uiactiondata[callnr].ActionName);
+		     (void*)uiactiondata[callnr].ActionName);
     callnr++;
     XtManageChild(margindownwdg);
 
@@ -199,7 +194,7 @@ int pos;
 		  (XtCallbackProc) uiDialogActivateCB,
 		  (caddr_t) & uiactiondata[callnr]);
     UiAttachCallback(uiactiondata[callnr].ActionName, uiprintmargincb,
-		     uiactiondata[callnr].ActionName);
+		     (void*)uiactiondata[callnr].ActionName);
     callnr++;
     XtManageChild(marginupwdg);
 
@@ -228,9 +223,7 @@ int pos;
 
 
 static Widget
- uicreateprintseparator(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+uicreateprintseparator(Widget formwdg, Widget topwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -251,8 +244,7 @@ Widget topwdg;
 
 
 static Widget
- uicreateprintcmd(formwdg)
-Widget formwdg;
+uicreateprintcmd(Widget formwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -309,9 +301,7 @@ Widget formwdg;
 
 
 static Widget
- uicreateprintfile(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+uicreateprintfile(Widget formwdg, Widget topwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -373,9 +363,7 @@ Widget topwdg;
 
 
 static Widget
- uicreateprintwidth(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+uicreateprintwidth(Widget formwdg, Widget topwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -472,9 +460,7 @@ Widget topwdg;
 }
 
 
-static void uicreateprintbuttons(formwdg, topwdg)
-Widget formwdg;
-Widget topwdg;
+static void uicreateprintbuttons(Widget formwdg, Widget topwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -522,11 +508,7 @@ Widget topwdg;
 
 
 
-static void uiprintmargincb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uiprintmargincb(const char *address, HText_t * htext, HTextObject_t * htextobject, void *parameter)
 {
     int i;
     Widget textwdg;
@@ -557,11 +539,7 @@ void *parameter;
 }
 
 
-static void uiprintwidthcb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uiprintwidthcb(const char *address, HText_t * htext, HTextObject_t * htextobject, void *parameter)
 {
     Widget textwdg = uiTopLevel.PrintGfx.WidthWdg;
     char *fixedtext;
@@ -591,11 +569,7 @@ void *parameter;
 extern int Print(HText_t *htext);
 
 
-static void uiprintbuttoncb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uiprintbuttoncb(const char *address, HText_t * htext, HTextObject_t * htextobject, void *parameter)
 {
     uiPage_t *page = uiPageInfo.CurrentPage;
 

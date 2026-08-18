@@ -6,72 +6,71 @@ static char *rcsid = "$Id: Misc.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 #include "Includes.h"
 
 
-void displaypage(char *topaddress, HText_t * parenthtext, HText_t * htext,
-		  char *address);
-int addresscmp(char *addr1, char *addr2);
+static void displaypage(const char *topaddress, HText_t * parenthtext, HText_t * htext,
+		 const char *address);
+static int addresscmp(const char *addr1, const char *addr2);
 
 
 Connection_t *Connections = (Connection_t *) NULL;
 Page_t *Pages = (Page_t *) NULL;
 
 
-Page_t *FindPage(Page_t *hierarchy, char *address)
+Page_t *FindPage(Page_t *hierarchy, const char *address)
 {
-    while (address && hierarchy)
-	if (!addresscmp(hierarchy->Address, address))
+    while (address && hierarchy) {
+	if (!addresscmp(hierarchy->Address, address)) {
 	    return hierarchy;
-	else
+	} else {
 	    hierarchy = hierarchy->Next;
+	}
+    }
 
     return (Page_t *) NULL;
 }
 
 
 Page_t *
- GlobalFindPage(address)
-char *address;
+GlobalFindPage(const char *address)
 {
     Page_t *hierarchy = Pages, *tmppage;
-
-    while (address && hierarchy)
-	if (tmppage = FindPage(hierarchy->Children, address))
+    
+    while (address && hierarchy) {
+	if ((tmppage = FindPage(hierarchy->Children, address))) {
 	    return tmppage;
-	else
+	} else {
 	    hierarchy = hierarchy->Next;
-
+	}
+    }
+    
     return (Page_t *) NULL;
 }
 
 
 Page_t *
- AddPage(page, address, htext, toppage)
-Page_t **page;
-char *address;
-HText_t *htext;
-Page_t *toppage;
+AddPage(Page_t **page, const char *address, HText_t *htext, Page_t *toppage)
 {
     if (*page) {
-	while ((*page)->Next)
+	while ((*page)->Next) {
 	    page = &(*page)->Next;
+	}
 	(*page)->Next = (Page_t *) Malloc(sizeof(**page));
 	page = &(*page)->Next;
-    } else
+    } else {
 	*page = (Page_t *) Malloc(sizeof(**page));
-
+    }
+    
     (*page)->Address = strdup(address);
     (*page)->HText = htext;
     (*page)->ParentPage = toppage;
     (*page)->Parents = (Page_t *) NULL;
     (*page)->Children = (Page_t *) NULL;
     (*page)->Next = (Page_t *) NULL;
-
+    
     return *page;
 }
 
 
-void DeletePage(page, address)
-Page_t **page;
-char *address;
+void DeletePage(Page_t **page, char *address)
 {
     Page_t *oldpage = *page;
 
@@ -90,15 +89,13 @@ char *address;
 }
 
 
-void DisplayWarning(text)
-char *text;
+void DisplayWarning(const char *text)
 {
     fprintf(stderr, "Warning: %s\n", text);
 }
 
 
-void DisplayFatal(text)
-char *text;
+void DisplayFatal(const char *text)
 {
     fprintf(stderr, "Fatal: %s\n", text);
 
@@ -106,8 +103,7 @@ char *text;
 }
 
 
-int CanBeCursor(htextobject)
-HTextObject_t *htextobject;
+int CanBeCursor(HTextObject_t *htextobject)
 {
     int i;
 
@@ -123,8 +119,7 @@ HTextObject_t *htextobject;
 
 
 void *
- Malloc(size)
-int size;
+Malloc(size_t size)
 {
     void *tmpptr;
 
@@ -137,14 +132,13 @@ int size;
 
 
 void *
- ReAlloc(ptr, size)
-void *ptr;
-int size;
+ReAlloc(void *ptr, size_t size)
 {
     void *tmpptr;
 
-    if (!ptr)
+    if (!ptr) {
 	return Malloc(size);
+    }
     else if (!(tmpptr = (void *) realloc((char *) ptr, size))) {
 	DisplayFatal("No swap, buy a computer");
 	exit(1);
@@ -153,18 +147,14 @@ int size;
 }
 
 
-void Free(ptr)
-void *ptr;
+void Free(void *ptr)
 {
     if (ptr)
 	free(ptr);
 }
 
 
-void StartLoading(address, topaddress, parentaddress)
-char *address;
-char *topaddress;
-char *parentaddress;
+void StartLoading(const char *address, const char *topaddress, const char *parentaddress)
 {
     Page_t *oldpage, *tmppage, *toppage, *parentpage;
     HText_t *newhtext;
@@ -176,7 +166,7 @@ char *parentaddress;
 	FindPage(toppage->Children, parentaddress) : (Page_t *) NULL;
 
     if (toppage && (oldpage = GlobalFindPage(address))) {
-	if (tmppage = FindPage(toppage->Children, address)) {
+	if ((tmppage = FindPage(toppage->Children, address))) {
 	    if (tmppage->HText) {
 		/* add the parent */
 		if (parentaddress && strcmp(parentaddress, address) &&
@@ -229,8 +219,7 @@ char *parentaddress;
 }
 
 
-void PollConnection(connection)
-Connection_t *connection;
+void PollConnection(Connection_t *connection)
 {
     HText_t *htext;
     int status;
@@ -299,11 +288,7 @@ Connection_t *connection;
 }
 
 
-void displaypage(topaddress, parenthtext, htext, address)
-char *topaddress;
-HText_t *parenthtext;
-HText_t *htext;
-char *address;
+void displaypage(const char *topaddress, HText_t *parenthtext, HText_t *htext, const char *address)
 {
     HTextAnchor_t *htanchor = (HTextAnchor_t *) NULL;
     HTextObject_t *htextobject;
@@ -330,11 +315,7 @@ char *address;
 
 
 Connection_t *
- AddConnection(address, toppage, parentpage, clconnection)
-char *address;
-Page_t *toppage;
-Page_t *parentpage;
-ClConnection_t *clconnection;
+AddConnection(char *address, Page_t *toppage, Page_t *parentpage, ClConnection_t *clconnection)
 {
     Connection_t *tmpconnection = Connections;
 
@@ -362,42 +343,45 @@ ClConnection_t *clconnection;
 
 
 Connection_t *
- FindConnection(address)
-char *address;
+FindConnection(char *address)
 {
     Connection_t *tmpconnection = Connections;
 
-    while (tmpconnection)
-	if (!addresscmp(tmpconnection->Address, address))
+    while (tmpconnection) {
+	if (!addresscmp(tmpconnection->Address, address)) {
 	    return tmpconnection;
-	else
+	} else {
 	    tmpconnection = tmpconnection->Next;
+	}
+    }
 
     return (Connection_t *) NULL;
 }
 
 
-void DeleteConnection(address)
-char *address;
+void DeleteConnection(char *address)
 {
     Connection_t *tmpconnection = Connections;
 
-    if (tmpconnection)
-	if (!strcmp(tmpconnection->Address, address))
+    if (tmpconnection) {
+	if (!strcmp(tmpconnection->Address, address)) {
 	    Connections = Connections->Next;
-	else {
+	} else {
 	    while (tmpconnection->Next &&
-		   strcmp(tmpconnection->Next->Address, address))
+		   strcmp(tmpconnection->Next->Address, address)) {
 		tmpconnection = tmpconnection->Next;
+	    }
 	    if (tmpconnection->Next) {
 		Connection_t *tmptmpconnection;
-
+		
 		tmptmpconnection = tmpconnection->Next;
 		tmpconnection->Next = tmpconnection->Next->Next;
 		tmpconnection = tmptmpconnection;
-	    } else
+	    } else {
 		tmpconnection = (Connection_t *) NULL;
+	    }
 	}
+    }
     if (tmpconnection) {
 	if (UiConnectionsDialogDisplayed())
 	    ConnectionsCB((char *) NULL, (HText_t *) NULL,
@@ -409,8 +393,7 @@ char *address;
 }
 
 
-int addresscmp(addr1, addr2)
-char *addr1, *addr2;
+int addresscmp(const char *addr1, const char *addr2)
 {
     int i = 0;
 

@@ -51,12 +51,12 @@ extern int UiInitialize(int argc, char *argv[],
 					        void *value));
 extern void UiMainLoop(void);
 
-extern int UiDisplaySelectionBox(void (*callback) (char *filename));
+extern int UiDisplaySelectionBox(void (*callback) (const char *filename));
 
-extern int UiDisplayPage(char *address, HText_t * prevhtext, HText_t * htext,
-			  HTextObject_t * htextobject, char *title);
-extern int UiDeletePage(char *address, HText_t * htext);
-extern int UiSetCursor(char *address, HText_t * htext,
+extern int UiDisplayPage(const char *address, HText_t * prevhtext, HText_t * htext,
+			  HTextObject_t * htextobject, const char *title);
+extern int UiDeletePage(const char *address, HText_t * htext);
+extern int UiSetCursor(const char *address, HText_t * htext,
 		        HTextObject_t * htextobject);
 
 extern int UiDisplaySearchDialog(int type);
@@ -64,49 +64,49 @@ extern int UiDisplaySearchDialog(int type);
 extern int UiDisplayPageSettingsDialog(int type);
 
 extern int UiDisplayListDialog(char **listitems, char **addresses, int nitems,
-			        void (*callback) (char *topaddress,
-						   char *address,
-						   char *parentaddress));
+			        void (*callback) (const char *topaddress,
+						   const char *address,
+						   const char *parentaddress));
 
 extern int UiDisplayRecallDialog(char **listitems, int nitems,
-				  void (*callback) (char *topaddress,
-						     char *address,
-						   char *parentaddress));
+				  void (*callback) (const char *topaddress,
+						     const char *address,
+						   const char *parentaddress));
 
 extern int UiAttachCallback(const char *actionname,
-			     void (*callback) (char *address,
-					        HText_t * htext,
-					     HTextObject_t * htextobject,
-					        void *parameter),
-			     void *parameter);
+			    void (*callback) (const char *address,
+					      HText_t * htext,
+					      HTextObject_t * htextobject,
+					      void *parameter),
+			    void *parameter);
 extern int UiBindKey(const char *keyname, int modifier,
-		      void (*callback) (char *address,
-					 HText_t * htext,
-					 HTextObject_t * htextobject,
-					 void *parameter),
-		      void *parameter);
+		     void (*callback) (const char *address,
+				       HText_t * htext,
+				       HTextObject_t * htextobject,
+				       void *parameter),
+		     void *parameter);
 extern int UiBindVariable(const char *varname, void *variable, uiVarType_t type);
 extern int UiUpdateVariable(const char *varname);
-extern void UiGetNextAction(void (*helponactioncb) (char *actionstring));
+extern void UiGetNextAction(void (*helponactioncb) (const char *actionstring));
 extern uintptr_t UiAddTimeOut(int timeout, void (*callback) (void *data),
 			 void *data);
 extern void UiDeleteTimeOut(uintptr_t timoutid);
 extern uintptr_t UiAddInputFD(int fd, void (*callback) (void *data), void *data);
 extern void UiDeleteInputFD(uintptr_t inputid);
 extern void UiAddStringToCutBuffer(char *data);
-void UiDisplayPopup(void (*callback) (char *address, char *topaddress,
-				       char *parentaddress),
-		     char *topaddress, char **items, int nitems);
+void UiDisplayPopup(void (*callback) (const char *address, const char *topaddress,
+				      const char *parentaddress),
+		    const char *topaddress, char **items, int nitems);
 
 extern void UiShowInfo(void);
 
 extern int UiDisplayControlPanel(void);
 
-extern int UiDisplayFileSelection(void (*callback) (char *topaddress,
+extern int UiDisplayFileSelection(void (*callback) (const char *topaddress,
 						     HText_t * htext,
 					     HTextObject_t * htextobject,
 						     void *parameter));
-extern int UiDisplayWarningDialog(char *warning, void (*callback) (int button));
+extern int UiDisplayWarningDialog(const char *warning, void (*callback) (int button));
 extern int UiDisplayDefaultsDialog(void);
 extern int UiDisplayConnectionsDialog(char **listitems, void **connections, int nitems, void (*callback) (void *connection));
 extern int UiDisplayPrintDialog(int type);

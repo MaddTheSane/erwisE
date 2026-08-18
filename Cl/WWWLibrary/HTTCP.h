@@ -18,11 +18,7 @@
 **	returns	a pointer to a static string which must be copied if
 **		it is to be kept.
 */
-#ifdef __STDC__
 extern const char * HTInetString(struct sockaddr_in* sin);
-#else
-extern char * HTInetString();
-#endif
 
 
 /*	Encode INET status (as in sys/errno.h)			  inet_status()
@@ -35,11 +31,7 @@ extern char * HTInetString();
 ** On return,
 **	returns		a negative status in the unix way.
 */
-#ifdef __STDC__
 extern int HTInetStatus(char *where);
-#else
-extern int HTInetStatus();
-#endif
 
 /*	Publicly accesible variables
 */
@@ -61,13 +53,9 @@ extern int HTInetStatus();
 **	*pp	    points to first unread character
 **	*pstatus    points to status updated iff bad
 */
-#ifdef __STDC__
 extern unsigned int HTCardinal(int *pstatus,
 	char		**pp,
 	unsigned int	max_value);
-#else
-extern unsigned int HTCardinal();
-#endif
 
 /*	Parse an internet node address and port
 **	---------------------------------------
@@ -81,18 +69,10 @@ extern unsigned int HTCardinal();
 **	*sin	is filled in. If no port is specified in str, that
 **		field is left unchanged in *sin.
 */
-#ifdef __STDC__
 extern int HTParseInet(struct sockaddr_in* sin, const char *str);
-#else
-extern int HTParseInet();
-#endif
 
 /*	Get Name of This Machine
 **	------------------------
 **
 */
-#ifdef __STDC__
 extern const char * HTHostName(void);
-#else
-extern char * HTHostName();
-#endif

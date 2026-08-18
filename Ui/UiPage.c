@@ -6,8 +6,8 @@ static char *rcsid = "$Id: UiPage.c,v 1.4 1992/03/26 18:13:50 kny Exp kny $";
 #include "UiIncludes.h"
 
 
-static uiHierarchy_t *uifindoraddhierarchy(char *topaddress);
-static uiHierarchy_t *uifindhierarchy(char *topaddress);
+static uiHierarchy_t *uifindoraddhierarchy(const char *topaddress);
+static uiHierarchy_t *uifindhierarchy(const char *topaddress);
 static int uideletehierarchy(uiHierarchy_t * hierarchy);
 static uiPage_t *uifindpage(HText_t * htext, uiHierarchy_t * hierarchy);
 static uiPage_t *
@@ -17,13 +17,13 @@ static int uideletepage(uiPage_t * page, uiHierarchy_t * hierarchy);
 static void uideletepagecallbacks(uiPage_t * page);
 static uiPage_t *uifindshadowpage(uiHierarchy_t * hierarchy, uiPage_t * page);
 static int uicreatepagewidgets(uiPage_t * page, uiPage_t * prevpage,
-			        char *title);
-static void uicreatepageform(uiPage_t * page, char *title, Widget topwdg);
+			       const char *title);
+static void uicreatepageform(uiPage_t * page, const char *title, Widget topwdg);
 static Widget uicreatepagemenu(uiPage_t * page, Widget formwdg);
 static Widget uicreatepagemenuitem(uiPage_t * page, Widget menuwdg,
 				    int itempos, int level);
 static int uifindnextitem(int itempos, int level);
-static Widget uicreatepagecontrol(uiPage_t * page, Widget formwdg, char *title);
+static Widget uicreatepagecontrol(uiPage_t * page, Widget formwdg, const char *title);
 static void uicreatepagelabel(Widget parentwdg, char *label);
 static void uicreatepagebutton(uiPage_t * page, Widget parentwdg, char *name,
 			        int leftpos, int rightpos);
@@ -34,9 +34,9 @@ static Widget uicreatepagescroll(uiPage_t * page, Widget formwdg,
 static void uiconnectpage(uiPage_t * page);
 static void uipageupdatescrollbars(uiPage_t * page);
 static uiActionData_t *uicreatepageactiondata(uiPage_t * page,
-					       char *actionname);
+					      const char *actionname);
 static void uisetcurrentpage(uiPage_t * page);
-static int uideletepageinternal(char *topaddress, HText_t * htext);
+static int uideletepageinternal(const char *topaddress, HText_t * htext);
 
 static void uipageactivatecb(Widget wdg, void * actiondata,
 			      void * calldata);
@@ -46,17 +46,17 @@ static void uipageexposecb(Widget wdg, uiPage_t * page,
 			    XmDrawingAreaCallbackStruct * calldata);
 static void uipageresizecb(Widget wdg, uiPage_t * page,
 			    XmDrawingAreaCallbackStruct * calldata);
-static void uipageinputcb(char *topaddress, HText_t * htext,
+static void uipageinputcb(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-static void uipagescrollbarcb(char *topaddress, HText_t * htext,
+static void uipagescrollbarcb(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-static void uipagedowncb(char *topaddress, HText_t * htext,
+static void uipagedowncb(const char *topaddress, HText_t * htext,
 			  HTextObject_t * htextobject, void *parameter);
-static void uipageupcb(char *topaddress, HText_t * htext,
+static void uipageupcb(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject, void *parameter);
-static void uipagetopcb(char *topaddress, HText_t * htext,
+static void uipagetopcb(const char *topaddress, HText_t * htext,
 			 HTextObject_t * htextobject, void *parameter);
-static void uipagebottomcb(char *topaddress, HText_t * htext,
+static void uipagebottomcb(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
 
 uiPageInfo_t uiPageInfo =
@@ -67,12 +67,7 @@ uiPageInfo_t uiPageInfo =
 };
 
 
-int UiDisplayPage(topaddress, prevhtext, htext, htextobject, title)
-char *topaddress;
-HText_t *prevhtext;
-HText_t *htext;
-HTextObject_t *htextobject;
-char *title;
+int UiDisplayPage(const char *topaddress, HText_t *prevhtext, HText_t *htext, HTextObject_t *htextobject, const char *title)
 {
     uiHierarchy_t *hierarchy;
     uiPage_t *prevpage, *page;
@@ -105,9 +100,7 @@ char *title;
 }
 
 
-int UiDeletePage(topaddress, htext)
-char *topaddress;
-HText_t *htext;
+int UiDeletePage(const char *topaddress, HText_t *htext)
 {
     uiHierarchy_t *hierarchy;
     uiPage_t *page, *shadowpage;
@@ -136,10 +129,7 @@ HText_t *htext;
 }
 
 
-int UiSetCursor(topaddress, htext, htextobject)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
+int UiSetCursor(const char *topaddress, HText_t *htext, HTextObject_t *htextobject)
 {
     uiHierarchy_t *hierarchy;
     uiPage_t *page;
@@ -171,8 +161,7 @@ HTextObject_t *htextobject;
 }
 
 
-void uiPageUpdateWindow(page)
-uiPage_t *page;
+void uiPageUpdateWindow(uiPage_t *page)
 {
     HTextObject_t *htextobject;
     int tmpwidth;
@@ -205,14 +194,14 @@ uiPage_t *page;
 }
 
 
-void uiPageAttachCallbacks()
+void uiPageAttachCallbacks(void)
 {
     UiAttachCallback("Top", uipagetopcb, (void *) NULL);
     UiAttachCallback("Bottom", uipagebottomcb, (void *) NULL);
 }
 
 
-void uiPageDefineKeys()
+void uiPageDefineKeys(void)
 {
     UiBindKey("space", UI_NONE, uipagedowncb, (void *) NULL);
     UiBindKey("Delete", UI_NONE, uipageupcb, (void *) NULL);
@@ -223,8 +212,7 @@ void uiPageDefineKeys()
 
 
 static uiHierarchy_t *
- uifindoraddhierarchy(topaddress)
-char *topaddress;
+uifindoraddhierarchy(const char *topaddress)
 {
     uiHierarchy_t *tmphierarchy;
 
@@ -248,20 +236,18 @@ char *topaddress;
 
 
 static uiHierarchy_t *
- uifindhierarchy(topaddress)
-char *topaddress;
+uifindhierarchy(const char *topaddress)
 {
     uiHierarchy_t *tmphierarchy = uiTopLevel.Hierarchies;
-
+    
     while (tmphierarchy && strcmp(tmphierarchy->Address, topaddress))
 	tmphierarchy = tmphierarchy->Next;
-
+    
     return tmphierarchy;
 }
 
 
-static int uideletehierarchy(hierarchy)
-uiHierarchy_t *hierarchy;
+static int uideletehierarchy(uiHierarchy_t *hierarchy)
 {
     uiHierarchy_t *tmphierarchy = uiTopLevel.Hierarchies;
 
@@ -294,9 +280,7 @@ uiHierarchy_t *hierarchy;
 
 
 static uiPage_t *
- uifindpage(htext, hierarchy)
-HText_t *htext;
-uiHierarchy_t *hierarchy;
+ uifindpage(HText_t *htext, uiHierarchy_t *hierarchy)
 {
     uiPage_t *tmppage = hierarchy->Pages;
 
@@ -308,11 +292,7 @@ uiHierarchy_t *hierarchy;
 
 
 static uiPage_t *
- uiaddpage(htext, htextobject, hierarchy, prevpage)
-HText_t *htext;
-HTextObject_t *htextobject;
-uiHierarchy_t *hierarchy;
-uiPage_t *prevpage;
+ uiaddpage(HText_t *htext, HTextObject_t *htextobject, uiHierarchy_t *hierarchy, uiPage_t *prevpage)
 {
     uiPage_t *tmppage = hierarchy->Pages;
 
@@ -364,9 +344,7 @@ uiPage_t *prevpage;
 }
 
 
-static int uideletepage(page, hierarchy)
-uiPage_t *page;
-uiHierarchy_t *hierarchy;
+static int uideletepage(uiPage_t *page, uiHierarchy_t *hierarchy)
 {
     uiPage_t *tmppage = hierarchy->Pages;
 
@@ -401,8 +379,7 @@ uiHierarchy_t *hierarchy;
 }
 
 
-static void uideletepagecallbacks(page)
-uiPage_t *page;
+static void uideletepagecallbacks(uiPage_t *page)
 {
     uiPageCBList_t *tmpcb = page->Callbacks;
 
@@ -415,9 +392,7 @@ uiPage_t *page;
 
 
 static uiPage_t *
- uifindshadowpage(hierarchy, page)
-uiHierarchy_t *hierarchy;
-uiPage_t *page;
+ uifindshadowpage(uiHierarchy_t *hierarchy, uiPage_t *page)
 {
     uiPage_t *tmppage = hierarchy->Pages;
 
@@ -431,10 +406,7 @@ uiPage_t *page;
 }
 
 
-static int uicreatepagewidgets(page, prevpage, title)
-uiPage_t *page;
-uiPage_t *prevpage;
-char *title;
+static int uicreatepagewidgets(uiPage_t *page, uiPage_t *prevpage, const char *title)
 {
     uiTopLevelGfx_t *topgfx = &uiTopLevel.TopGfx;
     uiPageGfx_t *pagegfx = &page->Gfx;
@@ -486,10 +458,7 @@ char *title;
 }
 
 
-static void uicreatepageform(page, title, topwdg)
-uiPage_t *page;
-char *title;
-Widget topwdg;
+static void uicreatepageform(uiPage_t *page, const char *title, Widget topwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -552,9 +521,7 @@ static char *uimenu[] =
 };
 
 static Widget
- uicreatepagemenu(page, formwdg)
-uiPage_t *page;
-Widget formwdg;
+ uicreatepagemenu(uiPage_t *page, Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -581,11 +548,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatepagemenuitem(page, menuwdg, itempos, level)
-uiPage_t *page;
-Widget menuwdg;
-int itempos;
-int level;
+ uicreatepagemenuitem(uiPage_t *page, Widget menuwdg, int itempos, int level)
 {
     int childitempos = itempos;
     int childlevel = level + 1;
@@ -629,9 +592,7 @@ int level;
 }
 
 
-static int uifindnextitem(itempos, level)
-int itempos;
-int level;
+static int uifindnextitem(int itempos, int level)
 {
     int i = itempos + 2;
 
@@ -647,10 +608,7 @@ int level;
 
 
 static Widget
- uicreatepagecontrol(page, formwdg, title)
-uiPage_t *page;
-Widget formwdg;
-char *title;
+ uicreatepagecontrol(uiPage_t *page, Widget formwdg, const char *title)
 {
     ArgList args;
     Cardinal nargs;
@@ -678,9 +636,7 @@ char *title;
 }
 
 
-static void uicreatepagelabel(parentwdg, label)
-Widget parentwdg;
-char *label;
+static void uicreatepagelabel(Widget parentwdg, char *label)
 {
     Widget labelwdg;
     XmString labelstr;
@@ -700,12 +656,7 @@ char *label;
 }
 
 
-static void uicreatepagebutton(page, parentwdg, name, leftpos, rightpos)
-uiPage_t *page;
-Widget parentwdg;
-char *name;
-int leftpos;
-int rightpos;
+static void uicreatepagebutton(uiPage_t *page, Widget parentwdg, char *name, int leftpos, int rightpos)
 {
     Widget tmpwdg;
     uiActionData_t *actiondata;
@@ -727,10 +678,7 @@ int rightpos;
 
 
 static Widget
- uicreatepagefind(page, formwdg, controlwdg)
-uiPage_t *page;
-Widget formwdg;
-Widget controlwdg;
+ uicreatepagefind(uiPage_t *page, Widget formwdg, Widget controlwdg)
 {
     Widget framewdg, findformwdg, buttonwdg, textwdg;
     uiActionData_t *actiondata;
@@ -789,11 +737,7 @@ Widget controlwdg;
 
 
 static Widget
- uicreatepagescroll(page, formwdg, menuwdg, bottomwdg)
-uiPage_t *page;
-Widget formwdg;
-Widget menuwdg;
-Widget bottomwdg;
+ uicreatepagescroll(uiPage_t *page, Widget formwdg, Widget menuwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -858,8 +802,7 @@ Widget bottomwdg;
 }
 
 
-static void uiconnectpage(page)
-uiPage_t *page;
+static void uiconnectpage(uiPage_t *page)
 {
     Widget drawwdg = page->Gfx.DrawAreaWdg;
     Widget hsbwdg = page->Gfx.HScrollBarWdg;
@@ -899,8 +842,7 @@ uiPage_t *page;
 }
 
 
-static void uipageupdatescrollbars(page)
-uiPage_t *page;
+static void uipageupdatescrollbars(uiPage_t *page)
 {
     Widget hsbwdg = page->Gfx.HScrollBarWdg;
     Widget vsbwdg = page->Gfx.VScrollBarWdg;
@@ -939,9 +881,7 @@ uiPage_t *page;
 
 
 uiActionData_t *
- uicreatepageactiondata(page, actionname)
-uiPage_t *page;
-char *actionname;
+ uicreatepageactiondata(uiPage_t *page, const char *actionname)
 {
     uiPageCBList_t *tmppagecb = page->Callbacks;
 
@@ -962,8 +902,7 @@ char *actionname;
 }
 
 
-static void uisetcurrentpage(page)
-uiPage_t *page;
+static void uisetcurrentpage(uiPage_t *page)
 {
     uiPage_t *oldpage;
 
@@ -981,9 +920,7 @@ uiPage_t *page;
 }
 
 
-static int uideletepageinternal(topaddress, htext)
-char *topaddress;
-HText_t *htext;
+static int uideletepageinternal(const char *topaddress, HText_t *htext)
 {
     uiHierarchy_t *hierarchy;
     uiPage_t *page;
@@ -1028,11 +965,11 @@ static void uipageactivatecb(Widget wdg, void *actiondata1, void *calldata1)
 	(void) uiDialogVariableCB((Widget) NULL, "FindText",
 				  (XmAnyCallbackStruct *) NULL);	/* Hmm? */
     }
-    if (tmpaction = uiFindAction(actiondata->ActionName)) {
+    if ((tmpaction = uiFindAction(actiondata->ActionName))) {
 	uiDefineCursor(uiBusyCursor);
 	if (uiHelpOnActionCB) {
 	    (*uiHelpOnActionCB) (actiondata->ActionName);
-	    uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+	    uiHelpOnActionCB = NULL;
 	} else
 	    (*tmpaction->Callback) (actiondata->Page->Hierarchy->Address,
 				    actiondata->Page->HText,
@@ -1062,25 +999,19 @@ static void uipagekludgecb(Widget wdg, void *actiondata1, XEvent *event, char *a
 }
 
 
-static void uipageexposecb(wdg, page, calldata)
-Widget wdg;
-uiPage_t *page;
-XmDrawingAreaCallbackStruct *calldata;
+static void uipageexposecb(Widget wdg, uiPage_t *page, XmDrawingAreaCallbackStruct *calldata)
 {
     XExposeEvent *event = (XExposeEvent *) calldata->event;
 
 #ifdef DEBUG
-    printf("Explode: %d %d %d %d %x\n",
+    printf("Explode: %d %d %d %d %p\n",
 	   event->x, event->y, event->width, event->height, page->HText);
 #endif
     XlRedraw(event->x, event->y, event->width, event->height, page->HText);
 }
 
 
-static void uipageresizecb(wdg, page, calldata)
-Widget wdg;
-uiPage_t *page;
-XmDrawingAreaCallbackStruct *calldata;
+static void uipageresizecb(Widget wdg, uiPage_t *page, XmDrawingAreaCallbackStruct *calldata)
 {
     Widget hsbwdg = page->Gfx.HScrollBarWdg;
     Widget vsbwdg = page->Gfx.VScrollBarWdg;
@@ -1104,11 +1035,7 @@ XmDrawingAreaCallbackStruct *calldata;
 }
 
 
-static void uipageinputcb(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipageinputcb(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     Widget wdg = uiPageInfo.Wdg;
     uiPage_t *page = uiPageInfo.CurrentPage;
@@ -1139,7 +1066,7 @@ void *parameter;
 		    uiDefineCursor(uiBusyCursor);
 		    if (uiHelpOnActionCB) {
 			(*uiHelpOnActionCB) ("Get page");
-			uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+			uiHelpOnActionCB = NULL;
 		    } else
 			(*tmpaction->Callback) (topaddress, htext,
 						page->HTextObject,
@@ -1169,11 +1096,11 @@ void *parameter;
     case KeyPress:
 	keysym = XLookupKeysym(kevent, 0);
 	if (keysym != NoSymbol && (keysymstring = XKeysymToString(keysym))) {
-	    if (tmpkey = uiFindKey(keysymstring, kevent->state)) {
+	    if ((tmpkey = uiFindKey(keysymstring, kevent->state))) {
 		uiDefineCursor(uiBusyCursor);
 		if (uiHelpOnActionCB) {
 		    (*uiHelpOnActionCB) (keysymstring);
-		    uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+		    uiHelpOnActionCB = NULL;
 		} else
 		    (*tmpkey->Callback) (topaddress,
 					 htext,
@@ -1187,7 +1114,7 @@ void *parameter;
 }
 
 
-static void uipagescrollbarcb(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
+static void uipagescrollbarcb(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     XmUpdateDisplay(uiPageInfo.CurrentPage->Gfx.DrawAreaWdg);
 
@@ -1208,11 +1135,7 @@ static void uipagescrollbarcb(char *topaddress, HText_t *htext, HTextObject_t *h
 }
 
 
-static void uipagedowncb(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagedowncb(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     uiPage_t *page = uiPageInfo.CurrentPage;
 
@@ -1223,11 +1146,7 @@ void *parameter;
 }
 
 
-static void uipageupcb(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipageupcb(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     uiPage_t *page = uiPageInfo.CurrentPage;
 
@@ -1238,11 +1157,7 @@ void *parameter;
 }
 
 
-static void uipagetopcb(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagetopcb(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     uiPage_t *page = uiPageInfo.CurrentPage;
 
@@ -1253,11 +1168,7 @@ void *parameter;
 }
 
 
-static void uipagebottomcb(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uipagebottomcb(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     uiPage_t *page = uiPageInfo.CurrentPage;
 

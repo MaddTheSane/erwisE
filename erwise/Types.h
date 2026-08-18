@@ -22,8 +22,8 @@ typedef struct _connection {
     char *Address;
     int Status;
     int FD;
-    int InputId;
-    int TimeOutId;
+    uintptr_t InputId;
+    uintptr_t TimeOutId;
     ClConnection_t *ClConnection;
     Page_t *TopPage;
     Page_t *ParentPage;

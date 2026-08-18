@@ -147,7 +147,7 @@ PRIVATE void parse_menu(
     char line[BIG];
     char address[BIG];
     char *name=NULL, *selector=NULL;		/* Gopher menu fields */
-    char *host;
+    char *host = NULL;
     char *port;
     char *p = line;
     

@@ -20,12 +20,7 @@ static HTElement	*element_stack;
 */
 const char * SGML_default = "";
 
-#ifdef __STDC__
 PRIVATE void handle_attribute_name(const char * s)
-#else
-PRIVATE void handle_attribute_name(s)
-    char *s;
-#endif
 {
     for(    current_attribute = current_tag->attributes;
 	    current_attribute->name;
@@ -50,12 +45,7 @@ PRIVATE void handle_attribute_name(s)
 /*	Handle attribute value
 **	----------------------
 */
-#ifdef __STDC__
 PRIVATE void handle_attribute_value(const char * s)
-#else
-PRIVATE void handle_attribute_value(s)
-    char *s;
-#endif
 {
     if (current_attribute) {
 	StrAllocCopy(current_attribute->value, s);
@@ -74,14 +64,7 @@ PRIVATE void handle_attribute_value(s)
 **	If the entity name is unknown, the terminator is treated as
 **	a printable non-special character in all cases, even if it is '<'
 */
-#ifdef __STDC__
 PRIVATE void handle_entity(const char * s, entity * entities, char term)
-#else
-PRIVATE void handle_entity(s,entities, term)
-    char * s;
-    entity * entities;
-    char term;
-#endif
 {
     entity * e;
     for(e = entities; e->name; e++) {
@@ -108,12 +91,7 @@ PRIVATE void handle_entity(s,entities, term)
 
 /*	End element
 */
-#ifdef __STDC__
 PRIVATE void end_element(HTTag * old_tag)
-#else
-PRIVATE void end_element(old_tag)
-    HTTag * old_tag;
-#endif
 {
     if (TRACE) fprintf(stderr, "SGML: End   </%s>\n", old_tag->name);
     if (!old_tag->end) {
@@ -155,12 +133,7 @@ PRIVATE void end_element(old_tag)
 
 /*	Start a element
 */
-#ifdef __STDC__
 PRIVATE void start_element(HTTag * new_tag)
-#else
-PRIVATE void start_element(new_tag)
-    HTTag * new_tag;
-#endif
 {
     if (TRACE) fprintf(stderr, "SGML: Start <%s>\n", new_tag->name);
     (*new_tag->begin)(new_tag, element_stack);

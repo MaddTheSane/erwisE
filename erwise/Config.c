@@ -8,9 +8,9 @@
 
 #define INDENT_STR  "    "
 
-static char *strdupmax(char *str, int length);
-static char *parseid(char *str);
-static char *parsevalue(char *str);
+static char *strdupmax(const char *str, int length);
+static char *parseid(const char *str);
+static char *parsevalue(const char *str);
 static char *readline(FILE * fp);
 
 static int ConfigLines = 0;
@@ -111,9 +111,7 @@ Config_t Config[] =
  * misc routines
  */
 static char *
- strdupmax(str, length)
-char *str;
-int length;
+strdupmax(const char *str, int length)
 {
     char *dup = (char *) NULL;
 
@@ -127,10 +125,9 @@ int length;
 
 
 static char *
- stripnewline(str)
-char *str;
+stripnewline(char *str)
 {
-    int length;
+    size_t length;
 
     if (str) {
 	length = strlen(str);
@@ -145,19 +142,18 @@ char *str;
  * config's code starts here
  */
 static char *
- readline(fp)
-FILE *fp;
+readline(FILE *fp)
 {
     char buffer[BUFFER_SIZE + 1];
     char *line = (char *) NULL;
     char *data;
-    int length = 1;
+    size_t length = 1;
 
     line = (char *) malloc(sizeof(char));
     line[0] = '\0';
 
     while (!feof(fp) && !strrchr(line, '\n')) {
-	if (data = fgets(buffer, BUFFER_SIZE, fp)) {
+	if ((data = fgets(buffer, BUFFER_SIZE, fp))) {
 	    line =
 		(char *) realloc(line, (strlen(data) + length) * sizeof(char));
 	    strcat(line, data);
@@ -176,10 +172,10 @@ FILE *fp;
  * returns a copy of id
  */
 static char *
- parseid(str)
-char *str;
+parseid(const char *str)
 {
-    char *ptr, *id = (char *) NULL;
+    const char *ptr;
+    char *id = NULL;
     int length = 0;
 
     while (str && *str && isspace(*str))
@@ -199,33 +195,31 @@ char *str;
  * returns a copy of value
  */
 static char *
- parsevalue(str)
-char *str;
+parsevalue(const char *str)
 {
-    char *ptr;
-    char *value = (char *) NULL;
-
-    if (ptr = strchr(str, '=')) {
-	ptr++;
-	while (ptr && *ptr && isspace(*ptr))
-	    ptr++;
-	value = stripnewline(strdup(ptr));
-    }
-    return value;
-}
+     char *ptr;
+     char *value = NULL;
+     
+     if ((ptr = strchr(str, '='))) {
+	 ptr++;
+	 while (ptr && *ptr && isspace(*ptr))
+	     ptr++;
+	 value = stripnewline(strdup(ptr));
+     }
+     return value;
+ }
 
 
 static Config_t *
- getitem(id, table)
-char *id;
-Config_t *table;
+getitem(char *id, Config_t *table)
 {
     Config_t *walker;
 
     walker = table;
     while (walker && (walker->type != EOC)) {
-	if (!strcmp(id, walker->id))
+	if (!strcmp(id, walker->id)) {
 	    return (walker);
+	}
 	walker++;
     }
     return ((Config_t *) NULL);
@@ -233,9 +227,7 @@ Config_t *table;
 
 
 ConfigType_t
-getidtype(id, table)
-char *id;
-Config_t *table;
+getidtype(char *id, Config_t *table)
 {
     Config_t *walker;
 
@@ -248,17 +240,16 @@ Config_t *table;
     if (!strncmp(id, "#", 1))
 	return (COMMENT);
 
-    if (walker = getitem(id, table))
+    if ((walker = getitem(id, table)))
 	return (walker->type);
     return (UNKNOWN);
 }
 
 
 static char *
- parsedynamicobject(line)
-char *line;
+ parsedynamicobject(const char *line)
 {
-    char *ptr;
+    const char *ptr;
 
     ptr = line;
     while (ptr && *ptr && isspace(*ptr))
@@ -267,9 +258,7 @@ char *line;
 }
 
 
-static int restoredynamicblock(fp, table)
-FILE *fp;
-Config_t *table;
+static int restoredynamicblock(FILE *fp, Config_t *table)
 {
     char *line;
     char *id;
@@ -315,9 +304,7 @@ Config_t *table;
 
 
 static void *
- setitemvalue(item, value)
-Config_t *item;
-void *value;
+ setitemvalue(Config_t *item, void *value)
 {
     void *oldvalue = (void *) NULL;
 
@@ -339,9 +326,7 @@ void *value;
 }
 
 
-static int restoreblock(fp, table)
-FILE *fp;
-Config_t *table;
+static int restoreblock(FILE *fp, Config_t *table)
 {
     char *id, *value;
     char *line;
@@ -465,11 +450,12 @@ int saveblock(FILE *fp, Config_t *table, int depth)
 	    fprintf(fp, "%s = %s\n", walker->id, (char *) walker->value);
 	    break;
 	case DYNAMIC_PTR:
-	    if (dynamic_object = (char **) walker->value)
-		while (*dynamic_object) {
-		    indent(fp, depth);
-		    fprintf(fp, "%s\n", (char *) *dynamic_object);
-		    dynamic_object++;
+		if ((dynamic_object = (char **) walker->value)) {
+		    while (*dynamic_object) {
+			indent(fp, depth);
+			fprintf(fp, "%s\n", (char *) *dynamic_object);
+			dynamic_object++;
+		    }
 		}
 	    break;
 	case BLOCK:
@@ -541,26 +527,22 @@ void ConfigInit(void)
 
 
 void *
- ConfigGetValue(tableptr, id)
-void *tableptr;
-char *id;
+ConfigGetValue(void *tableptr, char *id)
 {
-    Config_t *table = (Config_t *) tableptr;
-    Config_t *item;
-
-    if (!table)
-	table = Config;
-    if (item = getitem(id, table))
-	return (item->value);
-    return ((void *) NULL);
-}
+     Config_t *table = (Config_t *) tableptr;
+     Config_t *item;
+     
+     if (!table)
+	 table = Config;
+     if ((item = getitem(id, table))) {
+	 return (item->value);
+     }
+     return ((void *) NULL);
+ }
 
 
 void *
- ConfigSetValue(tableptr, id, value)
-void *tableptr;
-char *id;
-void *value;
+ConfigSetValue(void *tableptr, char *id, void *value)
 {
     Config_t *table = (Config_t *) tableptr;
     void *ret = (void *) NULL;
@@ -568,7 +550,7 @@ void *value;
 
     if (!table)
 	table = Config;
-    if (item = getitem(id, table))
+     if ((item = getitem(id, table)))
 	switch (item->type) {
 	case RESOURCE:
 	    if (item->value)

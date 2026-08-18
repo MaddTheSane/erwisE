@@ -5,22 +5,17 @@ static char *rcsid = "$Id: TopLevel.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 extern int UiDisplayInfo(void);
 
 
-void TopQuitCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void TopQuitCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplayWarningDialog("Quit Erwise?", NukeErwiseCB);
 }
 
 
-void NukeErwiseCB(button)
-int button;
+void NukeErwiseCB(int button)
 {
     FILE *fp;
 
-    if (fp = OpenErwiserc("w")) {
+    if ((fp = OpenErwiserc("w"))) {
 	ConfigSave(fp);
 	fclose(fp);
     } else
@@ -30,28 +25,19 @@ int button;
 }
 
 
-void TopInfoCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void TopInfoCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplayInfo();
 }
 
 
-void TopOpenCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void TopOpenCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplaySelectionBox(GetPageCB);
 }
 
 
-void GetPageCB(address)
-char *address;
+void GetPageCB(const char *address)
 {
     if (FindPage(Pages, address)) {
 	DisplayWarning("Already loaded");

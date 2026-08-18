@@ -2,7 +2,7 @@ static char *rcsid = "$Id$";
 
 #include "UiIncludes.h"
 
-static Widget uicreateconnectionsform();
+static Widget uicreateconnectionsform(void);
 static Widget uicreateconnectionslabel(Widget formwdg);
 static Widget uicreateconnectionskill(Widget formwdg);
 static Widget uicreateconnectionsclose(Widget formwdg);
@@ -68,13 +68,13 @@ int UiDisplayConnectionsDialog(char **listitems, void **connections, int nitems,
 }
 
 
-int UiConnectionsDialogDisplayed()
+int UiConnectionsDialogDisplayed(void)
 {
     return uiconnectionsdisplayed;
 }
 
 
-void uiConnectionsUpdateDialog()
+void uiConnectionsUpdateDialog(void)
 {
     if (!uiPageInfo.CurrentPage && uiTopLevel.ConnectionsGfx.FormWdg) {
 	uiconnectionsfreeprevious();
@@ -85,7 +85,7 @@ void uiConnectionsUpdateDialog()
 
 
 static Widget
- uicreateconnectionsform()
+uicreateconnectionsform(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -109,8 +109,7 @@ static Widget
 
 
 static Widget
- uicreateconnectionslabel(formwdg)
-Widget formwdg;
+uicreateconnectionslabel(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -133,8 +132,7 @@ Widget formwdg;
 
 
 static Widget
- uicreateconnectionskill(formwdg)
-Widget formwdg;
+uicreateconnectionskill(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -157,8 +155,7 @@ Widget formwdg;
 
 
 static Widget
- uicreateconnectionsclose(formwdg)
-Widget formwdg;
+uicreateconnectionsclose(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -181,9 +178,7 @@ Widget formwdg;
 
 
 static Widget
- uicreateconnectionsseparator(formwdg, bottomwdg)
-Widget formwdg;
-Widget bottomwdg;
+uicreateconnectionsseparator(Widget formwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -204,10 +199,7 @@ Widget bottomwdg;
 
 
 static Widget
- uicreateconnectionslist(formwdg, topwdg, bottomwdg)
-Widget formwdg;
-Widget topwdg;
-Widget bottomwdg;
+uicreateconnectionslist(Widget formwdg, Widget topwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -238,17 +230,15 @@ Widget bottomwdg;
 }
 
 
-void uiconnectionsfreeprevious()
+void uiconnectionsfreeprevious(void)
 {
-    if (uinitems)
+    if (uinitems) {
 	uiFree(uilistitems);
+    }
 }
 
 
-static void uiconnectionssetitems(listitems, connections, nitems)
-char **listitems;
-void **connections;
-int nitems;
+static void uiconnectionssetitems(char **listitems, void **connections, int nitems)
 {
     Widget listwdg = uiTopLevel.ConnectionsGfx.ListWdg;
     int i;
@@ -256,12 +246,14 @@ int nitems;
 
     XmListDeleteAllItems(listwdg);
     if (nitems) {
-	for (i = 0; i < nitems; i++)
+	for (i = 0; i < nitems; i++) {
 	    tmpstr[i] = XmStringCreateSimple(listitems[i]);
+	}
 
 	XmListAddItems(listwdg, tmpstr, nitems, 0);
-	for (i = 0; i < nitems; i++)
+	for (i = 0; i < nitems; i++) {
 	    XmStringFree(tmpstr[i]);
+	}
 	uiFree((void *) tmpstr);
     }
 }
@@ -269,10 +261,7 @@ int nitems;
 
 
 
-static void uiconnectionskillcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uiconnectionskillcb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     Widget connectionswdg = uiTopLevel.ConnectionsGfx.ListWdg;
     int *poslist;
@@ -284,7 +273,7 @@ XmListCallbackStruct *calldata;
 	    uiDefineCursor(uiBusyCursor);
 	    if (uiHelpOnActionCB) {
 		(*uiHelpOnActionCB) ("Kill connection");
-		uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+		uiHelpOnActionCB = NULL;
 	    } else
 		(*uiconnectionscallback) (uiconnections[poslist[0] - 1]);
 
@@ -295,10 +284,7 @@ XmListCallbackStruct *calldata;
 }
 
 
-static void uiconnectionsclosecb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uiconnectionsclosecb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     XtUnmapWidget(XtParent(uiTopLevel.ConnectionsGfx.FormWdg));
     uiconnectionsdisplayed = false;

@@ -31,7 +31,7 @@ typedef struct {
 struct _uipage;
 
 typedef struct {
-    char *ActionName;
+    const char *ActionName;
     struct _uipage *Page;
 } uiActionData_t;
 
@@ -58,7 +58,7 @@ typedef struct _uipage {
 
 
 typedef struct _uihierarchy {
-    char *Address;
+    const char *Address;
     uiPage_t *Pages;
     struct _uihierarchy *Next;
 } uiHierarchy_t;
@@ -66,8 +66,8 @@ typedef struct _uihierarchy {
 
 typedef struct _uiaction {
     char *Name;
-    void (*Callback) (char *address, HText_t * htext,
-		       HTextObject_t * htextobject, void *parameter);
+    void (*Callback) (const char *address, HText_t * htext,
+		      HTextObject_t * htextobject, void *parameter);
     void *Parameter;
     struct _uiaction *Next;
 } uiAction_t;
@@ -76,8 +76,8 @@ typedef struct _uiaction {
 typedef struct _uikey {
     char *Name;
     int Modifier;
-    void (*Callback) (char *address, HText_t * htext,
-		       HTextObject_t * htextobject, void *parameter);
+    void (*Callback) (const char *address, HText_t * htext,
+		      HTextObject_t * htextobject, void *parameter);
     void *Parameter;
     struct _uikey *Next;
 } uiKey_t;

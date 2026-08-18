@@ -5,11 +5,11 @@ static char *rcsid = "$Id$";
 
 static Widget uicreatefsformdialog(void);
 static Widget
- uicreatefsfsbox(Widget formwdg,
-		  void (*callback) (char *topaddress,
-				     HText_t * htext,
-				     HTextObject_t * htextobject,
-				     void *parameter));
+uicreatefsfsbox(Widget formwdg,
+		void (*callback) (const char *topaddress,
+				  HText_t * htext,
+				  HTextObject_t * htextobject,
+				  void *parameter));
 static void uifileselectionokcb(Widget wdg, void *callback,
 				 void * calldata);
 static void uifileselectioncancelcb(Widget wdg, void *ignored,
@@ -21,8 +21,8 @@ static void uifileselectionclickcb(Widget wdg, caddr_t ignored,
 //uiTopLevel_t uiTopLevel;
 
 
-int UiDisplayFileSelection(void (*callback) (char *topaddress, HText_t * htext, HTextObject_t * htextobject,
-											 void *parameter))
+int UiDisplayFileSelection(void (*callback) (const char *topaddress, HText_t * htext, HTextObject_t * htextobject,
+					     void *parameter))
 {
     uiFileSelectionGfx_t *fsgfx = &uiTopLevel.FSGfx;
 
@@ -64,7 +64,7 @@ static Widget
 
 
 static Widget
- uicreatefsfsbox(Widget formwdg, void (*callback) (char *topaddress, HText_t * htext,
+uicreatefsfsbox(Widget formwdg, void (*callback) (const char *topaddress, HText_t * htext,
 												   HTextObject_t * htextobject, void *parameter))
 {
     ArgList args;
@@ -105,13 +105,13 @@ static void uifileselectionokcb(Widget wdg, void *callback, void *calldata1)
 {
     Widget textwdg;
     char *selection;
-	XmPushButtonCallbackStruct *calldata = calldata1;
+    XmPushButtonCallbackStruct *calldata = calldata1;
 
     textwdg = XmFileSelectionBoxGetChild(uiTopLevel.FSGfx.FSBoxWdg,
 					 XmDIALOG_TEXT);
     selection = XmTextGetString(textwdg);
     XtUnmapWidget(XtParent(uiTopLevel.FSGfx.FormWdg));
-    (*(void (*) (char *, HText_t *, HTextObject_t *, void *)) callback)
+    (*(void (*) (const char *, HText_t *, HTextObject_t *, void *)) callback)
 	(uiPageInfo.CurrentPage->Hierarchy->Address,
       uiPageInfo.CurrentPage->HText, uiPageInfo.CurrentPage->HTextObject,
 	 (void *) selection);

@@ -94,4 +94,4 @@ extern void uiFree(void *ptr);
 extern void uiDisplayWarning(const char *text);
 extern void uiDisplayFatal(const char *text);
 extern void uiWidgetPlacement(Widget wdg, int placement);
-extern void (*uiHelpOnActionCB) (char *actionstring);
+extern void (*uiHelpOnActionCB) (const char *actionstring);

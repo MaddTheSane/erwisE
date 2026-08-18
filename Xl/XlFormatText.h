@@ -59,3 +59,5 @@
 
 #define MARGIN_START_STYLE			0
 #define MARGIN_HANDLE_P_OBJECT			1
+
+extern int xl_character_width(HTextObject_t *p);

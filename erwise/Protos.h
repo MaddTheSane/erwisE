@@ -31,16 +31,16 @@ extern void BindVariables(void);
  * TopLevel.c
  */
 
-extern void TopQuitCB(char *topaddress, HText_t * htext,
+extern void TopQuitCB(const char *topaddress, HText_t * htext,
 		       HTextObject_t * htextobject, void *parameter);
 extern void NukeErwiseCB(int button);
-extern void TopInfoCB(char *topaddress, HText_t * htext,
+extern void TopInfoCB(const char *topaddress, HText_t * htext,
 		       HTextObject_t * htextobject, void *parameter);
-extern void TopOpenCB(char *topaddress, HText_t * htext,
+extern void TopOpenCB(const char *topaddress, HText_t * htext,
 		       HTextObject_t * htextobject, void *parameter);
-extern void TopHelpCB(char *topaddress, HText_t * htext,
+extern void TopHelpCB(const char *topaddress, HText_t * htext,
 		       HTextObject_t * htextobject, void *parameter);
-extern void GetPageCB(char *nodename);
+extern void GetPageCB(const char *nodename);
 
 extern char FindText[256];
 extern char SearchText[256];
@@ -52,59 +52,59 @@ extern int SearchCase;
  * Page.c
  */
 
-extern void PageSearchCB(char *topaddress, HText_t * htext,
+extern void PageSearchCB(const char *topaddress, HText_t * htext,
 			  HTextObject_t * htextobject, void *parameter);
-extern void PageCopyCB(char *topaddress, HText_t * htext,
+extern void PageCopyCB(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject, void *parameter);
-extern void PageListCB(char *topaddress, HText_t * htext,
+extern void PageListCB(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject, void *parameter);
-extern void PageLoadToFileCB(char *topaddress, HText_t * htext,
+extern void PageLoadToFileCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void PagePrintCB(char *topaddress, HText_t * htext,
+extern void PagePrintCB(const char *topaddress, HText_t * htext,
 			 HTextObject_t * htextobject, void *parameter);
-extern void PageSettingsCB(char *topaddress, HText_t * htext,
+extern void PageSettingsCB(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void PageCloseCB(char *topaddress, HText_t * htext,
+extern void PageCloseCB(const char *topaddress, HText_t * htext,
 			 HTextObject_t * htextobject, void *parameter);
-extern void PagePrevWordCB(char *topaddress, HText_t * htext,
+extern void PagePrevWordCB(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void PageNextWordCB(char *topaddress, HText_t * htext,
+extern void PageNextWordCB(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void PagePrevTagCB(char *topaddress, HText_t * htext,
+extern void PagePrevTagCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void PageNextTagCB(char *topaddress, HText_t * htext,
+extern void PageNextTagCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void PageHomeCB(char *topaddress, HText_t * htext,
+extern void PageHomeCB(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject, void *parameter);
-extern void PageRecallCB(char *topaddress, HText_t * htext,
+extern void PageRecallCB(const char *topaddress, HText_t * htext,
 			  HTextObject_t * htextobject, void *parameter);
-extern void PageBackCB(char *topaddress, HText_t * htext,
+extern void PageBackCB(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject, void *parameter);
-extern void PagePrevPageCB(char *topaddress, HText_t * htext,
+extern void PagePrevPageCB(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void PageNextPageCB(char *topaddress, HText_t * htext,
+extern void PageNextPageCB(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void PageGetPageCB(char *topaddress, HText_t * htext,
+extern void PageGetPageCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void PageClickCB(char *topaddress, HText_t * htext,
+extern void PageClickCB(const char *topaddress, HText_t * htext,
 			 HTextObject_t * htextobject, void *parameter);
-extern void IndexFindCB(char *topaddress, HText_t * htext,
+extern void IndexFindCB(const char *topaddress, HText_t * htext,
 			 HTextObject_t * htextobject, void *parameter);
-extern void HierarchyCloseCB(char *topaddress, HText_t * htext,
+extern void HierarchyCloseCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
 extern void HierarchyNukeCB(int button);
-extern void HierarchyClose(char *topaddress, HText_t * htext,
+extern void HierarchyClose(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void SearchBackwardCB(char *topaddress, HText_t * htext,
+extern void SearchBackwardCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void SearchForwardCB(char *topaddress, HText_t * htext,
+extern void SearchForwardCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void ConnectionsCB(char *topaddress, HText_t * htext,
+extern void ConnectionsCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
 extern void KillCB(void *connection);
-extern void ControlPanelCB(char *topaddress, HText_t * htext,
+extern void ControlPanelCB(const char *topaddress, HText_t * htext,
 			    HTextObject_t * htextobject, void *parameter);
-extern void DefaultsCB(char *topaddress, HText_t * htext,
+extern void DefaultsCB(const char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject, void *parameter);
 
 
@@ -112,9 +112,9 @@ extern void DefaultsCB(char *topaddress, HText_t * htext,
  * Help.c
  */
 
-extern void HelpOnFunctionCB(char *topaddress, HText_t * htext,
+extern void HelpOnFunctionCB(const char *topaddress, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
-extern void HelpManualCB(char *topaddress, HText_t * htext,
+extern void HelpManualCB(const char *topaddress, HText_t * htext,
 			  HTextObject_t * htextobject, void *parameter);
 
 
@@ -135,18 +135,18 @@ extern char PrintFileName[1024];
  * Misc.c
  */
 
-extern Page_t *FindPage(Page_t * hierarchy, char *address);
-extern Page_t *GlobalFindPage(char *address);
-extern Page_t *AddPage(Page_t ** page, char *address, HText_t * htext,
+extern Page_t *FindPage(Page_t * hierarchy, const char *address);
+extern Page_t *GlobalFindPage(const char *address);
+extern Page_t *AddPage(Page_t ** page, const char *address, HText_t * htext,
 		        Page_t * toppage);
 extern void DeletePage(Page_t ** page, char *address);
-extern void DisplayWarning(char *text);
-extern void DisplayFatal(char *text);
+extern void DisplayWarning(const char *text);
+extern void DisplayFatal(const char *text);
 extern int CanBeCursor(HTextObject_t * htextobject);
-extern void *Malloc(int size);
-extern void *ReAlloc(void *ptr, int size);
+extern void *Malloc(size_t size);
+extern void *ReAlloc(void *ptr, size_t size);
 extern void Free(void *ptr);
-extern void StartLoading(char *address, char *topaddress, char *parentaddress);
+extern void StartLoading(const char *address, const char *topaddress, const char *parentaddress);
 void PollConnection(Connection_t * connection);
 Connection_t *AddConnection(char *address, Page_t * toppage, Page_t * parentpage,
 			     ClConnection_t * clconnection);

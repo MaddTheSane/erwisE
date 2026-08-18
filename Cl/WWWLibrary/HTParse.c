@@ -24,12 +24,7 @@ struct struct_parts {
 **	All trailing white space is OVERWRITTEN with zero.
 */
 
-#ifdef __STDC__
 char * HTStrip(char * s)
-#else
-char * HTStrip(s)
-	char *s;
-#endif
 {
 #define SPACE(c) ((c==' ')||(c=='\t')||(c=='\n')) 
     char * p=s;
@@ -53,13 +48,7 @@ char * HTStrip(s)
 **	host, anchor and access may be nonzero if they were specified.
 **	Any which are nonzero point to zero terminated strings.
 */
-#ifdef __STDC__
 PRIVATE void scan(char * name, struct struct_parts *parts)
-#else
-PRIVATE void scan(name, parts)
-    char * name;
-    struct struct_parts *parts;
-#endif
 {
     char * after_access;
     char * p;
@@ -133,15 +122,7 @@ PRIVATE void scan(name, parts)
 ** On exit,
 **	returns		A pointer to a malloc'd string which MUST BE FREED
 */
-#ifdef __STDC__
 char * HTParse(const char * aName, const char * relatedName, int wanted)
-#else
-char * HTParse(aName, relatedName, wanted)
-    char * aName;
-    char * relatedName;
-    int wanted;
-#endif
-
 {
     char * result = 0;
     char * return_value = 0;
@@ -237,13 +218,7 @@ char * HTParse(aName, relatedName, wanted)
 //	Thus, 	/etc/junk/../fred 	becomes	/etc/fred
 //		/etc/junk/./fred	becomes	/etc/junk/fred
 */
-#ifdef __STDC__
 void HTSimplify(char * filename)
-#else
-void HTSimplify(filename)
-    char * filename;
-#endif
-
 {
     char * p;
     char * q;
@@ -284,13 +259,7 @@ void HTSimplify(filename)
 **	The caller is responsible for freeing the resulting name later.
 **
 */
-#ifdef __STDC__
 char * HTRelative(const char * aName, const char *relatedName)
-#else
-char * HTRelative(aName, relatedName)
-   char * aName;
-   char * relatedName;
-#endif
 {
     char * result = 0;
     const char *p = aName;
