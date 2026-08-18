@@ -12,6 +12,8 @@
 
 #include <stdio.h>
 #include <sys/types.h>
+#include <unistd.h>
+#include <string.h>
 
 #include <X11/Xlib.h>
 
@@ -26,16 +28,13 @@
 
 #include "XlConfig.h"
 
-int xl_junk_object(HTextObject_t * p);
+static int xl_junk_object(HTextObject_t * p);
 
-/*
+/*!
  * Find a style
  */
 XlStyle_t *
- xl_get_style_and_gc(p, currentgc, t)
-HTextObject_t *p;
-GC *currentgc;
-HText_t *t;
+ xl_get_style_and_gc(HTextObject_t *p, GC *currentgc, HText_t *t)
 {
     XlStyle_t *loop = t->xl_global->XlStyles;
 
@@ -59,11 +58,10 @@ HText_t *t;
 
 
 
-/*
+/*!
  *  Setup resources for Xl (this can be changed at runtime some day)
  */
-int XlSetupResources(func)
-void *(*func) ();
+int XlSetupResources(void *(*func) (void *, char *))
 {
     void *table;
     char *item;
@@ -98,7 +96,7 @@ void *(*func) ();
 
 
 
-/*
+/*!
  *  For every page, setup Xl-stuff (including dpy, for multiple screens)
  *  - Setup GC's
  *  - Calculate width and height for each object
@@ -106,31 +104,26 @@ void *(*func) ();
  *  - Delete null space-objects (only spaces on nonraw-mode)
  *  - Something else (uh?)
  */
-int XlSetupText(display, window, fg, bg, htext)
-Display *display;
-Window window;
-unsigned long fg;
-unsigned long bg;
-HText_t *htext;
+int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long bg, HText_t *htext)
 {
     HTextObject_t *p;
 
     XlStyle_t *s, *s_alloc;
 
     HTStyle *st = NULL;
-    XlStyle_t *current;
+    XlStyle_t *current = NULL;
 
-    GC currentgc;
+    GC currentgc = NULL;
 
     int i;
 
-    int struct_length;
+    size_t struct_length;
 
     /*
      * safe
      */
     if (!htext)
-	return;
+	return 0;
 
 
     /*
@@ -350,23 +343,26 @@ HText_t *htext;
 
 
 
-/*
+/*!
  * If this object is not needed, it is 'junk' -object
  */
-int xl_junk_object(p)
-HTextObject_t *p;
+int xl_junk_object(HTextObject_t *p)
 {
     register int i;
 
-    if (p->paragraph)
+    if (p->paragraph) {
 	return 0;
+    }
 
-    if (xl_object_mode(p) & STYLE_RAW)
+    if (xl_object_mode(p) & STYLE_RAW) {
 	return 0;
+    }
 
-    for (i = 0; i < p->length; i++)
-	if (p->data[i] != ' ')
+    for (i = 0; i < p->length; i++) {
+	if (p->data[i] != ' ') {
 	    return 0;
+	}
+    }
 
     return 1;
 }

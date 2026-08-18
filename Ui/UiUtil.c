@@ -99,13 +99,11 @@ int UiDisplayWarningDialog(char *warning, void (*callback) (int button))
 
 	return UI_OK;
     }
+	return UI_NOTFOUND;
 }
 
 
-static void uiwarningokcb(wdg, callback, calldata)
-Widget wdg;
-caddr_t callback;
-XmListCallbackStruct *calldata;
+static void uiwarningokcb(Widget wdg, caddr_t callback, XmListCallbackStruct *calldata)
 {
     int button = UI_OK;
 
@@ -116,10 +114,7 @@ XmListCallbackStruct *calldata;
 }
 
 
-static void uiwarningcancelcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uiwarningcancelcb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     XtUnmapWidget(XtParent(XtParent(wdg)));
 }

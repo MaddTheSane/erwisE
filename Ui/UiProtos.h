@@ -76,20 +76,20 @@ extern void uiRecallUpdateDialog(void);
  *  UiMisc.c
  */
 
-extern uiAction_t *uiFindAction(char *actionname);
-extern uiKey_t *uiFindKey(char *keyname, int modifier);
-extern uiVariable_t *uiFindVariable(char *varname);
-extern int uiAddWidgetInfo(char *varname, Widget wdg, uiWdgType_t wdgtype);
+extern uiAction_t *uiFindAction(const char *actionname);
+extern uiKey_t *uiFindKey(const char *keyname, int modifier);
+extern uiVariable_t *uiFindVariable(const char *varname);
+extern int uiAddWidgetInfo(const char *varname, Widget wdg, uiWdgType_t wdgtype);
 extern void uiDialogActivateCB(Widget wdg, uiActionData_t * actiondata,
 			        XmAnyCallbackStruct * calldata);
 extern void uiDialogVariableCB(Widget wdg, caddr_t variablename,
 			        XmAnyCallbackStruct * calldata);
 extern void uiDefineCursor(Cursor cursor);
 extern void uiUndefineCursor(void);
-extern ArgList uiVaSetArgs(Cardinal *nargs, ...);
+extern ArgList uiVaSetArgs(Cardinal *nargs, ...) __attribute__((sentinel(0,1)));
 extern XtArgVal uiGetArg(Widget wdg, String resource);
-extern void *uiMalloc(int size);
-extern void *uiReAlloc(void *, int size);
+extern void *uiMalloc(size_t size);
+extern void *uiReAlloc(void *, size_t size);
 extern void uiFree(void *ptr);
 extern void uiDisplayWarning(const char *text);
 extern void uiDisplayFatal(const char *text);

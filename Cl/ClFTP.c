@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #include "Cl.h"
 
@@ -340,10 +341,7 @@ WWWErwiseFtpDataChannel ()
  */
 
 int
-cl_start_connection (host, connection, port)
-     char *host;
-     ClConnection_t *connection;
-     int port;
+cl_start_connection (char *host, ClConnection_t *connection, int port)
 {
   /*
    * Code partly from get_connection()

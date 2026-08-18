@@ -3,7 +3,7 @@ static char *rcsid = "$Id: UiSelectionBox.c,v 1.3 1992/03/26 18:13:50 kny Exp $"
 #include "UiIncludes.h"
 
 
-static Widget uicreatesbformdialog();
+static Widget uicreatesbformdialog(void);
 static Widget
  uicreatesbfsbox(Widget formwdg,
 		  void (*callback) (char *nodename));
@@ -28,15 +28,14 @@ static void uiselectionboxclickcb(Widget wdg, void *ignored,
 static void uiselectionboxupdateconfig(void);
 
 
-uiTopLevel_t uiTopLevel;
+//uiTopLevel_t uiTopLevel;
 char **uiSelectionArray;
 
 
 static int uidummy;
 
 
-int UiDisplaySelectionBox(callback)
-void (*callback) (char *nodename);
+int UiDisplaySelectionBox(void (*callback) (char *nodename))
 {
     uiSelectionBoxGfx_t *sbgfx = &uiTopLevel.SBGfx;
     XmString dummystr;

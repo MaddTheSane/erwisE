@@ -3,27 +3,26 @@ static char *rcsid = "$Id$";
 #include "UiIncludes.h"
 
 
-static Widget uicreatefsformdialog();
+static Widget uicreatefsformdialog(void);
 static Widget
  uicreatefsfsbox(Widget formwdg,
 		  void (*callback) (char *topaddress,
 				     HText_t * htext,
 				     HTextObject_t * htextobject,
 				     void *parameter));
-static void uifileselectionokcb(Widget wdg, caddr_t callback,
-				 XmPushButtonCallbackStruct * calldata);
-static void uifileselectioncancelcb(Widget wdg, caddr_t ignored,
-				  XmPushButtonCallbackStruct * calldata);
+static void uifileselectionokcb(Widget wdg, void *callback,
+				 void * calldata);
+static void uifileselectioncancelcb(Widget wdg, void *ignored,
+				  void * calldata);
 static void uifileselectionclickcb(Widget wdg, caddr_t ignored,
 				    XmListCallbackStruct * calldata);
 
 
-uiTopLevel_t uiTopLevel;
+//uiTopLevel_t uiTopLevel;
 
 
-int UiDisplayFileSelection(callback)
-void (*callback) (char *topaddress, HText_t * htext, HTextObject_t * htextobject,
-		   void *parameter);
+int UiDisplayFileSelection(void (*callback) (char *topaddress, HText_t * htext, HTextObject_t * htextobject,
+											 void *parameter))
 {
     uiFileSelectionGfx_t *fsgfx = &uiTopLevel.FSGfx;
 
@@ -43,7 +42,7 @@ void (*callback) (char *topaddress, HText_t * htext, HTextObject_t * htextobject
 
 
 static Widget
- uicreatefsformdialog()
+ uicreatefsformdialog(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -65,10 +64,8 @@ static Widget
 
 
 static Widget
- uicreatefsfsbox(formwdg, callback)
-Widget formwdg;
-void (*callback) (char *topaddress, HText_t * htext,
-		   HTextObject_t * htextobject, void *parameter);
+ uicreatefsfsbox(Widget formwdg, void (*callback) (char *topaddress, HText_t * htext,
+												   HTextObject_t * htextobject, void *parameter))
 {
     ArgList args;
     Cardinal nargs;
@@ -104,13 +101,11 @@ void (*callback) (char *topaddress, HText_t * htext,
 }
 
 
-static void uifileselectionokcb(wdg, callback, calldata)
-Widget wdg;
-caddr_t callback;
-XmPushButtonCallbackStruct *calldata;
+static void uifileselectionokcb(Widget wdg, void *callback, void *calldata1)
 {
     Widget textwdg;
     char *selection;
+	XmPushButtonCallbackStruct *calldata = calldata1;
 
     textwdg = XmFileSelectionBoxGetChild(uiTopLevel.FSGfx.FSBoxWdg,
 					 XmDIALOG_TEXT);
@@ -125,19 +120,13 @@ XmPushButtonCallbackStruct *calldata;
 }
 
 
-static void uifileselectioncancelcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmPushButtonCallbackStruct *calldata;
+static void uifileselectioncancelcb(Widget wdg, void *ignored, void *calldata1)
 {
     XtUnmapWidget(XtParent(uiTopLevel.FSGfx.FormWdg));
 }
 
 
-static void uifileselectionclickcb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uifileselectionclickcb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     Widget textwdg;
     char *selection;

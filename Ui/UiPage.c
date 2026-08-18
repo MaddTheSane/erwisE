@@ -1,5 +1,8 @@
 static char *rcsid = "$Id: UiPage.c,v 1.4 1992/03/26 18:13:50 kny Exp kny $";
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "UiIncludes.h"
 
 

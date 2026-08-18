@@ -14,27 +14,23 @@
 #include <sys/types.h>
 #include <limits.h>
 
+#include <X11/Xlib.h>
+
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "../HText/HText.h"
 
 #include "XlFormatText.h"
+#include "XlStyle.h"
 
-int xl_calc_position();
-int xl_character_width();
+static int xl_character_width(HTextObject_t *p);
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-/*
+/*!
  * Set up how to format text (current left and right margins)
  */
-void xl_set_margins(p, left, right, c_l, c_r, x, y, low_y, m)
-HTextObject_t *p;
-int left, right;
-int *c_l, *c_r;
-int *x, *y;
-int low_y;
-int m;
+void xl_set_margins(HTextObject_t *p, int left, int right, int *c_l, int *c_r, int *x, int *y, int low_y, int m)
 {
     int i;
 
@@ -88,14 +84,10 @@ int m;
 }
 
 
-/*
+/*!
  * Check how many objects belongs to this line.
  */
-int xl_check_objects(pp, x_corner, y, right)
-HTextObject_t **pp;
-int *x_corner;
-int y;
-int right;
+int xl_check_objects(HTextObject_t **pp, int *x_corner, int y, int right)
 {
     HTextObject_t *p, *p_old;
 
@@ -162,15 +154,11 @@ int right;
     return r;
 }
 
-/*
+/*!
  * Set new x-koordinate if line of objects is not 'leftified'
  * Set new y coordinate above all objects.
  */
-void xl_modify_objects(p_start, p_end, right, mode)
-HTextObject_t *p_start;
-HTextObject_t *p_end;
-int right;
-int mode;
+void xl_modify_objects(HTextObject_t *p_start, HTextObject_t *p_end, int right, int mode)
 {
     HTextObject_t *p = p_start;
     HTextObject_t *p_last;
@@ -227,26 +215,23 @@ int mode;
 }
 
 
-/*
+/*!
  *  width is a request which can be denied (in case of ftp-text for
  *  example)
+ *
  *  Maximum width used on the page is returned. Everything else on the screen
  *  is formatted using given width.
  */
-int XlFormatText(leftmargin, width, topmargin, vwidth, vheight, htext)
-int leftmargin, width;
-int topmargin;
-int *vwidth, *vheight;
-HText_t *htext;
+int XlFormatText(int leftmargin, int width, int topmargin, int *vwidth, int *vheight, HText_t *htext)
 {
-    int stepped_y;
+    int stepped_y = 0;
 
     int max_right_position = leftmargin;
 
     /*
      * Current x,y coordinates.
      */
-    int x, y;
+    int x = 0, y = 0;
 
     /*
      * When there are many regions next to other, store starting
@@ -258,8 +243,8 @@ HText_t *htext;
     /*
      * current format region
      */
-    int current_left;
-    int current_right;
+    int current_left = 0;
+    int current_right = 0;
 
     /*
      * Point out line

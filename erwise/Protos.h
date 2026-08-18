@@ -1,5 +1,7 @@
 /* $Id: Protos.h,v 1.1 1992/05/18 21:43:03 tvr Exp $ */
 
+typedef struct HTextObject HTextObject_t;
+typedef struct HText HText_t;
 
 /*
  * From other objects/libraries
@@ -42,8 +44,8 @@ extern void GetPageCB(char *nodename);
 
 extern char FindText[256];
 extern char SearchText[256];
-int SearchDepth;
-int SearchCase;
+extern int SearchDepth;
+extern int SearchCase;
 
 
 /*

@@ -538,7 +538,7 @@ PRIVATE int get_listen_socket()
 #else
     {
         int status;
-	int address_length = sizeof(soc_address);
+	socklen_t address_length = sizeof(soc_address);
 	status = getsockname(control->socket,
 			(struct sockaddr *)&soc_address,
 			 &address_length);

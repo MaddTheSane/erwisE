@@ -4,9 +4,7 @@ static char *rcsid = "$Id: main.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 
 
 
-void main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     FILE *fp;
 
@@ -24,6 +22,7 @@ char *argv[];
     BindVariables();
 
     UiMainLoop();
+	return EXIT_SUCCESS;
 }
 
 #define RCPOSTFIX ".old"

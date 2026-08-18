@@ -1,6 +1,9 @@
 static char *rcsid = "$Id: UiList.c,v 1.1 1992/03/26 18:13:50 kny Exp kny $";
 
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "UiIncludes.h"
 
 
@@ -205,10 +208,7 @@ Widget bottomwdg;
 
 
 static Widget
- uicreatelistlist(formwdg, topwdg, bottomwdg)
-Widget formwdg;
-Widget topwdg;
-Widget bottomwdg;
+ uicreatelistlist(Widget formwdg, Widget topwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -305,10 +305,7 @@ XmListCallbackStruct *calldata;
 }
 
 
-static void uilistclosecb(wdg, ignored, calldata)
-Widget wdg;
-caddr_t ignored;
-XmListCallbackStruct *calldata;
+static void uilistclosecb(Widget wdg, caddr_t ignored, XmListCallbackStruct *calldata)
 {
     XtUnmapWidget(XtParent(uiTopLevel.ListGfx.FormWdg));
 }

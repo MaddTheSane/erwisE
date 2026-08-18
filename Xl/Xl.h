@@ -10,6 +10,11 @@
  *
  */
 
+#ifndef __xl_h__
+#define __xl_h__
+
+typedef struct HText HText_t;
+typedef struct HTextObject HTextObject_t;
 
 /*
  * Prototypes
@@ -35,7 +40,7 @@ HTextObject_t *XlLocateHTextObject(int windowx, int windowy,
 void XlDeleteText(HText_t * htext);
 
 void XlRedraw(int windowx, int windowy, int width, int height,
-	       HText_t * htext);
+			  HText_t * htext);
 
 void XlMoveWindow(int newvx, int newvy, HText_t * htext);
 
@@ -45,3 +50,6 @@ void XlSetCursor(HText_t * htext, HTextObject_t * object);
 
 void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin);
 
+int xl_object_on_region(HText_t *htext, HTextObject_t *object, int x, int y, int w, int h);
+
+#endif

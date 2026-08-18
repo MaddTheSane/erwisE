@@ -1,9 +1,12 @@
 static char *rcsid = "$Id: UiSearch.c,v 1.1 1992/03/26 18:13:50 kny Exp kss $";
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "UiIncludes.h"
 
 
-static Widget uicreatesearchformdialog();
+static Widget uicreatesearchformdialog(void);
 static Widget uicreatesearchtext(Widget formwdg);
 static Widget uicreatesearchlevel(Widget formwdg, Widget textwdg);
 static Widget uicreatesearchlevelform(Widget formwdg, Widget levelwdg);
@@ -21,8 +24,7 @@ static void uisearchclosecb(char *address, HText_t * htext,
 			   HTextObject_t * htextobject, void *parameter);
 
 
-int UiDisplaySearchDialog(type)
-int type;
+int UiDisplaySearchDialog(int type)
 {
     uiSearchGfx_t *searchgfx = &uiTopLevel.SearchGfx;
 
@@ -60,7 +62,7 @@ int type;
 }
 
 
-void uiSearchUpdateDialog()
+void uiSearchUpdateDialog(void)
 {
     XmString labelstr;
 
@@ -80,7 +82,7 @@ void uiSearchUpdateDialog()
 
 
 static Widget
- uicreatesearchformdialog()
+ uicreatesearchformdialog(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -103,8 +105,7 @@ static Widget
 
 
 static Widget
- uicreatesearchtext(formwdg)
-Widget formwdg;
+uicreatesearchtext(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -146,9 +147,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatesearchlevel(formwdg, textwdg)
-Widget formwdg;
-Widget textwdg;
+ uicreatesearchlevel(Widget formwdg, Widget textwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -194,9 +193,7 @@ Widget textwdg;
 
 
 static Widget
- uicreatesearchlevelform(formwdg, levelwdg)
-Widget formwdg;
-Widget levelwdg;
+ uicreatesearchlevelform(Widget formwdg, Widget levelwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -221,8 +218,7 @@ Widget levelwdg;
 
 
 static Widget
- uicreatesearchleveldown(formwdg)
-Widget formwdg;
+ uicreatesearchleveldown(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -252,8 +248,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatesearchlevelup(formwdg)
-Widget formwdg;
+ uicreatesearchlevelup(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -283,9 +278,7 @@ Widget formwdg;
 
 
 static Widget
- uicreatesearchcase(formwdg, levelwdg)
-Widget formwdg;
-Widget levelwdg;
+ uicreatesearchcase(Widget formwdg, Widget levelwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -313,9 +306,7 @@ Widget levelwdg;
 
 
 static Widget
- uicreatesearchbackward(formwdg, textwdg)
-Widget formwdg;
-Widget textwdg;
+ uicreatesearchbackward(Widget formwdg, Widget textwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -346,9 +337,7 @@ Widget textwdg;
 
 
 static Widget
- uicreatesearchforward(formwdg, backwardwdg)
-Widget formwdg;
-Widget backwardwdg;
+ uicreatesearchforward(Widget formwdg, Widget backwardwdg)
 {
     XmString labelstr;
     ArgList args;
@@ -381,9 +370,7 @@ Widget backwardwdg;
 
 
 static Widget
- uicreatesearchclose(parentwdg, topwdg)
-Widget parentwdg;
-Widget topwdg;
+ uicreatesearchclose(Widget parentwdg, Widget topwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -449,11 +436,8 @@ Widget rightwdg;
 }
 
 
-static void uisearchlevelcb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uisearchlevelcb(char *address, HText_t * htex,
+							HTextObject_t * htextobject, void *parameter)
 {
     Widget levelwdg = uiTopLevel.SearchGfx.LevelWdg;
     char *leveltext;
@@ -478,11 +462,7 @@ void *parameter;
 }
 
 
-static void uisearchclosecb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uisearchclosecb(char *address, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     XtUnmapWidget(XtParent(uiTopLevel.SearchGfx.FormWdg));
 }

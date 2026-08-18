@@ -20,11 +20,10 @@ void *(*uiConfigPF) (void *table, char *item);
 void *(*uiConfigSetPF) (void *table, char *item, void *value);
 
 
-int UiInitialize(argc, argv, configpf, configsetpf)
-int argc;
-char *argv[];
-void *(*configpf) (void *table, char *item);
-void *(*configsetpf) (void *table, char *item, void *value);
+int UiInitialize(int argc, char *argv[],
+				 void *(*configpf) (void *table, char *item),
+			  void *(*configsetpf) (void *table, char *item,
+							 void *value))
 {
     uiTopLevelGfx_t *topgfx = &uiTopLevel.TopGfx;
 
@@ -57,14 +56,13 @@ void *(*configsetpf) (void *table, char *item, void *value);
 }
 
 
-void UiMainLoop()
+void UiMainLoop(void)
 {
     XtMainLoop();
 }
 
 
-int PlaceValue(value)
-char *value;
+int PlaceValue(void *value)
 {
     if (value && !strncasecmp(value, "mouse", strlen("mouse")))
 	return TRUE;
@@ -72,10 +70,8 @@ char *value;
 }
 
 
-static void uisetupdefaults(argc, argv, configpf)
-int argc;
-char *argv[];
-void *(*configpf) (void *table, char *item);
+static void uisetupdefaults(int argc, char *argv[],
+							void *(*configpf) (void *table, char *item))
 {
     uiGlobalSettings_t *gs = &uiTopLevel.GlobalSettings;
     void *table;
@@ -115,11 +111,8 @@ void *(*configpf) (void *table, char *item);
 
 
 static Widget
- uicreatebutton(parentwdg, name, leftpos, rightpos)
-Widget parentwdg;
-char *name;
-int leftpos;
-int rightpos;
+ uicreatebutton(Widget parentwdg, char *name, int leftpos,
+				int rightpos)
 {
     Widget tmpwdg;
 
@@ -144,12 +137,14 @@ static void uitopactivatecb(Widget wdg, void *actionname, void *calldata)
 {
     uiAction_t *tmpaction;
 
-    if (tmpaction = uiFindAction((char *) actionname))
-	if (uiHelpOnActionCB) {
-	    (*uiHelpOnActionCB) (actionname);
-	    uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
-	} else
-	    (*tmpaction->Callback) ((char *) NULL, (HText_t *) NULL,
-				    (HTextObject_t *) NULL,
-				    tmpaction->Parameter);
+	if ((tmpaction = uiFindAction((char *) actionname))) {
+		if (uiHelpOnActionCB) {
+			(*uiHelpOnActionCB) (actionname);
+			uiHelpOnActionCB = (void (*) (char *actionstring)) NULL;
+		} else {
+			(*tmpaction->Callback) ((char *) NULL, (HText_t *) NULL,
+									(HTextObject_t *) NULL,
+									tmpaction->Parameter);
+		}
+	}
 }

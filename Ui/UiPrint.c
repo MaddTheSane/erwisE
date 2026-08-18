@@ -3,7 +3,7 @@ static char *rcsid = "$Id$";
 #include "UiIncludes.h"
 
 
-static Widget uicreateprintformdialog();
+static Widget uicreateprintformdialog(void);
 static Widget uicreateprintcmd(Widget formwdg);
 static Widget
  uicreateprintmargin(Widget formwdg, Widget topwdg,
@@ -98,7 +98,7 @@ void uiPrintUpdateDialog()
 
 
 static Widget
- uicreateprintformdialog()
+ uicreateprintformdialog(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -587,6 +587,8 @@ void *parameter;
 
     XtFree(fixedtext);
 }
+
+extern int Print(HText_t *htext);
 
 
 static void uiprintbuttoncb(address, htext, htextobject, parameter)

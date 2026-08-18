@@ -1,5 +1,8 @@
 static char *rcsid = "$Id: UiMisc.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "UiIncludes.h"
 #include <X11/IntrinsicP.h>
 #include <stdarg.h>
@@ -11,9 +14,7 @@ static void uipopupcb(Widget wdg, char *address,
 		       XmAnyCallbackStruct * calldata);
 
 
-void (*uiHelpOnActionCB) (char *actionstring) =
- (
-      void (*) (char *actionstring)) NULL;
+void (*uiHelpOnActionCB) (char *actionstring) = NULL;
 
 static void (*uitimeoutcallback) (void *data);
 static void (*uifdinputcallback) (void *data);
@@ -24,11 +25,9 @@ static void (*uipopupcallback) (char *address, char *topaddress,
 static char *uipopuptopaddress;
 
 
-int UiAttachCallback(actionname, callback, parameter)
-char *actionname;
-void (*callback) (char *address, HText_t * htext,
-		   HTextObject_t * htextobject, void *parameter);
-void *parameter;
+int UiAttachCallback(const char *actionname,
+		     void (*callback) (char *address, HText_t * htext,
+				       HTextObject_t * htextobject, void *parameter), void *parameter)
 {
     uiAction_t *tmpaction;
 
@@ -54,12 +53,9 @@ void *parameter;
 }
 
 
-int UiBindKey(keyname, modifier, callback, parameter)
-char *keyname;
-int modifier;
-void (*callback) (char *address, HText_t * htext,
-		   HTextObject_t * htextobject, void *parameter);
-void *parameter;
+int UiBindKey(const char *keyname, int modifier,
+	      void (*callback) (char *address, HText_t * htext,
+				HTextObject_t * htextobject, void *parameter), void *parameter)
 {
     uiKey_t *tmpkey;
 
@@ -86,10 +82,7 @@ void *parameter;
 }
 
 
-int UiBindVariable(varname, variable, type)
-char *varname;
-void *variable;
-uiVarType_t type;
+int UiBindVariable(const char *varname, void *variable, uiVarType_t type)
 {
     uiVariable_t *tmpvar;
 
@@ -115,15 +108,14 @@ uiVarType_t type;
 }
 
 
-int UiUpdateVariable(varname)
-char *varname;
+int UiUpdateVariable(const char *varname)
 {
     uiVariable_t *tmpvar;
     char *tmpstr;
     static char staticstr[100];	/* Is this overkill? */
 
     tmpstr = staticstr;
-    if (tmpvar = uiFindVariable(varname)) {
+    if ((tmpvar = uiFindVariable(varname))) {
 	switch (tmpvar->WdgType) {
 	case uiWTtext:
 	    switch (tmpvar->VarType) {
@@ -158,55 +150,45 @@ char *varname;
 }
 
 
-void UiGetNextAction(helponactioncb)
-void (*helponactioncb) (char *actionstring);
+void UiGetNextAction(void (*helponactioncb) (char *actionstring))
 {
     uiHelpOnActionCB = helponactioncb;
 }
 
 
-int UiAddTimeOut(timeout, callback, data)
-int timeout;
-void (*callback) (void *data);
-void *data;
+uintptr_t UiAddTimeOut(int timeout, void (*callback) (void *data), void *data)
 {
     uitimeoutcallback = callback;
 
-    return (int) XtAddTimeOut(timeout, uitimeouthandler, (caddr_t) data);
+    return XtAddTimeOut(timeout, uitimeouthandler, (caddr_t) data);
 }
 
 
-void UiDeleteTimeOut(timeoutid)
-int timeoutid;
+void UiDeleteTimeOut(uintptr_t timeoutid)
 {
     XtRemoveTimeOut((XtIntervalId) timeoutid);
 }
 
 
-int UiAddInputFD(fd, callback, data)
-int fd;
-void (*callback) (void *data);
-void *data;
+uintptr_t UiAddInputFD(int fd, void (*callback) (void *data), void *data)
 {
     uifdinputcallback = callback;
 
-    return (int) XtAddInput(fd, (XtPointer)(size_t)(XtInputReadMask | XtInputExceptMask),
+    return XtAddInput(fd, (XtPointer)(size_t)(XtInputReadMask | XtInputExceptMask),
 			    uifdinputhandler, (caddr_t) data);
 }
 
 
-void UiDeleteInputFD(inputid)
-int inputid;
+void UiDeleteInputFD(uintptr_t inputid)
 {
     XtRemoveInput((XtInputId) inputid);
 }
 
 
-void UiAddStringToCutBuffer(data)
-char *data;
+void UiAddStringToCutBuffer(char *data)
 {
     static char *cutbuffer = (char *) NULL;
-    int oldlen;
+    size_t oldlen;
 
     if (data) {
 	oldlen = cutbuffer ? strlen(cutbuffer) : 0;
@@ -224,11 +206,7 @@ char *data;
 }
 
 
-void UiDisplayPopup(callback, topaddress, items, nitems)
-void (*callback) (char *address, char *topaddress, char *parentaddress);
-char *topaddress;
-char **items;
-int nitems;
+void UiDisplayPopup(void (*callback) (char *address, char *topaddress, char *parentaddress), char *topaddress, char **items, int nitems)
 {
     Widget topwdg = uiPageInfo.CurrentPage->Gfx.TopWdg;
     ArgList args;
@@ -280,8 +258,7 @@ int nitems;
 
 
 uiAction_t *
- uiFindAction(actionname)
-char *actionname;
+ uiFindAction(const char *actionname)
 {
     uiAction_t *tmpaction = uiTopLevel.Actions;
 
@@ -297,9 +274,7 @@ char *actionname;
 
 
 uiKey_t *
- uiFindKey(keyname, modifier)
-char *keyname;
-int modifier;
+ uiFindKey(const char *keyname, int modifier)
 {
     uiKey_t *tmpkey = uiTopLevel.Keys;
 
@@ -315,14 +290,14 @@ int modifier;
 
 
 uiVariable_t *
- uiFindVariable(varname)
-char *varname;
+ uiFindVariable(const char *varname)
 {
     uiVariable_t *tmpvar = uiTopLevel.Variables;
 
     while (tmpvar) {
-	if (!strcmp(varname, tmpvar->Name))
+	if (!strcmp(varname, tmpvar->Name)) {
 	    return tmpvar;
+	}
 
 	tmpvar = tmpvar->Next;
     }
@@ -331,14 +306,11 @@ char *varname;
 }
 
 
-int uiAddWidgetInfo(varname, wdg, wdgtype)
-char *varname;
-Widget wdg;
-uiWdgType_t wdgtype;
+int uiAddWidgetInfo(const char *varname, Widget wdg, uiWdgType_t wdgtype)
 {
     uiVariable_t *tmpvar;
 
-    if (tmpvar = uiFindVariable(varname)) {
+    if ((tmpvar = uiFindVariable(varname))) {
 	tmpvar->Wdg = wdg;
 	tmpvar->WdgType = wdgtype;
 
@@ -348,10 +320,7 @@ uiWdgType_t wdgtype;
 }
 
 
-void uiDialogActivateCB(wdg, actiondata, calldata)
-Widget wdg;
-uiActionData_t *actiondata;
-XmAnyCallbackStruct *calldata;
+void uiDialogActivateCB(Widget wdg, uiActionData_t *actiondata, XmAnyCallbackStruct *calldata)
 {
     uiAction_t *tmpaction;
 
@@ -359,7 +328,7 @@ XmAnyCallbackStruct *calldata;
     uiPageInfo.Wdg = wdg;
     uiPageInfo.CallData = (void *) calldata;
 
-    if (tmpaction = uiFindAction(actiondata->ActionName)) {
+    if ((tmpaction = uiFindAction(actiondata->ActionName))) {
 	uiDefineCursor(uiBusyCursor);
 	if (uiHelpOnActionCB) {
 	    (*uiHelpOnActionCB) (actiondata->ActionName);
@@ -374,15 +343,12 @@ XmAnyCallbackStruct *calldata;
 }
 
 
-void uiDialogVariableCB(wdg, varname, calldata)
-Widget wdg;
-caddr_t varname;
-XmAnyCallbackStruct *calldata;
+void uiDialogVariableCB(Widget wdg, caddr_t varname, XmAnyCallbackStruct *calldata)
 {
     uiVariable_t *tmpvar;
     char *tmpstr;
 
-    if (tmpvar = uiFindVariable((char *) varname)) {
+    if ((tmpvar = uiFindVariable((char *) varname))) {
 	switch (tmpvar->WdgType) {
 	case uiWTtext:
 	    tmpstr = XmTextGetString(tmpvar->Wdg);
@@ -405,7 +371,7 @@ XmAnyCallbackStruct *calldata;
 	    /* Not implemented yet */
 	    break;
 	case uiWTcheckbutton:
-	    *(int *) tmpvar->Value = uiGetArg(tmpvar->Wdg, XmNset);
+	    *(uintptr_t *) tmpvar->Value = uiGetArg(tmpvar->Wdg, XmNset);
 	    break;
 	case uiWTscale:
 	    /* Not implemented yet */
@@ -415,8 +381,7 @@ XmAnyCallbackStruct *calldata;
 }
 
 
-void uiDefineCursor(cursor)
-Cursor cursor;
+void uiDefineCursor(Cursor cursor)
 {
     uiHierarchy_t *tmphierarchy = uiTopLevel.Hierarchies;
     uiPage_t *tmppage;
@@ -451,7 +416,7 @@ Cursor cursor;
 }
 
 
-void uiUndefineCursor()
+void uiUndefineCursor(void)
 {
     uiHierarchy_t *tmphierarchy = uiTopLevel.Hierarchies;
     uiPage_t *tmppage;
@@ -504,21 +469,20 @@ uiVaSetArgs(Cardinal *nargs, ...)
 
 
 XtArgVal
-uiGetArg(wdg, resource)
-Widget wdg;
-String resource;
+uiGetArg(Widget wdg, String resource)
 {
-    Arg args[1];
+    Arg args;
+    XtArgVal aVal = 0;
 
-    XtSetArg(args[0], resource, (XtArgVal) 0);
-    XtGetValues(wdg, args, 1);
+    XtSetArg(args, resource, (XtArgVal) &aVal);
+    XtGetValues(wdg, &args, 1);
 
-    return args[0].value;
+    return aVal;
 }
 
 
 void *
- uiMalloc(int size)
+ uiMalloc(size_t size)
 {
     void *tmpptr;
 
@@ -531,7 +495,7 @@ void *
 
 
 void *
- uiReAlloc(void *ptr, int size)
+ uiReAlloc(void *ptr, size_t size)
 {
     void *tmpptr;
 
@@ -587,10 +551,7 @@ static void uitimeouthandler(XtPointer data, XtIntervalId *id)
 }
 
 
-static void uifdinputhandler(data, fd, id)
-XtPointer data;
-int *fd;
-XtInputId *id;
+static void uifdinputhandler(XtPointer data, int *fd, XtInputId *id)
 {
     uiinputid = *id;
 
@@ -598,10 +559,7 @@ XtInputId *id;
 }
 
 
-static void uipopupcb(wdg, address, calldata)
-Widget wdg;
-char *address;
-XmAnyCallbackStruct *calldata;
+static void uipopupcb(Widget wdg, char *address, XmAnyCallbackStruct *calldata)
 {
     XtDestroyWidget(XtParent(XtParent(wdg)));
 

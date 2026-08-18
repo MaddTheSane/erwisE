@@ -26,8 +26,6 @@
 
 #include "XlConfig.h"
 
-int xl_object_mode();
-
 /*
  * All hypertext styles. Also needed configure data (font configure-name)
  */
@@ -135,14 +133,10 @@ XlStyle_t XlStyles[] =
 };
 
 
-/*
+/*!
  * How much to increase y coordinate after this line ?
  */
-/* ARGS_IN_USE */
-
-int xl_linespace(p_start, p_end)
-HTextObject_t *p_start;
-HTextObject_t *p_end;
+int xl_linespace(HTextObject_t *p_start, HTextObject_t *p_end)
 {
     if (p_start->xl_data->style->fontinfo) {
 
@@ -156,9 +150,7 @@ HTextObject_t *p_end;
 }
 
 
-int xl_paragraphspace(p_start, p_end)
-HTextObject_t *p_start;
-HTextObject_t *p_end;
+int xl_paragraphspace(HTextObject_t *p_start, HTextObject_t *p_end)
 {
     if (p_start->xl_data->style->fontinfo) {
 
@@ -172,9 +164,7 @@ HTextObject_t *p_end;
 }
 
 
-int xl_stylespace(p_start, p_end)
-HTextObject_t *p_start;
-HTextObject_t *p_end;
+int xl_stylespace(HTextObject_t *p_start, HTextObject_t *p_end)
 {
     if (p_start->xl_data->style->fontinfo) {
 
@@ -189,9 +179,7 @@ HTextObject_t *p_end;
 }
 
 
-int xl_stylespace_before(p_start, p_end)
-HTextObject_t *p_start;
-HTextObject_t *p_end;
+int xl_stylespace_before(HTextObject_t *p_start, HTextObject_t *p_end)
 {
     if (p_start->xl_data->style->fontinfo) {
 
@@ -205,12 +193,10 @@ HTextObject_t *p_end;
 }
 
 
-/*
+/*!
  * How much to increase x-coordinate after this object ?
  */
-/* ARGS_IN_USE */
-int xl_wordgap(p)
-HTextObject_t *p;
+int xl_wordgap(HTextObject_t *p)
 {
     if (xl_object_mode(p) & STYLE_RAW)
 	return 0;
@@ -219,46 +205,38 @@ HTextObject_t *p;
 }
 
 
-/*
+/*!
  * Return width of a character 'a'. Used to mostly when calculating
  * tabulator spaces.
  */
-int xl_character_width(p)
-HTextObject_t *p;
+int xl_character_width(HTextObject_t *p)
 {
     return p->xl_data->style->char_width;
 }
 
 
-/*
+/*!
  * Return style of this object
  */
-int xl_object_style(p)
-HTextObject_t *p;
+int xl_object_style(HTextObject_t *p)
 {
     return p->xl_data->style->mode & STYLE_MASK;
 }
 
 
-/*
+/*!
  * Return mode of this object
  */
-int xl_object_mode(p)
-HTextObject_t *p;
+int xl_object_mode(HTextObject_t *p)
 {
     return p->xl_data->style->mode;
 }
 
 
-/*
+/*!
  * Calculate position of a coordinate according to left and right margins
  */
-
-int xl_calc_position(p, which, left, right)
-HTextObject_t *p;
-int which;
-int left;
-int right;
+int xl_calc_position(HTextObject_t *p, int which, int left, int right)
 {
     int r = 0;
     int delta = right - left;

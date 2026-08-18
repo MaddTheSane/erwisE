@@ -42,8 +42,8 @@ typedef struct XlGlobalData {
     /*
      * Coordinates of a view window left upper corner
      */
-    long x;
-    long y;
+    int x;
+    int y;
 
     /*
      * store GC:s for all fonts here
@@ -52,7 +52,7 @@ typedef struct XlGlobalData {
 
     GC xorgc;
 
-    int nr_gcs;
+    size_t nr_gcs;
 
     /*
      * Save styledata here

@@ -11,11 +11,13 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include "Cl.h"
 
 #include "HTStyle.h"
 #include "HTParse.h"
+#include "HTAccess.h"
 #include "HText.h"
 #include "tcp.h"
 

@@ -1,5 +1,12 @@
 /* $Id: Types.h,v 1.1 1992/05/18 21:43:03 tvr Exp $ */
 
+#ifndef __erwise_Types_h__
+#define __erwise_Types_h__
+
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
+
 
 typedef struct _page {
     char *Address;
@@ -43,3 +50,5 @@ typedef struct _config {
     char *id;
     void *value;
 } Config_t;
+
+#endif

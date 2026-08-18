@@ -25,7 +25,7 @@ char PrintFileName[1024] = "foobar.www";
 
 //FIXME: find the right way to include these!
 extern void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin);
-extern void HText_free(HText_t * me);
+//extern void HText_free(HText_t * me);
 
 
 /*
@@ -304,8 +304,7 @@ char *command;
 /*
  * Open files, handle commands, call DoPrint
  */
-int Print(htext)
-HText_t *htext;
+int Print(HText_t *htext)
 {
     int fd;
 

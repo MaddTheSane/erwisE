@@ -1,3 +1,6 @@
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "Includes.h"
 
 #define BUFFER_SIZE 79
@@ -430,30 +433,25 @@ Config_t *table;
 #ifdef DEBUG_CONFIG
     printf("end of block\n");
 #endif
+	return 0;
 }
 
 
-int ConfigRestore(fp)
-FILE *fp;
+int ConfigRestore(FILE *fp)
 {
     ConfigLines = 0;
-    restoreblock(fp, Config);
+    return restoreblock(fp, Config);
 }
 
 
-static void indent(fp, depth)
-FILE *fp;
-int depth;
+static void indent(FILE *fp, int depth)
 {
     while (depth-- > 0)
 	fprintf(fp, INDENT_STR);
 }
 
 
-int saveblock(fp, table, depth)
-FILE *fp;
-Config_t *table;
-int depth;
+int saveblock(FILE *fp, Config_t *table, int depth)
 {
     Config_t *walker;
     char **dynamic_object;
@@ -502,19 +500,19 @@ int depth;
 	}
 	walker++;
     }
+	return 0;
 }
 
 
-int ConfigSave(fp)
-FILE *fp;
+int ConfigSave(FILE *fp)
 {
     saveblock(fp, Config, 0);
     fflush(fp);
+	return 0;
 }
 
 
-static void configinitloop(table)
-Config_t *table;
+static void configinitloop(Config_t *table)
 {
     Config_t *walker;
 

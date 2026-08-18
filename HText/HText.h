@@ -10,6 +10,11 @@
  *
  */
 
+#ifndef __HText_HText_h__
+#define __HText_HText_h__
+
+#include "HTAnchor.h"
+#include "HTStyle.h"
 
 /*
  * Maximum Htext object data size
@@ -76,15 +81,15 @@ typedef struct HTextObject
    * Position of an object on a virtual screen. These will be set when
    * object is being positioned.
    */
-  long x;
-  long y;
+  int x;
+  int y;
 
   /*
    * Size of an object. These are calculated once (as these does
    * not change).
    */
-  long width;
-  long height;
+  int width;
+  int height;
 
   /*
    * Xl specific data of this object
@@ -158,3 +163,5 @@ typedef struct HTextAnchor
 
 HText_t *HtDuplicate (HText_t * text);
 extern char *HTSearchAddress(char *keywords);
+
+#endif

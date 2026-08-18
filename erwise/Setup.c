@@ -66,7 +66,7 @@ char *item;
 
 typedef struct erwise_key_bindings_s {
     char *itemname;
-    void (*callback) ();
+    void (*callback) (char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter);
     void *data;
 } erwise_key_bindings_t;
 

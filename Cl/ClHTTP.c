@@ -20,6 +20,7 @@
 #include "HTParse.h"
 #include "HTFormat.h"
 #include "HTAnchor.h"
+#include "HTTCP.h"
 #include "tcp.h"
 
 
@@ -139,7 +140,7 @@ ARGS4 (CONST char *, arg,
    */
 
   {
-    static void (*functions[]) () =
+    static void (*functions[]) (void) =
     {
       WWWErwiseConnect,
       WWWErwiseSendCommand,

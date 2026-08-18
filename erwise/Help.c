@@ -1,5 +1,8 @@
 static char *rcsid = "$Id: Help.c,v 1.1 1992/05/18 21:43:03 tvr Exp tvr $";
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "Includes.h"
 
 static struct anchorstr_st {
@@ -34,21 +37,13 @@ static struct anchorstr_st {
 static void helponactioncb(char *actionstring);
 
 
-void HelpOnFunctionCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void HelpOnFunctionCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiGetNextAction(helponactioncb);
 }
 
 
-void HelpManualCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void HelpManualCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     if (!FindPage(Pages, HELP_TOPLEVEL))
 	AddPage(&Pages, HELP_TOPLEVEL, (HText_t *) NULL, (Page_t *) NULL);
@@ -57,8 +52,7 @@ void *parameter;
 }
 
 
-static void helponactioncb(actionstring)
-char *actionstring;
+static void helponactioncb(char *actionstring)
 {
     int i;
     char *addressstring;

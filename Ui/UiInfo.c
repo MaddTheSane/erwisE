@@ -99,11 +99,11 @@ static char logo_bits[] =
  0x00, 0x00, 0x00, 0x00, 0xa0, 0xff, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 
-static Widget uicreateinfoform();
+static Widget uicreateinfoform(void);
 static Widget uicreateinfook(Widget parent);
 void uicreateinfolabels(Widget parent, Widget bottomwdg);
-static void uiinfookcb(char *address, HText_t * htext,
-		        HTextObject_t * htextobject, void *parameter);
+static void uiinfookcb(Widget address, void * htext,
+		       void *parameter);
 
 
 int UiDisplayInfo(void)
@@ -127,7 +127,7 @@ int UiDisplayInfo(void)
 
 
 static Widget
- uicreateinfoform()
+ uicreateinfoform(void)
 {
     ArgList args;
     Cardinal nargs;
@@ -149,8 +149,7 @@ static Widget
 
 
 static Widget
- uicreateinfook(formwdg)
-Widget formwdg;
+uicreateinfook(Widget formwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -172,9 +171,7 @@ Widget formwdg;
 }
 
 
-void uicreateinfolabels(formwdg, bottomwdg)
-Widget formwdg;
-Widget bottomwdg;
+void uicreateinfolabels(Widget formwdg, Widget bottomwdg)
 {
     ArgList args;
     Cardinal nargs;
@@ -196,7 +193,7 @@ Widget bottomwdg;
 				    uiGetArg(wdg, XmNbackground),
 				  DefaultDepth(dpy, DefaultScreen(dpy)));
 
-    if (logo_pixmap == NULL) {
+    if (logo_pixmap == 0) {
 	printf("Pixmap creation failed\n");
 	exit(1);
     }
@@ -242,11 +239,8 @@ Widget bottomwdg;
 }
 
 
-static void uiinfookcb(address, htext, htextobject, parameter)
-char *address;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+static void uiinfookcb(Widget address, void * htext,
+		       void *parameter)
 {
     XtUnmapWidget(XtParent(uiTopLevel.InfoGfx.FormWdg));
 }

@@ -42,6 +42,8 @@ typedef enum {
     uiVTstring
 } uiVarType_t;
 
+typedef struct HText HText_t;
+typedef struct HTextObject HTextObject_t;
 
 extern int UiInitialize(int argc, char *argv[],
 			 void *(*configpf) (void *table, char *item),
@@ -71,26 +73,26 @@ extern int UiDisplayRecallDialog(char **listitems, int nitems,
 						     char *address,
 						   char *parentaddress));
 
-extern int UiAttachCallback(char *actionname,
+extern int UiAttachCallback(const char *actionname,
 			     void (*callback) (char *address,
 					        HText_t * htext,
 					     HTextObject_t * htextobject,
 					        void *parameter),
 			     void *parameter);
-extern int UiBindKey(char *keyname, int modifier,
+extern int UiBindKey(const char *keyname, int modifier,
 		      void (*callback) (char *address,
 					 HText_t * htext,
 					 HTextObject_t * htextobject,
 					 void *parameter),
 		      void *parameter);
-extern int UiBindVariable(char *varname, void *variable, uiVarType_t type);
-extern int UiUpdateVariable(char *varname);
+extern int UiBindVariable(const char *varname, void *variable, uiVarType_t type);
+extern int UiUpdateVariable(const char *varname);
 extern void UiGetNextAction(void (*helponactioncb) (char *actionstring));
-extern int UiAddTimeOut(int timeout, void (*callback) (void *data),
+extern uintptr_t UiAddTimeOut(int timeout, void (*callback) (void *data),
 			 void *data);
-extern void UiDeleteTimeOut(int timoutid);
-extern int UiAddInputFD(int fd, void (*callback) (void *data), void *data);
-extern void UiDeleteInputFD(int inputid);
+extern void UiDeleteTimeOut(uintptr_t timoutid);
+extern uintptr_t UiAddInputFD(int fd, void (*callback) (void *data), void *data);
+extern void UiDeleteInputFD(uintptr_t inputid);
 extern void UiAddStringToCutBuffer(char *data);
 void UiDisplayPopup(void (*callback) (char *address, char *topaddress,
 				       char *parentaddress),

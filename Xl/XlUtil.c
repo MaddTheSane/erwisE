@@ -13,6 +13,8 @@
 
 #include <stdio.h>
 #include <sys/types.h>
+#include <string.h>
+#include <stdbool.h>
 
 #include <X11/Xlib.h>
 
@@ -23,26 +25,26 @@
 #include "XlStyle.h"
 #include "XlFormatText.h"
 #include "XlTypes.h"
+#include "Xl.h"
 
-/*
+
+static bool xl_can_be_cursor(HTextObject_t *htextobject);
+
+/*!
  *  Does nothing but updates htext-object positions. This has to be
  *  used after text is reformatted (on window size change).
  */
-void XlSetPageCoordinates(virtualx, virtualy, htext)
-int virtualx, virtualy;
-HText_t *htext;
+void XlSetPageCoordinates(int virtualx, int virtualy, HText_t *htext)
 {
     htext->xl_global->x = virtualx;
     htext->xl_global->y = virtualy;
 }
 
 
-/*
+/*!
  *  Get HTextObject position (virtual position of screen area to display)
  */
-void XlGetCoordinates(virtualx, virtualy, htextobject)
-int *virtualx, *virtualy;
-HTextObject_t *htextobject;
+void XlGetCoordinates(int *virtualx, int *virtualy, HTextObject_t *htextobject)
 {
     if (!htextobject)
 	return;
@@ -52,11 +54,10 @@ HTextObject_t *htextobject;
 }
 
 
-/*
- * Can this object be cursor?
+/*!
+ *  Can this object be cursor?
  */
-int xl_can_be_cursor(htextobject)
-HTextObject_t *htextobject;
+bool xl_can_be_cursor(HTextObject_t *htextobject)
 {
     int i;
 
@@ -71,20 +72,18 @@ HTextObject_t *htextobject;
 }
 
 
-/*
- *  Get pointer to hypertextobject nearest to chosen coordinates
+/*!
+ *  Get pointer to `hypertextobject` nearest to chosen coordinates
  */
 HTextObject_t *
- XlLocateHTextObject(windowx, windowy, htext)
-int windowx, windowy;
-HText_t *htext;
+ XlLocateHTextObject(int windowx, int windowy, HText_t *htext)
 {
     HTextObject_t *p;
     HTextObject_t *p_closest = NULL;
 
     int virtualx;
     int virtualy;
-    int distance;
+    int distance = 0;
 
     virtualx = windowx + htext->xl_global->x;
     virtualy = windowy + htext->xl_global->y;
@@ -129,11 +128,8 @@ HText_t *htext;
     return p_closest;
 }
 
-/*
- * Delete all Xl data from a page. Free all data allocated on Xl-library.
- */
-void XlDeleteText(htext)
-HText_t *htext;
+//! Delete all Xl data from a page. Free all data allocated on Xl-library.
+void XlDeleteText(HText_t *htext)
 {
     int i;
 
@@ -172,13 +168,10 @@ HText_t *htext;
 }
 
 
-/*
+/*!
  * What is the length of this without spaces
  */
-int xl_nospacelength(p, data, len)
-HTextObject_t *p;
-char *data;
-int len;
+int xl_nospacelength(HTextObject_t *p, char *data, int len)
 {
     if (xl_object_mode(p) & STYLE_RAW) {
 
@@ -246,7 +239,7 @@ void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin)
     while (p) {
 	HTStyle *st = NULL;
 
-	XlStyle_t *current;
+	XlStyle_t *current = NULL;
 
 	p->height = 1;
 

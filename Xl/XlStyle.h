@@ -76,9 +76,16 @@ typedef struct XlStyle {
 
 
 extern XlStyle_t XlStyles[];
-extern int xl_lineheightandgap();
-extern int xl_wordgap();
-extern int xl_object_style();
+//extern int xl_lineheightandgap();
+extern int xl_wordgap(HTextObject_t *p);
+extern int xl_calc_position(HTextObject_t *p, int which, int left, int right);
+extern int xl_object_style(HTextObject_t *p);
+extern int xl_object_mode(HTextObject_t *p);
+extern XlStyle_t *xl_get_style_and_gc(HTextObject_t *p, GC *currentgc, HText_t *t);
+extern int xl_linespace(HTextObject_t *p_start, HTextObject_t *p_end);
+extern int xl_paragraphspace(HTextObject_t *p_start, HTextObject_t *p_end);
+extern int xl_stylespace(HTextObject_t *p_start, HTextObject_t *p_end);
+extern int xl_stylespace_before(HTextObject_t *p_start, HTextObject_t *p_end);
 
 
 

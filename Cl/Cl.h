@@ -10,6 +10,7 @@
  *
  */
 
+#include <sys/socket.h>
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "HText.h"
@@ -148,30 +149,31 @@ int ClConnectionOnLoadToFileMode (ClConnection_t * connection);
 extern int WWWErwiseStatus;
 extern ClConnection_t *WWWErwiseConnection;
 
-void WWWErwiseConnect ();
-void WWWErwiseSendCommand ();
-void WWWErwiseReadData ();
-void WWWErwiseParse ();
+void WWWErwiseConnect (void);
+void WWWErwiseSendCommand (void);
+void WWWErwiseReadData (void);
+void WWWErwiseParse (void);
 
 
 /*
  * Internals
  */
 
-void WWWErwiseFtpUser ();
-void WWWErwiseFtpPass ();
-void WWWErwiseFtpPassive ();
-void WWWErwiseFtpGetPassive ();
-void WWWErwiseFtpGetCommand ();
-void WWWErwiseFtpDataChannel ();
-void WWWErwiseFtpCheckForError ();
-void WWWErwiseFtpBinary ();
-void WWWErwiseCheckParse ();
-void WWWErwiseSetPoll ();
-void WWWErwiseSetSelect ();
-void WWWErwiseTerminateIfLoadToFile ();
+void WWWErwiseFtpUser (void);
+void WWWErwiseFtpPass (void);
+void WWWErwiseFtpPassive (void);
+void WWWErwiseFtpGetPassive (void);
+void WWWErwiseFtpGetCommand (void);
+void WWWErwiseFtpDataChannel (void);
+void WWWErwiseFtpCheckForError (void);
+void WWWErwiseFtpBinary (void);
+void WWWErwiseCheckParse (void);
+void WWWErwiseSetPoll (void);
+void WWWErwiseSetSelect (void);
+void WWWErwiseTerminateIfLoadToFile (void);
 
-int cl_start_connection ();
+int cl_start_connection (char *host, ClConnection_t *connection, int port);
+int erwise_connect (int fd, struct sockaddr *addr, int size);
 
 /*
  * Debug ...

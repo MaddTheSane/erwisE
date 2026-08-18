@@ -65,7 +65,7 @@ extern void 	HText_free PARAMS((HText * me));
 **	append calls, then HText_endAppend. This allows optimised
 **	handling using buffers and caches which are flushed at the end.
 */
-extern void HText_beginAppend PARAMS((HText * text));
+extern void HText_beginAppend(HText * text);
 
 extern void HText_endAppend PARAMS((HText * text));
 
@@ -112,8 +112,8 @@ extern HTParentAnchor * HText_nodeAnchor PARAMS((HText * me));
 /*	Bring to front and highlight it
 */
 
-extern BOOL HText_select PARAMS((HText * text)); 
-extern BOOL HText_selectAnchor PARAMS((HText * text, HTChildAnchor* anchor)); 
+extern BOOL HText_select(HText * text); 
+extern BOOL HText_selectAnchor(HText * text, HTChildAnchor* anchor);
 
 /*		Editing functions
 **		-----------------

@@ -1,8 +1,11 @@
 static char *rcsid = "$Id: Page.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "Includes.h"
 
-extern void 	HText_free(HText_t * me);
+//extern void 	HText_free(HText_t * me);
 static void getanddisplaypage(char *topaddress, HText_t * htext,
 		        HTextObject_t * htextobject);
 static int matchingstring(char *word);
@@ -23,11 +26,7 @@ static HText_t *CopyHText;
 static HTextObject_t *CopyHTextObject;
 
 
-void PageSearchCB(topaddress, htext, htextobject, parameter)
-char *topaddress;
-HText_t *htext;
-HTextObject_t *htextobject;
-void *parameter;
+void PageSearchCB(char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     UiDisplaySearchDialog(SearchDialogType);
 }

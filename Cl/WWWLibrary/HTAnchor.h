@@ -79,7 +79,7 @@ struct _HTParentAnchor {
   char *	title;		/* Title of document */
 };
 
-typedef struct {
+typedef struct HTChildAnchor {
   /* Common part from the generic anchor structure */
   HTLink	mainLink;	/* Main (or default) destination of this */
   HTList *	links;  	/* List of extra links from this, if any */

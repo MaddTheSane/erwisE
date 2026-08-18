@@ -13,6 +13,7 @@
 #include "HTTCP.h"
 #include "HTFormat.h"
 
+int WWW_TraceFlag;
 
 #ifndef ERWISE
 /*		Load Dcoument from HTTP Server			HTLoadHTTP()

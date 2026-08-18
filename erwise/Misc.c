@@ -1,5 +1,8 @@
 static char *rcsid = "$Id: Misc.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
 
+#include "HTAnchor.h"
+#include "HTStyle.h"
+#include "../HText/HText.h"
 #include "Includes.h"
 
 
@@ -12,9 +15,7 @@ Connection_t *Connections = (Connection_t *) NULL;
 Page_t *Pages = (Page_t *) NULL;
 
 
-Page_t *FindPage(hierarchy, address)
-Page_t *hierarchy;
-char *address;
+Page_t *FindPage(Page_t *hierarchy, char *address)
 {
     while (address && hierarchy)
 	if (!addresscmp(hierarchy->Address, address))

@@ -2,7 +2,7 @@ static char *rcsid = "$Id$";
 
 #include "UiIncludes.h"
 
-static Widget uicreatecpform();
+static Widget uicreatecpform(void);
 static Widget
  uicreatecpbutton(Widget parentwdg, char *name, char *actionname,
 		   int leftpos, int rightpos);
@@ -16,7 +16,7 @@ static void uicpclickcb(Widget wdg, caddr_t ignored,
 			 XmListCallbackStruct * calldata);
 
 
-uiTopLevel_t uiTopLevel;
+//uiTopLevel_t uiTopLevel;
 
 
 int UiDisplayControlPanel()

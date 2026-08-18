@@ -24,17 +24,18 @@
 #include "XlTypes.h"
 #include "XlFormatText.h"
 
+
+static void xl_draw_object(HText_t *htext, HTextObject_t *object);
+
 /*
  * Make cursor positioning more intelligent
  */
 #define Y_MULTIPLIER 50
 
-/*
+/*!
  * Is there spaces at the end of data ?
  */
-int xl_space_index(data, length)
-char *data;
-int length;
+int xl_space_index(char *data, int length)
 {
     int i;
 
@@ -49,12 +50,10 @@ int length;
 }
 
 
-/*
+/*!
  * Draw one Xl object to screen
  */
-void xl_draw_object(htext, object)
-HText_t *htext;
-HTextObject_t *object;
+void xl_draw_object(HText_t *htext, HTextObject_t *object)
 {
     /*
      * If this object is cursor, clear area or else partial updating
@@ -139,17 +138,13 @@ HTextObject_t *object;
 }
 
 
-/*
+/*!
  * Check is object is on wanted region. Return 0 if point is on region.
  * Otherwise return distance. NOTE. y-distance is multiplied by a big
  * number because this way cursor positioning works more intelligently than
  * without it.
  */
-int xl_object_on_region(htext, object, x, y, w, h)
-HText_t *htext;
-HTextObject_t *object;
-int x, y;
-int w, h;
+int xl_object_on_region(HText_t *htext, HTextObject_t *object, int x, int y, int w, int h)
 {
     int r = 0;
 
@@ -176,14 +171,12 @@ int w, h;
 
 
 
-/*
+/*!
  *  Redraw region of the window. Draw all objects (or parts of the objects)
  *  on redraw region.
  */
-void XlRedraw(windowx, windowy, width, height, htext)
-int windowx, windowy;
-int width, height;
-HText_t *htext;
+void XlRedraw(int windowx, int windowy, int width, int height,
+			  HText_t * htext)
 {
     HTextObject_t *p;
 
@@ -202,17 +195,15 @@ HText_t *htext;
 }
 
 
-/*
+/*!
  *  Move window to other coordinates. Xl can optimize window moving by using
  *  regioncopy and updating only parts of display.
  */
-void XlMoveWindow(newvx, newvy, htext)
-int newvx, newvy;
-HText_t *htext;
+void XlMoveWindow(int newvx, int newvy, HText_t *htext)
 {
     XWindowAttributes a;
 
-    long deltax, deltay;
+    int deltax, deltay;
 
     /*
      * Need to know window dimensions
@@ -273,13 +264,10 @@ HText_t *htext;
 
 
 
-/*
+/*!
  * Clear window
  */
-void XlClearWindow(width, height, htext)
-int width;
-int height;
-HText_t *htext;
+void XlClearWindow(int width, int height, HText_t *htext)
 {
     XClearArea(htext->xl_global->dpy,
 	       htext->xl_global->window,
@@ -287,12 +275,10 @@ HText_t *htext;
 }
 
 
-/*
+/*!
  * Setup cursorposition on a page
  */
-void XlSetCursor(htext, object)
-HText_t *htext;
-HTextObject_t *object;
+void XlSetCursor(HText_t * htext, HTextObject_t * object)
 {
     XWindowAttributes a;
     HTextObject_t *old_object;

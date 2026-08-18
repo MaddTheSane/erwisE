@@ -11,6 +11,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 
 #include "HTStyle.h"
 #include "HText.h"
@@ -38,9 +39,9 @@
  * Local prototype
  */
 
-void new_htext_object ();
-void make_paragraph_object ();
-void HText_setStyle ();
+void new_htext_object (struct HText *text);
+void make_paragraph_object (struct HText *text, int type);
+void HText_setStyle (struct HText *text, HTStyle *style);
 
 
 /*
@@ -80,8 +81,7 @@ extern HTStyleSheet *styleSheet;
 **                      ---------------
 */
 struct HText *
-HText_new (anchor)
-     HTParentAnchor *anchor;
+HText_new (HTParentAnchor *anchor)
 {
   struct HText *self;
 
@@ -121,8 +121,7 @@ HText_new (anchor)
 **      ----------------
 */
 void 
-HText_free (self)
-     struct HText *self;
+HText_free (struct HText *self)
 {
   struct HTextObject *p, *p2;
   struct HTextAnchor *a, *a2;
@@ -176,7 +175,7 @@ HText_free (self)
  * Get default style
  */
 HTStyle *
-ht_get_default_style ()
+ht_get_default_style (void)
 {
   HTStyle *p = styleSheet->styles;
 
@@ -201,8 +200,7 @@ ht_get_default_style ()
 **      These are used by a parser to build the text in an object
 */
 void 
-HText_beginAppend (text)
-     struct HText *text;
+HText_beginAppend (struct HText *text)
 {
   /*
    * Set object to accept text
@@ -228,8 +226,7 @@ HText_beginAppend (text)
 */
 
 void 
-HText_appendParagraph (text)
-     struct HText *text;
+HText_appendParagraph (struct HText *text)
 {
   HT_DEBUG (("\nHText_appendParagraph\n"));
 
@@ -247,9 +244,7 @@ HText_appendParagraph (text)
 **      -------------------------------------
 */
 void 
-HText_appendCharacter (text, ch)
-     struct HText *text;
-     char ch;
+HText_appendCharacter (struct HText *text, char ch)
 {
   struct HTextObject *p;
   int l;
@@ -465,9 +460,7 @@ HText_endAppend (text)
 
 
 void 
-HText_setStyle (text, style)
-     struct HText *text;
-     HTStyle *style;
+HText_setStyle (struct HText *text, HTStyle *style)
 {
   HT_DEBUG (("HText_setStyle %s\n", style->name));
 
@@ -505,20 +498,20 @@ HText_select (text)
    */
 
   HtLocalText = text;
+	return 0;
 }
 
 
 
 BOOL 
-HText_selectAnchor (text, anchor)
-     struct HText *text;
-     struct HTChildAnchor *anchor;
+HText_selectAnchor (struct HText *text, struct HTChildAnchor *anchor)
 {
   HT_DEBUG (("\nHText_selectAnchor\n"));
 
   /*
    * Something stupid ?
    */
+	return 0;
 }
 
 
@@ -528,8 +521,7 @@ HText_selectAnchor (text, anchor)
  */
 
 struct HTextObject *
-malloc_ht_object (prev)
-     struct HTextObject *prev;
+malloc_ht_object (struct HTextObject *prev)
 {
   struct HTextObject *p;
 
@@ -578,8 +570,7 @@ malloc_ht_object (prev)
  */
 
 void 
-new_htext_object (text)
-     struct HText *text;
+new_htext_object (struct HText *text)
 {
   struct HTextObject *p;
 
@@ -664,9 +655,7 @@ new_htext_object (text)
  */
 
 void 
-make_paragraph_object (text, type)
-     struct HText *text;
-     int type;
+make_paragraph_object (struct HText *text, int type)
 {
   new_htext_object (text);
 
@@ -681,9 +670,7 @@ make_paragraph_object (text, type)
  * Malloc and copy data
  */
 char *
-ht_memdup (data, len)
-     char *data;
-     int len;
+ht_memdup (char *data, int len)
 {
   char *p;
 

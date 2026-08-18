@@ -13,12 +13,15 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include "Cl.h"
 
 #include "HTParse.h"
 #include "HTFormat.h"
 #include "HTAnchor.h"
+#include "HTAccess.h"
+#include "HTTCP.h"
 #include "tcp.h"
 
 #include "../HText/HText.h"
@@ -30,7 +33,7 @@ extern HText_t *HtLocalText;
  * Poll connecting until connection completes.
  */
 void
-WWWErwiseConnect ()
+WWWErwiseConnect (void)
 {
   int status;
 
@@ -78,10 +81,7 @@ WWWErwiseConnect ()
  * poll connecting later.
  */
 int
-erwise_connect (fd, addr, size)
-     int fd;
-     struct sockaddr *addr;
-     int size;
+erwise_connect (int fd, struct sockaddr *addr, int size)
 {
   int status;
 
@@ -303,7 +303,7 @@ WWWErwiseParse ()
  * If we are loading to file, nothing else needs to be done ...
  */
 void
-WWWErwiseTerminateIfLoadToFile ()
+WWWErwiseTerminateIfLoadToFile (void)
 {
   if (WWWErwiseConnection->load_to_file)
     {
