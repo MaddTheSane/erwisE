@@ -1,2 +1,5 @@
 *.o
 *.a
+xcuserdata/
+.DS_Store
+project.xcworkspace/

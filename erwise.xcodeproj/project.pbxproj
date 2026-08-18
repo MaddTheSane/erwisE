@@ -1,0 +1,714 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		55D82A1A303426400043B1A0 /* HTAccess.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829A5303426400043B1A0 /* HTAccess.c */; };
+		55D82A1B303426400043B1A0 /* HTAnchor.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829A7303426400043B1A0 /* HTAnchor.c */; };
+		55D82A1C303426400043B1A0 /* HTAtom.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829A9303426400043B1A0 /* HTAtom.c */; };
+		55D82A1D303426400043B1A0 /* HTChunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829AC303426400043B1A0 /* HTChunk.c */; };
+		55D82A1E303426400043B1A0 /* HTFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829AF303426400043B1A0 /* HTFile.c */; };
+		55D82A1F303426400043B1A0 /* HTFormat.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829B2303426400043B1A0 /* HTFormat.c */; };
+		55D82A20303426400043B1A0 /* HTFTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829B4303426400043B1A0 /* HTFTP.c */; };
+		55D82A21303426400043B1A0 /* HTGopher.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829B6303426400043B1A0 /* HTGopher.c */; };
+		55D82A22303426400043B1A0 /* HTHistory.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829B8303426400043B1A0 /* HTHistory.c */; };
+		55D82A23303426400043B1A0 /* HTList.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829BA303426400043B1A0 /* HTList.c */; };
+		55D82A24303426400043B1A0 /* HTML.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829BC303426400043B1A0 /* HTML.c */; };
+		55D82A25303426400043B1A0 /* HTNews.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829BE303426400043B1A0 /* HTNews.c */; };
+		55D82A26303426400043B1A0 /* HTParse.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C0303426400043B1A0 /* HTParse.c */; };
+		55D82A27303426400043B1A0 /* HTString.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C2303426400043B1A0 /* HTString.c */; };
+		55D82A28303426400043B1A0 /* HTStyle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C4303426400043B1A0 /* HTStyle.c */; };
+		55D82A29303426400043B1A0 /* HTTCP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C6303426400043B1A0 /* HTTCP.c */; };
+		55D82A2A303426400043B1A0 /* HTTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829C8303426400043B1A0 /* HTTP.c */; };
+		55D82A2B303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829CB303426400043B1A0 /* Makefile */; };
+		55D82A2C303426400043B1A0 /* SGML.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829CF303426400043B1A0 /* SGML.c */; };
+		55D82A2D303426400043B1A0 /* Cl.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D4303426400043B1A0 /* Cl.c */; };
+		55D82A2E303426400043B1A0 /* ClConnection.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D5303426400043B1A0 /* ClConnection.c */; };
+		55D82A2F303426400043B1A0 /* ClFTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D6303426400043B1A0 /* ClFTP.c */; };
+		55D82A30303426400043B1A0 /* ClHTTP.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D7303426400043B1A0 /* ClHTTP.c */; };
+		55D82A31303426400043B1A0 /* ClMisc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829D8303426400043B1A0 /* ClMisc.c */; };
+		55D82A32303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829DA303426400043B1A0 /* Makefile */; };
+		55D82A33303426400043B1A0 /* Config.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829DC303426400043B1A0 /* Config.c */; };
+		55D82A34303426400043B1A0 /* Help.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829DE303426400043B1A0 /* Help.c */; };
+		55D82A35303426400043B1A0 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E1303426400043B1A0 /* main.c */; };
+		55D82A36303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E2303426400043B1A0 /* Makefile */; };
+		55D82A37303426400043B1A0 /* Misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E3303426400043B1A0 /* Misc.c */; };
+		55D82A38303426400043B1A0 /* Page.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E4303426400043B1A0 /* Page.c */; };
+		55D82A39303426400043B1A0 /* Print.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E5303426400043B1A0 /* Print.c */; };
+		55D82A3A303426400043B1A0 /* Setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E7303426400043B1A0 /* Setup.c */; };
+		55D82A3B303426400043B1A0 /* TopLevel.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829E8303426400043B1A0 /* TopLevel.c */; };
+		55D82A3C303426400043B1A0 /* DefaultStyles.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829EB303426400043B1A0 /* DefaultStyles.c */; };
+		55D82A3D303426400043B1A0 /* dummy.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829EC303426400043B1A0 /* dummy.c */; };
+		55D82A3E303426400043B1A0 /* HText.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829EE303426400043B1A0 /* HText.c */; };
+		55D82A3F303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F0303426400043B1A0 /* Makefile */; };
+		55D82A40303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F3303426400043B1A0 /* Makefile */; };
+		55D82A41303426400043B1A0 /* UiConnections.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F5303426400043B1A0 /* UiConnections.c */; };
+		55D82A42303426400043B1A0 /* UiControlPanel.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F6303426400043B1A0 /* UiControlPanel.c */; };
+		55D82A43303426400043B1A0 /* UiDefaults.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F7303426400043B1A0 /* UiDefaults.c */; };
+		55D82A44303426400043B1A0 /* UiFileSelection.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829F9303426400043B1A0 /* UiFileSelection.c */; };
+		55D82A45303426400043B1A0 /* UiInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829FB303426400043B1A0 /* UiInfo.c */; };
+		55D82A46303426400043B1A0 /* UiInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829FC303426400043B1A0 /* UiInit.c */; };
+		55D82A47303426400043B1A0 /* UiList.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829FD303426400043B1A0 /* UiList.c */; };
+		55D82A48303426400043B1A0 /* UiMisc.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829FE303426400043B1A0 /* UiMisc.c */; };
+		55D82A49303426400043B1A0 /* UiPage.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D829FF303426400043B1A0 /* UiPage.c */; };
+		55D82A4A303426400043B1A0 /* UiPageSettings.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A00303426400043B1A0 /* UiPageSettings.c */; };
+		55D82A4B303426400043B1A0 /* UiPrint.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A01303426400043B1A0 /* UiPrint.c */; };
+		55D82A4C303426400043B1A0 /* UiRecall.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A03303426400043B1A0 /* UiRecall.c */; };
+		55D82A4D303426400043B1A0 /* UiSearch.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A04303426400043B1A0 /* UiSearch.c */; };
+		55D82A4E303426400043B1A0 /* UiSelectionBox.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A05303426400043B1A0 /* UiSelectionBox.c */; };
+		55D82A4F303426400043B1A0 /* UiUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A07303426400043B1A0 /* UiUtil.c */; };
+		55D82A50303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A0A303426400043B1A0 /* Makefile */; };
+		55D82A51303426400043B1A0 /* XlFormatText.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A0F303426400043B1A0 /* XlFormatText.c */; };
+		55D82A52303426400043B1A0 /* XlSetup.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A10303426400043B1A0 /* XlSetup.c */; };
+		55D82A53303426400043B1A0 /* XlStyle.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A12303426400043B1A0 /* XlStyle.c */; };
+		55D82A54303426400043B1A0 /* XlUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A14303426400043B1A0 /* XlUtil.c */; };
+		55D82A55303426400043B1A0 /* XlWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A15303426400043B1A0 /* XlWindow.c */; };
+		55D82A56303426400043B1A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 55D82A18303426400043B1A0 /* Makefile */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5578D96D3032BFCF00F73A71 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5578D96F3032BFCF00F73A71 /* erwise */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = erwise; sourceTree = BUILT_PRODUCTS_DIR; };
+		55D829A4303426400043B1A0 /* HTAccess.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTAccess.h; sourceTree = "<group>"; };
+		55D829A5303426400043B1A0 /* HTAccess.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTAccess.c; sourceTree = "<group>"; };
+		55D829A6303426400043B1A0 /* HTAnchor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTAnchor.h; sourceTree = "<group>"; };
+		55D829A7303426400043B1A0 /* HTAnchor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTAnchor.c; sourceTree = "<group>"; };
+		55D829A8303426400043B1A0 /* HTAtom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTAtom.h; sourceTree = "<group>"; };
+		55D829A9303426400043B1A0 /* HTAtom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTAtom.c; sourceTree = "<group>"; };
+		55D829AA303426400043B1A0 /* HTBrowse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTBrowse.h; sourceTree = "<group>"; };
+		55D829AB303426400043B1A0 /* HTChunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTChunk.h; sourceTree = "<group>"; };
+		55D829AC303426400043B1A0 /* HTChunk.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTChunk.c; sourceTree = "<group>"; };
+		55D829AD303426400043B1A0 /* HText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HText.h; sourceTree = "<group>"; };
+		55D829AE303426400043B1A0 /* HTFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTFile.h; sourceTree = "<group>"; };
+		55D829AF303426400043B1A0 /* HTFile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTFile.c; sourceTree = "<group>"; };
+		55D829B0303426400043B1A0 /* HTFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTFont.h; sourceTree = "<group>"; };
+		55D829B1303426400043B1A0 /* HTFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTFormat.h; sourceTree = "<group>"; };
+		55D829B2303426400043B1A0 /* HTFormat.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTFormat.c; sourceTree = "<group>"; };
+		55D829B3303426400043B1A0 /* HTFTP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTFTP.h; sourceTree = "<group>"; };
+		55D829B4303426400043B1A0 /* HTFTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTFTP.c; sourceTree = "<group>"; };
+		55D829B5303426400043B1A0 /* HTGopher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTGopher.h; sourceTree = "<group>"; };
+		55D829B6303426400043B1A0 /* HTGopher.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTGopher.c; sourceTree = "<group>"; };
+		55D829B7303426400043B1A0 /* HTHistory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTHistory.h; sourceTree = "<group>"; };
+		55D829B8303426400043B1A0 /* HTHistory.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTHistory.c; sourceTree = "<group>"; };
+		55D829B9303426400043B1A0 /* HTList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTList.h; sourceTree = "<group>"; };
+		55D829BA303426400043B1A0 /* HTList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTList.c; sourceTree = "<group>"; };
+		55D829BB303426400043B1A0 /* HTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTML.h; sourceTree = "<group>"; };
+		55D829BC303426400043B1A0 /* HTML.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTML.c; sourceTree = "<group>"; };
+		55D829BD303426400043B1A0 /* HTNews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTNews.h; sourceTree = "<group>"; };
+		55D829BE303426400043B1A0 /* HTNews.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTNews.c; sourceTree = "<group>"; };
+		55D829BF303426400043B1A0 /* HTParse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTParse.h; sourceTree = "<group>"; };
+		55D829C0303426400043B1A0 /* HTParse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTParse.c; sourceTree = "<group>"; };
+		55D829C1303426400043B1A0 /* HTString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTString.h; sourceTree = "<group>"; };
+		55D829C2303426400043B1A0 /* HTString.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTString.c; sourceTree = "<group>"; };
+		55D829C3303426400043B1A0 /* HTStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTStyle.h; sourceTree = "<group>"; };
+		55D829C4303426400043B1A0 /* HTStyle.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTStyle.c; sourceTree = "<group>"; };
+		55D829C5303426400043B1A0 /* HTTCP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTCP.h; sourceTree = "<group>"; };
+		55D829C6303426400043B1A0 /* HTTCP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTTCP.c; sourceTree = "<group>"; };
+		55D829C7303426400043B1A0 /* HTTP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTP.h; sourceTree = "<group>"; };
+		55D829C8303426400043B1A0 /* HTTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HTTP.c; sourceTree = "<group>"; };
+		55D829C9303426400043B1A0 /* HTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTUtils.h; sourceTree = "<group>"; };
+		55D829CA303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D829CB303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D829CC303426400043B1A0 /* Makefile.bak */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.bak; sourceTree = "<group>"; };
+		55D829CD303426400043B1A0 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		55D829CE303426400043B1A0 /* SGML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SGML.h; sourceTree = "<group>"; };
+		55D829CF303426400043B1A0 /* SGML.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SGML.c; sourceTree = "<group>"; };
+		55D829D0303426400043B1A0 /* tcp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcp.h; sourceTree = "<group>"; };
+		55D829D1303426400043B1A0 /* WWW.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWW.h; sourceTree = "<group>"; };
+		55D829D3303426400043B1A0 /* Cl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cl.h; sourceTree = "<group>"; };
+		55D829D4303426400043B1A0 /* Cl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Cl.c; sourceTree = "<group>"; };
+		55D829D5303426400043B1A0 /* ClConnection.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClConnection.c; sourceTree = "<group>"; };
+		55D829D6303426400043B1A0 /* ClFTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClFTP.c; sourceTree = "<group>"; };
+		55D829D7303426400043B1A0 /* ClHTTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClHTTP.c; sourceTree = "<group>"; };
+		55D829D8303426400043B1A0 /* ClMisc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClMisc.c; sourceTree = "<group>"; };
+		55D829D9303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D829DA303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D829DC303426400043B1A0 /* Config.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Config.c; sourceTree = "<group>"; };
+		55D829DD303426400043B1A0 /* Defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defs.h; sourceTree = "<group>"; };
+		55D829DE303426400043B1A0 /* Help.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Help.c; sourceTree = "<group>"; };
+		55D829DF303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D829E0303426400043B1A0 /* Includes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Includes.h; sourceTree = "<group>"; };
+		55D829E1303426400043B1A0 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		55D829E2303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D829E3303426400043B1A0 /* Misc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Misc.c; sourceTree = "<group>"; };
+		55D829E4303426400043B1A0 /* Page.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Page.c; sourceTree = "<group>"; };
+		55D829E5303426400043B1A0 /* Print.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Print.c; sourceTree = "<group>"; };
+		55D829E6303426400043B1A0 /* Protos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protos.h; sourceTree = "<group>"; };
+		55D829E7303426400043B1A0 /* Setup.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Setup.c; sourceTree = "<group>"; };
+		55D829E8303426400043B1A0 /* TopLevel.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TopLevel.c; sourceTree = "<group>"; };
+		55D829E9303426400043B1A0 /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		55D829EB303426400043B1A0 /* DefaultStyles.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DefaultStyles.c; sourceTree = "<group>"; };
+		55D829EC303426400043B1A0 /* dummy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dummy.c; sourceTree = "<group>"; };
+		55D829ED303426400043B1A0 /* HText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HText.h; sourceTree = "<group>"; };
+		55D829EE303426400043B1A0 /* HText.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HText.c; sourceTree = "<group>"; };
+		55D829EF303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D829F0303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D829F2303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D829F3303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D829F4303426400043B1A0 /* Ui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ui.h; sourceTree = "<group>"; };
+		55D829F5303426400043B1A0 /* UiConnections.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiConnections.c; sourceTree = "<group>"; };
+		55D829F6303426400043B1A0 /* UiControlPanel.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiControlPanel.c; sourceTree = "<group>"; };
+		55D829F7303426400043B1A0 /* UiDefaults.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiDefaults.c; sourceTree = "<group>"; };
+		55D829F8303426400043B1A0 /* UiDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UiDefs.h; sourceTree = "<group>"; };
+		55D829F9303426400043B1A0 /* UiFileSelection.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiFileSelection.c; sourceTree = "<group>"; };
+		55D829FA303426400043B1A0 /* UiIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UiIncludes.h; sourceTree = "<group>"; };
+		55D829FB303426400043B1A0 /* UiInfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiInfo.c; sourceTree = "<group>"; };
+		55D829FC303426400043B1A0 /* UiInit.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiInit.c; sourceTree = "<group>"; };
+		55D829FD303426400043B1A0 /* UiList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiList.c; sourceTree = "<group>"; };
+		55D829FE303426400043B1A0 /* UiMisc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiMisc.c; sourceTree = "<group>"; };
+		55D829FF303426400043B1A0 /* UiPage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiPage.c; sourceTree = "<group>"; };
+		55D82A00303426400043B1A0 /* UiPageSettings.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiPageSettings.c; sourceTree = "<group>"; };
+		55D82A01303426400043B1A0 /* UiPrint.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiPrint.c; sourceTree = "<group>"; };
+		55D82A02303426400043B1A0 /* UiProtos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UiProtos.h; sourceTree = "<group>"; };
+		55D82A03303426400043B1A0 /* UiRecall.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiRecall.c; sourceTree = "<group>"; };
+		55D82A04303426400043B1A0 /* UiSearch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiSearch.c; sourceTree = "<group>"; };
+		55D82A05303426400043B1A0 /* UiSelectionBox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiSelectionBox.c; sourceTree = "<group>"; };
+		55D82A06303426400043B1A0 /* UiTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UiTypes.h; sourceTree = "<group>"; };
+		55D82A07303426400043B1A0 /* UiUtil.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UiUtil.c; sourceTree = "<group>"; };
+		55D82A09303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D82A0A303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		55D82A0B303426400043B1A0 /* Xl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Xl.h; sourceTree = "<group>"; };
+		55D82A0C303426400043B1A0 /* XlConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlConfig.h; sourceTree = "<group>"; };
+		55D82A0D303426400043B1A0 /* XlDefaultFonts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlDefaultFonts.h; sourceTree = "<group>"; };
+		55D82A0E303426400043B1A0 /* XlFormatText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlFormatText.h; sourceTree = "<group>"; };
+		55D82A0F303426400043B1A0 /* XlFormatText.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XlFormatText.c; sourceTree = "<group>"; };
+		55D82A10303426400043B1A0 /* XlSetup.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XlSetup.c; sourceTree = "<group>"; };
+		55D82A11303426400043B1A0 /* XlStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlStyle.h; sourceTree = "<group>"; };
+		55D82A12303426400043B1A0 /* XlStyle.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XlStyle.c; sourceTree = "<group>"; };
+		55D82A13303426400043B1A0 /* XlTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XlTypes.h; sourceTree = "<group>"; };
+		55D82A14303426400043B1A0 /* XlUtil.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XlUtil.c; sourceTree = "<group>"; };
+		55D82A15303426400043B1A0 /* XlWindow.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = XlWindow.c; sourceTree = "<group>"; };
+		55D82A17303426400043B1A0 /* Imakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Imakefile; sourceTree = "<group>"; };
+		55D82A18303426400043B1A0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5578D96C3032BFCF00F73A71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5578D9663032BFCF00F73A71 = {
+			isa = PBXGroup;
+			children = (
+				55D82A19303426400043B1A0 /* erwise */,
+				5578D9703032BFCF00F73A71 /* Products */,
+			);
+			sourceTree = "<group>";
+			tabWidth = 8;
+		};
+		5578D9703032BFCF00F73A71 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5578D96F3032BFCF00F73A71 /* erwise */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55D829D2303426400043B1A0 /* WWWLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				55D829A4303426400043B1A0 /* HTAccess.h */,
+				55D829A5303426400043B1A0 /* HTAccess.c */,
+				55D829A6303426400043B1A0 /* HTAnchor.h */,
+				55D829A7303426400043B1A0 /* HTAnchor.c */,
+				55D829A8303426400043B1A0 /* HTAtom.h */,
+				55D829A9303426400043B1A0 /* HTAtom.c */,
+				55D829AA303426400043B1A0 /* HTBrowse.h */,
+				55D829AB303426400043B1A0 /* HTChunk.h */,
+				55D829AC303426400043B1A0 /* HTChunk.c */,
+				55D829AD303426400043B1A0 /* HText.h */,
+				55D829AE303426400043B1A0 /* HTFile.h */,
+				55D829AF303426400043B1A0 /* HTFile.c */,
+				55D829B0303426400043B1A0 /* HTFont.h */,
+				55D829B1303426400043B1A0 /* HTFormat.h */,
+				55D829B2303426400043B1A0 /* HTFormat.c */,
+				55D829B3303426400043B1A0 /* HTFTP.h */,
+				55D829B4303426400043B1A0 /* HTFTP.c */,
+				55D829B5303426400043B1A0 /* HTGopher.h */,
+				55D829B6303426400043B1A0 /* HTGopher.c */,
+				55D829B7303426400043B1A0 /* HTHistory.h */,
+				55D829B8303426400043B1A0 /* HTHistory.c */,
+				55D829B9303426400043B1A0 /* HTList.h */,
+				55D829BA303426400043B1A0 /* HTList.c */,
+				55D829BB303426400043B1A0 /* HTML.h */,
+				55D829BC303426400043B1A0 /* HTML.c */,
+				55D829BD303426400043B1A0 /* HTNews.h */,
+				55D829BE303426400043B1A0 /* HTNews.c */,
+				55D829BF303426400043B1A0 /* HTParse.h */,
+				55D829C0303426400043B1A0 /* HTParse.c */,
+				55D829C1303426400043B1A0 /* HTString.h */,
+				55D829C2303426400043B1A0 /* HTString.c */,
+				55D829C3303426400043B1A0 /* HTStyle.h */,
+				55D829C4303426400043B1A0 /* HTStyle.c */,
+				55D829C5303426400043B1A0 /* HTTCP.h */,
+				55D829C6303426400043B1A0 /* HTTCP.c */,
+				55D829C7303426400043B1A0 /* HTTP.h */,
+				55D829C8303426400043B1A0 /* HTTP.c */,
+				55D829C9303426400043B1A0 /* HTUtils.h */,
+				55D829CA303426400043B1A0 /* Imakefile */,
+				55D829CB303426400043B1A0 /* Makefile */,
+				55D829CC303426400043B1A0 /* Makefile.bak */,
+				55D829CD303426400043B1A0 /* README */,
+				55D829CE303426400043B1A0 /* SGML.h */,
+				55D829CF303426400043B1A0 /* SGML.c */,
+				55D829D0303426400043B1A0 /* tcp.h */,
+				55D829D1303426400043B1A0 /* WWW.h */,
+			);
+			path = WWWLibrary;
+			sourceTree = "<group>";
+		};
+		55D829DB303426400043B1A0 /* Cl */ = {
+			isa = PBXGroup;
+			children = (
+				55D829D2303426400043B1A0 /* WWWLibrary */,
+				55D829D3303426400043B1A0 /* Cl.h */,
+				55D829D4303426400043B1A0 /* Cl.c */,
+				55D829D5303426400043B1A0 /* ClConnection.c */,
+				55D829D6303426400043B1A0 /* ClFTP.c */,
+				55D829D7303426400043B1A0 /* ClHTTP.c */,
+				55D829D8303426400043B1A0 /* ClMisc.c */,
+				55D829D9303426400043B1A0 /* Imakefile */,
+				55D829DA303426400043B1A0 /* Makefile */,
+			);
+			path = Cl;
+			sourceTree = "<group>";
+		};
+		55D829EA303426400043B1A0 /* erwise */ = {
+			isa = PBXGroup;
+			children = (
+				55D829DC303426400043B1A0 /* Config.c */,
+				55D829DD303426400043B1A0 /* Defs.h */,
+				55D829DE303426400043B1A0 /* Help.c */,
+				55D829DF303426400043B1A0 /* Imakefile */,
+				55D829E0303426400043B1A0 /* Includes.h */,
+				55D829E1303426400043B1A0 /* main.c */,
+				55D829E2303426400043B1A0 /* Makefile */,
+				55D829E3303426400043B1A0 /* Misc.c */,
+				55D829E4303426400043B1A0 /* Page.c */,
+				55D829E5303426400043B1A0 /* Print.c */,
+				55D829E6303426400043B1A0 /* Protos.h */,
+				55D829E7303426400043B1A0 /* Setup.c */,
+				55D829E8303426400043B1A0 /* TopLevel.c */,
+				55D829E9303426400043B1A0 /* Types.h */,
+			);
+			path = erwise;
+			sourceTree = "<group>";
+		};
+		55D829F1303426400043B1A0 /* HText */ = {
+			isa = PBXGroup;
+			children = (
+				55D829EB303426400043B1A0 /* DefaultStyles.c */,
+				55D829EC303426400043B1A0 /* dummy.c */,
+				55D829ED303426400043B1A0 /* HText.h */,
+				55D829EE303426400043B1A0 /* HText.c */,
+				55D829EF303426400043B1A0 /* Imakefile */,
+				55D829F0303426400043B1A0 /* Makefile */,
+			);
+			path = HText;
+			sourceTree = "<group>";
+		};
+		55D82A08303426400043B1A0 /* Ui */ = {
+			isa = PBXGroup;
+			children = (
+				55D829F2303426400043B1A0 /* Imakefile */,
+				55D829F3303426400043B1A0 /* Makefile */,
+				55D829F4303426400043B1A0 /* Ui.h */,
+				55D829F5303426400043B1A0 /* UiConnections.c */,
+				55D829F6303426400043B1A0 /* UiControlPanel.c */,
+				55D829F7303426400043B1A0 /* UiDefaults.c */,
+				55D829F8303426400043B1A0 /* UiDefs.h */,
+				55D829F9303426400043B1A0 /* UiFileSelection.c */,
+				55D829FA303426400043B1A0 /* UiIncludes.h */,
+				55D829FB303426400043B1A0 /* UiInfo.c */,
+				55D829FC303426400043B1A0 /* UiInit.c */,
+				55D829FD303426400043B1A0 /* UiList.c */,
+				55D829FE303426400043B1A0 /* UiMisc.c */,
+				55D829FF303426400043B1A0 /* UiPage.c */,
+				55D82A00303426400043B1A0 /* UiPageSettings.c */,
+				55D82A01303426400043B1A0 /* UiPrint.c */,
+				55D82A02303426400043B1A0 /* UiProtos.h */,
+				55D82A03303426400043B1A0 /* UiRecall.c */,
+				55D82A04303426400043B1A0 /* UiSearch.c */,
+				55D82A05303426400043B1A0 /* UiSelectionBox.c */,
+				55D82A06303426400043B1A0 /* UiTypes.h */,
+				55D82A07303426400043B1A0 /* UiUtil.c */,
+			);
+			path = Ui;
+			sourceTree = "<group>";
+		};
+		55D82A16303426400043B1A0 /* Xl */ = {
+			isa = PBXGroup;
+			children = (
+				55D82A09303426400043B1A0 /* Imakefile */,
+				55D82A0A303426400043B1A0 /* Makefile */,
+				55D82A0B303426400043B1A0 /* Xl.h */,
+				55D82A0C303426400043B1A0 /* XlConfig.h */,
+				55D82A0D303426400043B1A0 /* XlDefaultFonts.h */,
+				55D82A0E303426400043B1A0 /* XlFormatText.h */,
+				55D82A0F303426400043B1A0 /* XlFormatText.c */,
+				55D82A10303426400043B1A0 /* XlSetup.c */,
+				55D82A11303426400043B1A0 /* XlStyle.h */,
+				55D82A12303426400043B1A0 /* XlStyle.c */,
+				55D82A13303426400043B1A0 /* XlTypes.h */,
+				55D82A14303426400043B1A0 /* XlUtil.c */,
+				55D82A15303426400043B1A0 /* XlWindow.c */,
+			);
+			path = Xl;
+			sourceTree = "<group>";
+		};
+		55D82A19303426400043B1A0 /* erwise */ = {
+			isa = PBXGroup;
+			children = (
+				55D829DB303426400043B1A0 /* Cl */,
+				55D829EA303426400043B1A0 /* erwise */,
+				55D829F1303426400043B1A0 /* HText */,
+				55D82A08303426400043B1A0 /* Ui */,
+				55D82A16303426400043B1A0 /* Xl */,
+				55D82A17303426400043B1A0 /* Imakefile */,
+				55D82A18303426400043B1A0 /* Makefile */,
+			);
+			name = erwise;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5578D96E3032BFCF00F73A71 /* erwise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5578D9763032BFCF00F73A71 /* Build configuration list for PBXNativeTarget "erwise" */;
+			buildPhases = (
+				5578D96B3032BFCF00F73A71 /* Sources */,
+				5578D96C3032BFCF00F73A71 /* Frameworks */,
+				5578D96D3032BFCF00F73A71 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = erwise;
+			packageProductDependencies = (
+			);
+			productName = erwise;
+			productReference = 5578D96F3032BFCF00F73A71 /* erwise */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5578D9673032BFCF00F73A71 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					5578D96E3032BFCF00F73A71 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 5578D96A3032BFCF00F73A71 /* Build configuration list for PBXProject "erwise" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5578D9663032BFCF00F73A71;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5578D9703032BFCF00F73A71 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5578D96E3032BFCF00F73A71 /* erwise */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5578D96B3032BFCF00F73A71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D82A1A303426400043B1A0 /* HTAccess.c in Sources */,
+				55D82A1B303426400043B1A0 /* HTAnchor.c in Sources */,
+				55D82A1C303426400043B1A0 /* HTAtom.c in Sources */,
+				55D82A1D303426400043B1A0 /* HTChunk.c in Sources */,
+				55D82A1E303426400043B1A0 /* HTFile.c in Sources */,
+				55D82A1F303426400043B1A0 /* HTFormat.c in Sources */,
+				55D82A20303426400043B1A0 /* HTFTP.c in Sources */,
+				55D82A21303426400043B1A0 /* HTGopher.c in Sources */,
+				55D82A22303426400043B1A0 /* HTHistory.c in Sources */,
+				55D82A23303426400043B1A0 /* HTList.c in Sources */,
+				55D82A24303426400043B1A0 /* HTML.c in Sources */,
+				55D82A25303426400043B1A0 /* HTNews.c in Sources */,
+				55D82A26303426400043B1A0 /* HTParse.c in Sources */,
+				55D82A27303426400043B1A0 /* HTString.c in Sources */,
+				55D82A28303426400043B1A0 /* HTStyle.c in Sources */,
+				55D82A29303426400043B1A0 /* HTTCP.c in Sources */,
+				55D82A2A303426400043B1A0 /* HTTP.c in Sources */,
+				55D82A2B303426400043B1A0 /* Makefile in Sources */,
+				55D82A2C303426400043B1A0 /* SGML.c in Sources */,
+				55D82A2D303426400043B1A0 /* Cl.c in Sources */,
+				55D82A2E303426400043B1A0 /* ClConnection.c in Sources */,
+				55D82A2F303426400043B1A0 /* ClFTP.c in Sources */,
+				55D82A30303426400043B1A0 /* ClHTTP.c in Sources */,
+				55D82A31303426400043B1A0 /* ClMisc.c in Sources */,
+				55D82A32303426400043B1A0 /* Makefile in Sources */,
+				55D82A33303426400043B1A0 /* Config.c in Sources */,
+				55D82A34303426400043B1A0 /* Help.c in Sources */,
+				55D82A35303426400043B1A0 /* main.c in Sources */,
+				55D82A36303426400043B1A0 /* Makefile in Sources */,
+				55D82A37303426400043B1A0 /* Misc.c in Sources */,
+				55D82A38303426400043B1A0 /* Page.c in Sources */,
+				55D82A39303426400043B1A0 /* Print.c in Sources */,
+				55D82A3A303426400043B1A0 /* Setup.c in Sources */,
+				55D82A3B303426400043B1A0 /* TopLevel.c in Sources */,
+				55D82A3C303426400043B1A0 /* DefaultStyles.c in Sources */,
+				55D82A3D303426400043B1A0 /* dummy.c in Sources */,
+				55D82A3E303426400043B1A0 /* HText.c in Sources */,
+				55D82A3F303426400043B1A0 /* Makefile in Sources */,
+				55D82A40303426400043B1A0 /* Makefile in Sources */,
+				55D82A41303426400043B1A0 /* UiConnections.c in Sources */,
+				55D82A42303426400043B1A0 /* UiControlPanel.c in Sources */,
+				55D82A43303426400043B1A0 /* UiDefaults.c in Sources */,
+				55D82A44303426400043B1A0 /* UiFileSelection.c in Sources */,
+				55D82A45303426400043B1A0 /* UiInfo.c in Sources */,
+				55D82A46303426400043B1A0 /* UiInit.c in Sources */,
+				55D82A47303426400043B1A0 /* UiList.c in Sources */,
+				55D82A48303426400043B1A0 /* UiMisc.c in Sources */,
+				55D82A49303426400043B1A0 /* UiPage.c in Sources */,
+				55D82A4A303426400043B1A0 /* UiPageSettings.c in Sources */,
+				55D82A4B303426400043B1A0 /* UiPrint.c in Sources */,
+				55D82A4C303426400043B1A0 /* UiRecall.c in Sources */,
+				55D82A4D303426400043B1A0 /* UiSearch.c in Sources */,
+				55D82A4E303426400043B1A0 /* UiSelectionBox.c in Sources */,
+				55D82A4F303426400043B1A0 /* UiUtil.c in Sources */,
+				55D82A50303426400043B1A0 /* Makefile in Sources */,
+				55D82A51303426400043B1A0 /* XlFormatText.c in Sources */,
+				55D82A52303426400043B1A0 /* XlSetup.c in Sources */,
+				55D82A53303426400043B1A0 /* XlStyle.c in Sources */,
+				55D82A54303426400043B1A0 /* XlUtil.c in Sources */,
+				55D82A55303426400043B1A0 /* XlWindow.c in Sources */,
+				55D82A56303426400043B1A0 /* Makefile in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5578D9743032BFCF00F73A71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5578D9753032BFCF00F73A71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5578D9773032BFCF00F73A71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ERWISE=1",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lXmu",
+					"-lXt",
+					"-lXi",
+					"-lX11",
+					"-lXext",
+					"-lXaw",
+					"-lXau",
+					"-lXm",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/local/include;
+			};
+			name = Debug;
+		};
+		5578D9783032BFCF00F73A71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ERWISE=1",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lXmu",
+					"-lXt",
+					"-lXi",
+					"-lX11",
+					"-lXext",
+					"-lXaw",
+					"-lXau",
+					"-lXm",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/local/include;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5578D96A3032BFCF00F73A71 /* Build configuration list for PBXProject "erwise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5578D9743032BFCF00F73A71 /* Debug */,
+				5578D9753032BFCF00F73A71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5578D9763032BFCF00F73A71 /* Build configuration list for PBXNativeTarget "erwise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5578D9773032BFCF00F73A71 /* Debug */,
+				5578D9783032BFCF00F73A71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5578D9673032BFCF00F73A71 /* Project object */;
+}
