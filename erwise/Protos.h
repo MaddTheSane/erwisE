@@ -148,9 +148,9 @@ extern void *ReAlloc(void *ptr, size_t size);
 extern void Free(void *ptr);
 extern void StartLoading(const char *address, const char *topaddress, const char *parentaddress);
 void PollConnection(Connection_t * connection);
-Connection_t *AddConnection(char *address, Page_t * toppage, Page_t * parentpage,
+Connection_t *AddConnection(const char *address, Page_t * toppage, Page_t * parentpage,
 			     ClConnection_t * clconnection);
-Connection_t *FindConnection(char *address);
+Connection_t *FindConnection(const char *address);
 void DeleteConnection(char *address);
 
 extern Page_t *Pages;

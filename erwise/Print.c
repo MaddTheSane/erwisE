@@ -65,8 +65,9 @@ new_print_object(void)
 
     p = (PrintObject_t *) malloc(sizeof(*p));
 
-    if (!p)
+    if (!p) {
 	return p;
+    }
 
     memset(p, 0, sizeof(*p));
 
@@ -167,13 +168,15 @@ print_check_line_append(PrintLine_t *first, HTextObject_t *object)
 
 	p = new_print_line();
 
-	if (!p)
+	if (!p) {
 	    return 0;
+	}
 
 	p->LineY = object->y;
 
-	if (!printobject_append(p, object))
+	if (!printobject_append(p, object)) {
 	    return 0;
+	}
 
 	return p;
     }
@@ -453,8 +456,9 @@ int DoPrint(HText_t *old_htext, int fd, int width, int lmargin, int top, int bot
 		/*
 	         * XXXXXX free
 	         */
-		if (!d)
+		if (!d) {
 		    return 0;
+		}
 
 		memset(d, ' ', max_x + 1);
 

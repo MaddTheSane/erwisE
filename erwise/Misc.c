@@ -316,7 +316,7 @@ void displaypage(const char *topaddress, HText_t *parenthtext, HText_t *htext, c
 
 
 Connection_t *
-AddConnection(char *address, Page_t *toppage, Page_t *parentpage, ClConnection_t *clconnection)
+AddConnection(const char *address, Page_t *toppage, Page_t *parentpage, ClConnection_t *clconnection)
 {
     Connection_t *tmpconnection = Connections;
 
@@ -344,7 +344,7 @@ AddConnection(char *address, Page_t *toppage, Page_t *parentpage, ClConnection_t
 
 
 Connection_t *
-FindConnection(char *address)
+FindConnection(const char *address)
 {
     Connection_t *tmpconnection = Connections;
 
