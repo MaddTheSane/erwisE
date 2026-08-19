@@ -39,34 +39,31 @@
  * Local prototype
  */
 
-void new_htext_object (struct HText *text);
-void make_paragraph_object (struct HText *text, int type);
-void HText_setStyle (struct HText *text, HTStyle *style);
+static void new_htext_object (struct HText *text);
+static void make_paragraph_object (struct HText *text, HTextType type);
+extern void HText_setStyle (struct HText *text, HTStyle *style);
 
 
-/*
+/*!
  * Local text (temporary)
  */
-
 struct HText *HtLocalText;
 
 
-/*
+/*!
  * When constructing data, save it first here. Then malloc needed space
  * and copy it
  */
-
 char localdata[HTEXT_MAX_OBJECT_SIZE];
 
 
-/*
+/*!
  * Set same anchor information to all objects belonging to same
  * anchor.
  */
-
 HTChildAnchor *local_anchor = 0;
 
-/*
+/*!
  * Default style
  */
 extern HTStyleSheet *styleSheet;
@@ -77,9 +74,9 @@ extern HTStyleSheet *styleSheet;
  * object.
  */
 
-/*                      Creation Method
-**                      ---------------
-*/
+/*!
+ * Creation Method
+ */
 struct HText *
 HText_new (HTParentAnchor *anchor)
 {
@@ -91,8 +88,9 @@ HText_new (HTParentAnchor *anchor)
 
   self = (struct HText *) malloc (sizeof (struct HText));
 
-  if (!self)
+  if (!self) {
     return self;
+  }
 
   HTAnchor_setDocument (anchor, (HyperDoc *) self);
 
@@ -117,9 +115,9 @@ HText_new (HTParentAnchor *anchor)
 }
 
 
-/*      Free Entire Text
-**      ----------------
-*/
+/*!
+ * Free Entire Text
+ */
 void 
 HText_free (struct HText *self)
 {
@@ -171,7 +169,7 @@ HText_free (struct HText *self)
   free (self);
 }
 
-/*
+/*!
  * Get default style
  */
 HTStyle *
@@ -194,11 +192,11 @@ ht_get_default_style (void)
 
 
 
-/*                      Object Building methods
-**                      -----------------------
-**
-**      These are used by a parser to build the text in an object
-*/
+/*!
+ * Object Building methods
+ *
+ * These are used by a parser to build the text in an object
+ */
 void 
 HText_beginAppend (struct HText *text)
 {
@@ -220,11 +218,11 @@ HText_beginAppend (struct HText *text)
 }
 
 
-/*      New paragraph in current style
-**      ------------------------------
-** See also: setStyle.
+/*!
+ * New paragraph in current style
+ *
+ * \sa ``HText_setStyle``
 */
-
 void 
 HText_appendParagraph (struct HText *text)
 {
@@ -240,9 +238,9 @@ HText_appendParagraph (struct HText *text)
 
 
 
-/*      Append a character to the text object
-**      -------------------------------------
-*/
+/*!
+ * Append a character to the text object
+ */
 void 
 HText_appendCharacter (struct HText *text, char ch)
 {
@@ -509,10 +507,9 @@ HText_selectAnchor (struct HText *text, struct HTChildAnchor *anchor)
 
 
 
-/*
+/*!
  * Allocate new object. Set up modes from previous. Set up data -area.
  */
-
 struct HTextObject *
 malloc_ht_object (struct HTextObject *prev)
 {
@@ -558,10 +555,9 @@ malloc_ht_object (struct HTextObject *prev)
 
 
 
-/*
+/*!
  * Create new hypertext object.
  */
-
 void 
 new_htext_object (struct HText *text)
 {
@@ -643,12 +639,11 @@ new_htext_object (struct HText *text)
 
 
 
-/*
+/*!
  * Make empty object only stating paragraph, tab or newline
  */
-
 void 
-make_paragraph_object (struct HText *text, int type)
+make_paragraph_object (struct HText *text, HTextType type)
 {
   new_htext_object (text);
 
@@ -659,7 +654,7 @@ make_paragraph_object (struct HText *text, int type)
 }
 
 
-/*
+/*!
  * Malloc and copy data
  */
 char *
@@ -678,10 +673,9 @@ ht_memdup (char *data, int len)
 }
 
 
-/*
+/*!
  * Duplicate object information of this hypertext-page
  */
-
 HText_t *
 HtDuplicate (HText_t *text)
 {

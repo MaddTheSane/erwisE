@@ -124,7 +124,7 @@
 		55D829D0303426400043B1A0 /* tcp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcp.h; sourceTree = "<group>"; };
 		55D829D1303426400043B1A0 /* WWW.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWW.h; sourceTree = "<group>"; };
 		55D829D3303426400043B1A0 /* Cl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cl.h; sourceTree = "<group>"; };
-		55D829D4303426400043B1A0 /* Cl.c */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.c; path = Cl.c; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
+		55D829D4303426400043B1A0 /* Cl.c */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.c; path = Cl.c; sourceTree = "<group>"; tabWidth = 8; usesTabs = 1; };
 		55D829D5303426400043B1A0 /* ClConnection.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClConnection.c; sourceTree = "<group>"; };
 		55D829D6303426400043B1A0 /* ClFTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClFTP.c; sourceTree = "<group>"; };
 		55D829D7303426400043B1A0 /* ClHTTP.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClHTTP.c; sourceTree = "<group>"; };
@@ -288,6 +288,7 @@
 				55D829D9303426400043B1A0 /* Imakefile */,
 				55D829DA303426400043B1A0 /* Makefile */,
 			);
+			indentWidth = 2;
 			path = Cl;
 			sourceTree = "<group>";
 		};

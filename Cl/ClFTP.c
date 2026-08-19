@@ -133,10 +133,9 @@ WWWErwiseFtpPass (void)
 
   CL_DEBUG (("FTP: send pass\n"));
 
-  if (!gethostname (hostname, 1024))
-    {
-      strcpy (hostname, "noname.rupu");
-    }
+  if (!gethostname (hostname, 1024)) {
+    strcpy (hostname, "noname.rupu");
+  }
 
   sprintf (tmp, "PASS erwise@%s\r\n", hostname);
 
@@ -181,21 +180,19 @@ WWWErwiseFtpGetCommand (void)
 
   i = NETREAD (WWWErwiseConnection->fd, tmp, ERWISE_BL_SIZE);
 
-  if ((i == -1) && (errno == EWOULDBLOCK))
-    {
-      return;
-    }
+  if ((i == -1) && (errno == EWOULDBLOCK)) {
+    return;
+  }
 
   CL_DEBUG (("FTP: got %s\n", tmp));
 
-  if ((tmp[0] < '2') || (tmp[0] > '3'))
-    {
+  if ((tmp[0] < '2') || (tmp[0] > '3')) {
 
-      WWWErwiseStatus = CL_FAILED;
+    WWWErwiseStatus = CL_FAILED;
 
-      return;
+    return;
 
-    }
+  }
 
   WWWErwiseConnection->function++;
 
@@ -215,10 +212,9 @@ WWWErwiseFtpGetPassive (void)
 
   i = NETREAD (WWWErwiseConnection->fd, tmp, 1024);
 
-  if ((i == -1) && (errno == EWOULDBLOCK))
-    {
-      return;
-    }
+  if ((i == -1) && (errno == EWOULDBLOCK)) {
+    return;
+  }
 
   tmp[i] = 0;
 
@@ -233,57 +229,53 @@ WWWErwiseFtpGetPassive (void)
 
   i = 1;
 
-  while (i)
-    {
-      if ((*p >= '0') && (*p <= '9'))
-	{
-	  if (!strncmp ("227", p, 3))
-	    {
-	      i = 0;
-	      continue;
-	    }
+  while (i) {
+    if ((*p >= '0') && (*p <= '9')) {
+      if (!strncmp ("227", p, 3)) {
+	i = 0;
+	continue;
+      }
 
-	  if ((p[0] < '2') || (tmp[0] > '3'))
-	    {
-	      WWWErwiseStatus = CL_FAILED;
-	      return;
-	    }
-	}
-
-      /*
-       * Get next line
-       */
-      while (*p && (*p != '\n'))
-	p++;
-
-      p++;
-
-      if (!*p)
-	{
-	  /*
-           * no line but no errors yet
-           */
-	  return;
-	}
+      if ((p[0] < '2') || (tmp[0] > '3')) {
+	WWWErwiseStatus = CL_FAILED;
+	return;
+      }
     }
+
+    /*
+     * Get next line
+     */
+    while (*p && (*p != '\n')) {
+      p++;
+    }
+
+    p++;
+
+    if (!*p) {
+      /*
+       * no line but no errors yet
+       */
+      return;
+    }
+  }
 
   /*
    * Correct line, get port
    */
 
-  while (*p && (*p != '('))
+  while (*p && (*p != '(')) {
     p++;
+  }
 
-  if (!*p)
-    {
-      /*
-       * 227 but no address / port ??
-       */
+  if (!*p) {
+    /*
+     * 227 but no address / port ??
+     */
 
-      WWWErwiseStatus = CL_FAILED;
+    WWWErwiseStatus = CL_FAILED;
 
-      return;
-    }
+    return;
+  }
 
   sscanf (p, "(%d,%d,%d,%d,%d,%d)", &a1, &a2, &a3, &a4, &p1, &p2);
 
@@ -311,7 +303,7 @@ WWWErwiseFtpGetPassive (void)
 }
 
 
-/*
+/*!
  * Make data channel connection
  */
 void
@@ -332,10 +324,9 @@ WWWErwiseFtpDataChannel (void)
 
 
 
-/*
+/*!
  * Start connection. Make sure it is nonblocking one.
  */
-
 int
 cl_start_connection (char *host, ClConnection_t *connection, int port)
 {
@@ -357,36 +348,32 @@ cl_start_connection (char *host, ClConnection_t *connection, int port)
 /* Get node name:
 */
   {
-    if (*host >= '0' && *host <= '9')
-      {				/* Numeric node address: */
-	sin->sin_addr.s_addr = inet_addr (host);	/* See arpa/inet.h */
+    if (*host >= '0' && *host <= '9') {		/* Numeric node address: */
+      sin->sin_addr.s_addr = inet_addr (host);	/* See arpa/inet.h */
 
-      }
-    else
-      {				/* Alphanumeric node name: */
+      } else {				/* Alphanumeric node name: */
 	phost = gethostbyname (host);	/* See netdb.h */
-	if (!phost)
-	  {
-	    if (TRACE)
-	      printf (
-		       "FTP: Can't find internet node name `%s'.\n",
-		       host);
-
-	    WWWErwiseStatus = CL_FAILED;
-
-	    return -1;
+	if (!phost) {
+	  if (TRACE) {
+	    printf ("FTP: Can't find internet node name `%s'.\n",
+		    host);
 	  }
+
+	  WWWErwiseStatus = CL_FAILED;
+
+	  return -1;
+	}
 	memcpy (&sin->sin_addr, phost->h_addr, phost->h_length);
       }
 
-    if (TRACE)
-      printf (
-	       "FTP: Parsed remote address as port %d, inet %d.%d.%d.%d\n",
-	       (unsigned int) ntohs (sin->sin_port),
-	       (int) *((unsigned char *) (&sin->sin_addr) + 0),
-	       (int) *((unsigned char *) (&sin->sin_addr) + 1),
-	       (int) *((unsigned char *) (&sin->sin_addr) + 2),
-	       (int) *((unsigned char *) (&sin->sin_addr) + 3));
+    if (TRACE) {
+      printf ("FTP: Parsed remote address as port %d, inet %d.%d.%d.%d\n",
+	      (unsigned int) ntohs (sin->sin_port),
+	      (int) *((unsigned char *) (&sin->sin_addr) + 0),
+	      (int) *((unsigned char *) (&sin->sin_addr) + 1),
+	      (int) *((unsigned char *) (&sin->sin_addr) + 2),
+	      (int) *((unsigned char *) (&sin->sin_addr) + 3));
+    }
   }				/* scope of p1 */
 
 
@@ -395,12 +382,11 @@ cl_start_connection (char *host, ClConnection_t *connection, int port)
 
     s = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-    if (s < 0)
-      {
-	WWWErwiseStatus = CL_FAILED;
+    if (s < 0) {
+      WWWErwiseStatus = CL_FAILED;
 
-	return -1;
-      }
+      return -1;
+    }
 
     connection->fd = s;
 
@@ -426,10 +412,9 @@ cl_start_connection (char *host, ClConnection_t *connection, int port)
 
 
 
-/*
+/*!
  * Check for errors when retr is sent
  */
-
 void
 WWWErwiseFtpCheckForError (void)
 {
@@ -458,33 +443,30 @@ WWWErwiseFtpCheckForError (void)
   /*
    * Error on either data or command channel
    */
-  if (FD_ISSET (fd, &exceptionfds) || FD_ISSET (fd2, &exceptionfds))
-    {
+  if (FD_ISSET (fd, &exceptionfds) || FD_ISSET (fd2, &exceptionfds)){
 
-      WWWErwiseStatus = CL_FAILED;
+    WWWErwiseStatus = CL_FAILED;
 
-      return;
-    }
+    return;
+  }
 
   /*
    * Data is flowing (OK)
    */
-  if (FD_ISSET (fd, &readfds))
-    {
+  if (FD_ISSET (fd, &readfds)) {
 
-      WWWErwiseConnection->function++;
+    WWWErwiseConnection->function++;
 
-      return;
-    }
+    return;
+  }
 
   /*
    * Anything here is considered an error
    */
-  if (FD_ISSET (fd2, &readfds))
-    {
+  if (FD_ISSET (fd2, &readfds)) {
 
-      WWWErwiseStatus = CL_FAILED;
+    WWWErwiseStatus = CL_FAILED;
 
-      return;
-    }
+    return;
+  }
 }

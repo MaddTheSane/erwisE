@@ -13,10 +13,9 @@
 #include "Cl.h"
 
 
-/*
+/*!
  * Set mode to poll or to select connection
  */
-
 void
 WWWErwiseSetPoll (void)
 {

@@ -15,7 +15,7 @@
 #include "HTStyle.h"
 #include "HText.h"
 
-/*
+/*!
  * Data is store on linked list
  */
 typedef struct cl_data_s
@@ -28,63 +28,63 @@ typedef struct cl_data_s
 }         cl_data_t;
 
 
-/*
+/*!
  * This structure contains all information needed to accomplish this
  * connection.
  */
 typedef struct ClConnection_s
 {
-  /*
+  /*!
    * address of this connection
    */
   char *address;
 
-  /*
+  /*!
    * Fd of the connection. Also ftp connection data channel.
    */
   int fd;
   int secondary_fd;
 
-  /*
+  /*!
    * If this fd is not set connection has to be polled. If it is NOT
    * set, connection has to be selected (must not poll!)
    */
   int select_fd;
 
-  /*
+  /*!
    * Function of this state machine
    */
   void (**function) (void);
 
-  /*
+  /*!
    * Store junk here (address of data on connect() )
    */
   void *addr;
   int addr_size;
 
-  /*
+  /*!
    * Store command to write to the net here
    */
   char *command;
 
-  /*
+  /*!
    * Data Buffer
    */
   cl_data_t *buffer_first;
   cl_data_t *buffer_last;
 
-  /*
+  /*!
    * stuff given to HTLoadHTTP()
    */
   int diag;
   struct HTAnchor *anAnchor;
 
-  /*
+  /*!
    * How happened with load if on nonblocking mode
    */
   int status;
 
-  /*
+  /*!
    * Hostname on ftp connections
    */
   char *ftphost;
@@ -95,7 +95,7 @@ typedef struct ClConnection_s
   int port;
 
 
-  /*
+  /*!
    * Load to file ?
    */
   int load_to_file;
@@ -104,30 +104,30 @@ typedef struct ClConnection_s
 }              ClConnection_t;
 
 
-/*
+/*!
  * More data is to be read
  */
 #define CL_CONTINUES		0
 
-/*
+/*!
  * Connection completed
  */
 #define CL_COMPLETED		1
 
-/*
+/*!
  * Connection failed
  */
 #define CL_FAILED		2
 
-/*
+/*!
  * Document already loaded (error)
  */
 #define CL_ALREADY_LOADED	3
 
 
-/*
- * Prototypes
- */
+
+#pragma mark Prototypes -
+
 ClConnection_t *ClOpenConnection (const char *address);
 
 struct HText *ClReadData (ClConnection_t * connection, int *how_done, int *fd);
@@ -142,9 +142,9 @@ void ClSetFileNameForLoadingToFile (char *filename);
 
 int ClConnectionOnLoadToFileMode (ClConnection_t * connection);
 
-/*
- * Globals
- */
+
+#pragma mark Globals -
+
 
 extern int WWWErwiseStatus;
 extern ClConnection_t *WWWErwiseConnection;
@@ -155,9 +155,9 @@ void WWWErwiseReadData (void);
 void WWWErwiseParse (void);
 
 
-/*
- * Internals
- */
+
+#pragma mark Internals -
+
 
 void WWWErwiseFtpUser (void);
 void WWWErwiseFtpPass (void);
@@ -175,8 +175,8 @@ void WWWErwiseTerminateIfLoadToFile (void);
 int cl_start_connection (char *host, ClConnection_t *connection, int port);
 int erwise_connect (int fd, struct sockaddr *addr, int size);
 
-/*
- * Debug ...
- */
+
+#pragma mark Debug ... -
+
 
 #define CL_DEBUG(a)    printf a

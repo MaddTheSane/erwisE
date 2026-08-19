@@ -42,10 +42,8 @@ WWWErwiseConnect (void)
   status = connect (WWWErwiseConnection->fd,
 		    (struct sockaddr *) WWWErwiseConnection->addr,
 		    WWWErwiseConnection->addr_size);
-  if (status < 0 && (errno != EISCONN))
-    {
-      if ((errno == EALREADY) || (errno == EINPROGRESS))
-	{
+  if (status < 0 && (errno != EISCONN)) {
+      if ((errno == EALREADY) || (errno == EINPROGRESS)) {
 	  /*
            * Would block
            */
@@ -89,8 +87,7 @@ erwise_connect (int fd, struct sockaddr *addr, int size)
 
   status = connect (fd, addr, size);
 
-  if (status < 0)
-    {
+  if (status < 0) {
       switch (errno)
 	{
 	case EINPROGRESS:
@@ -119,10 +116,6 @@ erwise_connect (int fd, struct sockaddr *addr, int size)
   return 0;
 }
 
-
-
-
-
 /*!
  * Send command to net
  */
@@ -137,29 +130,24 @@ WWWErwiseSendCommand (void)
 		     WWWErwiseConnection->command,
 		     (int) strlen (WWWErwiseConnection->command));
 
-  if (status == strlen (WWWErwiseConnection->command))
-    {
-      /*
-       * Succeeded
-       */
-      free (WWWErwiseConnection->command);
-      WWWErwiseConnection->command = 0;
+  if (status == strlen (WWWErwiseConnection->command)) {
+    /*
+     * Succeeded
+     */
+    free (WWWErwiseConnection->command);
+    WWWErwiseConnection->command = NULL;
 
-      WWWErwiseConnection->function++;
+    WWWErwiseConnection->function++;
 
-    }
-  else if (status < 0)
-    {
-      /*
-       * Failed
-       */
-      CL_DEBUG (("SendCommand failed\n"));
+  } else if (status < 0) {
+    /*
+     * Failed
+     */
+    CL_DEBUG (("SendCommand failed\n"));
 
-      WWWErwiseStatus = CL_FAILED;
-      return;
-    }
-  else
-    {
+    WWWErwiseStatus = CL_FAILED;
+    return;
+    } else {
       /*
        * Partial read
        */
@@ -187,86 +175,78 @@ WWWErwiseReadData (void)
 	    tmp,
 	    ERWISE_BLOCK);
 
-    CL_DEBUG (("got %zd bytes\n", i));
+  CL_DEBUG (("got %zd bytes\n", i));
 
   /*
    * Append data to (memory) buffer or to file.
    */
-  if (i > 0)
-    {
+  if (i > 0) {
 
-      /*
-       * Load directly to file ?
-       */
+    /*
+     * Load directly to file ?
+     */
 
-      if (WWWErwiseConnection->load_to_file)
-	{
-	  ssize_t st;
+    if (WWWErwiseConnection->load_to_file) {
+      ssize_t st;
 
-	  st = write (WWWErwiseConnection->load_to_file_fd,
-		      tmp,
-		      i);
+      st = write (WWWErwiseConnection->load_to_file_fd,
+		  tmp,
+		  i);
 
-	  if (st != i)
-	    {
-	      WWWErwiseStatus = CL_FAILED;
-	    }
-
-	  return;
-	}
-
-      if (!WWWErwiseConnection->buffer_first)
-	{
-
-	  WWWErwiseConnection->buffer_first =
-	    WWWErwiseConnection->buffer_last =
-	    (cl_data_t *) malloc (sizeof (cl_data_t));
-
-	  memset (WWWErwiseConnection->buffer_first, 0, sizeof (cl_data_t));
-
-	  WWWErwiseConnection->buffer_first->data =
-	    WWWErwiseConnection->buffer_first->freeptr =
-	    (void *) malloc (i);
-
-	  WWWErwiseConnection->buffer_first->size = i;
-
-	  memcpy (WWWErwiseConnection->buffer_first->data, tmp, i);
-
-	}
-      else
-	{
-
-	  cl_data_t *p = (cl_data_t *) malloc (sizeof (cl_data_t));
-
-	  memset (p, 0, sizeof (cl_data_t));
-
-	  p->data = p->freeptr = (void *) malloc (i);
-
-	  p->size = i;
-
-	  memcpy (p->data, tmp, i);
-
-	  p->prev = WWWErwiseConnection->buffer_last;
-
-	  WWWErwiseConnection->buffer_last->next = p;
-
-	  WWWErwiseConnection->buffer_last = p;
-	}
+      if (st != i) {
+	WWWErwiseStatus = CL_FAILED;
+      }
 
       return;
     }
 
-  if (i < 0 && (errno != EWOULDBLOCK))
-    {
-      CL_DEBUG (("ReadData failed\n"));
-      WWWErwiseStatus = CL_FAILED;
+    if (!WWWErwiseConnection->buffer_first) {
+
+      WWWErwiseConnection->buffer_first =
+      WWWErwiseConnection->buffer_last =
+      (cl_data_t *) malloc (sizeof (cl_data_t));
+
+      memset (WWWErwiseConnection->buffer_first, 0, sizeof (cl_data_t));
+
+      WWWErwiseConnection->buffer_first->data =
+      WWWErwiseConnection->buffer_first->freeptr =
+      (void *) malloc (i);
+
+      WWWErwiseConnection->buffer_first->size = i;
+
+      memcpy (WWWErwiseConnection->buffer_first->data, tmp, i);
+
+    } else {
+
+      cl_data_t *p = (cl_data_t *) malloc (sizeof (cl_data_t));
+
+      memset (p, 0, sizeof (cl_data_t));
+
+      p->data = p->freeptr = (void *) malloc (i);
+
+      p->size = i;
+
+      memcpy (p->data, tmp, i);
+
+      p->prev = WWWErwiseConnection->buffer_last;
+
+      WWWErwiseConnection->buffer_last->next = p;
+
+      WWWErwiseConnection->buffer_last = p;
     }
 
-  if (i == 0)
-    {
-      WWWErwiseConnection->function++;
-      return;
-    }
+    return;
+  }
+
+  if (i < 0 && (errno != EWOULDBLOCK)) {
+    CL_DEBUG (("ReadData failed\n"));
+    WWWErwiseStatus = CL_FAILED;
+  }
+
+  if (i == 0) {
+    WWWErwiseConnection->function++;
+    return;
+  }
 }
 
 
@@ -302,16 +282,16 @@ WWWErwiseParse (void)
 void
 WWWErwiseTerminateIfLoadToFile (void)
 {
-    if (WWWErwiseConnection->load_to_file) {
-	HtLocalText = 0;
-	
-	while (*WWWErwiseConnection->function) {
-	    WWWErwiseConnection->function++;
-	}
-	
-	WWWErwiseStatus = CL_COMPLETED;
-	
-    } else {
-	WWWErwiseConnection->function++;
+  if (WWWErwiseConnection->load_to_file) {
+    HtLocalText = 0;
+
+    while (*WWWErwiseConnection->function) {
+      WWWErwiseConnection->function++;
     }
+
+    WWWErwiseStatus = CL_COMPLETED;
+
+  } else {
+    WWWErwiseConnection->function++;
+  }
 }

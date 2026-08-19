@@ -56,17 +56,17 @@ PUBLIC int HTLoadHTTP(const char * arg,
   sin->sin_family = AF_INET;	/* Family, host order  */
   sin->sin_port = htons (TCP_PORT);	/* Default: new port,    */
 
-  if (TRACE)
-    {
-      if (gate)
+  if (TRACE) {
+      if (gate) {
 	fprintf (stderr,
 		 "HTTPAccess: Using gateway %s for %s\n", gate, arg);
-      else
+      } else {
 	fprintf (stderr, "HTTPAccess: Direct access for %s\n", arg);
+      }
     }
 
-/* Get node name and optional port number:
-*/
+  /* Get node name and optional port number:
+   */
   {
     char *p1 = HTParse (gate ? gate : arg, "", PARSE_HOST);
     HTParseInet (sin, p1);
@@ -74,8 +74,8 @@ PUBLIC int HTLoadHTTP(const char * arg,
   }
 
 
-/*	Now, let's get a socket set up from the server for the sgml data:
-*/
+  /*	Now, let's get a socket set up from the server for the sgml data:
+   */
   s = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
   (void) fcntl (s, F_SETFL, O_NONBLOCK);
   (void) fcntl (s, F_SETFL, FNDELAY);
@@ -87,48 +87,46 @@ PUBLIC int HTLoadHTTP(const char * arg,
 			   (struct sockaddr *) & soc_address,
 			   sizeof (soc_address));
 
-  if (s < 0)
-    {
-      /*
-       * Fail
-       */
-      /*free(command);*/
-      return -1;
-    }
+  if (s < 0) {
+    /*
+     * Fail
+     */
+    /*free(command);*/
+    return -1;
+  }
 
-  if (TRACE)
+  if (TRACE) {
     printf ("HTTP connected, socket %d\n", s);
+  }
 
 /*	Ask that node for the document,
 **	omitting the host name & anchor if not gatewayed.
 */
-  if (gate)
-    {
-      command = malloc (4 + strlen (arg) + 1 + 1);
-      strcpy (command, "GET ");
-      strcat (command, arg);
-    }
-  else
-    {				/* not gatewayed */
-      char *p1 = HTParse (arg, "", PARSE_PATH | PARSE_PUNCTUATION);
-      command = malloc (4 + strlen (p1) + 1 + 1);
-      strcpy (command, "GET ");
-      strcat (command, p1);
-      free (p1);
-    }
+  if (gate) {
+    command = malloc (4 + strlen (arg) + 1 + 1);
+    strcpy (command, "GET ");
+    strcat (command, arg);
+  } else {				/* not gatewayed */
+    char *p1 = HTParse (arg, "", PARSE_PATH | PARSE_PUNCTUATION);
+    command = malloc (4 + strlen (p1) + 1 + 1);
+    strcpy (command, "GET ");
+    strcat (command, p1);
+    free (p1);
+  }
   strcat (command, "\r\n");	/* Include CR for telnet compat. */
 
 
-  if (TRACE)
+  if (TRACE) {
     printf ("HTTP writing command `%s' to socket %d\n", command, s);
+  }
 
 #ifdef NOT_ASCII
   {
     char *p;
     for (p = command; *p; p++)
-      {
-	*p = TOASCII (*p);
-      }
+    {
+      *p = TOASCII (*p);
+    }
   }
 #endif
 

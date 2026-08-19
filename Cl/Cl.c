@@ -42,39 +42,38 @@ char *WWWErwiseFileLoadName = 0;
 ClConnection_t *
 ClOpenConnection (const char *address)
 {
-  int status;
   ClConnection_t *p = (ClConnection_t *) malloc (sizeof (*p));
 
   /*
    * Some validation checks
    */
 
-  if (!p)
+  if (!p) {
     return p;
+  }
 
-  if (!address)
+  if (!address) {
     return NULL;
+  }
 
   memset (p, 0, sizeof (*p));
 
-  p->address = (char *) strdup (address);
+  p->address = strdup (address);
 
   /*
    * If we wish to load to file, open fd here
    */
 
-  if (WWWErwiseFileLoadName)
-    {
+  if (WWWErwiseFileLoadName) {
 
       p->load_to_file_fd =
 	open (WWWErwiseFileLoadName, O_WRONLY | O_CREAT, 0666);
 
       free (WWWErwiseFileLoadName);
 
-      WWWErwiseFileLoadName = 0;
+      WWWErwiseFileLoadName = NULL;
 
-      if (p->load_to_file_fd < 0)
-	{
+      if (p->load_to_file_fd < 0) {
 
 	  printf ("ClOpenConnection: Cannot load to file '%s'\n",
 		  WWWErwiseFileLoadName);
@@ -130,81 +129,75 @@ ClReadData (ClConnection_t *connection, int *how_done, int *fd)
   /*
    * If loading was on non-blocking mode ?
    */
-  if (!connection->function)
-    {
+  if (!connection->function) {
 
-      *fd = connection->fd;
+    *fd = connection->fd;
 
-      if (connection->status)
-	{
+    if (connection->status) {
 
-	  *how_done = CL_COMPLETED;
+      *how_done = CL_COMPLETED;
 
-	  ClCloseConnection (connection);
+      ClCloseConnection (connection);
 
-	  return HtLocalText;
+      return HtLocalText;
 
-	}
-      else
-	{
+    } else {
 
-	  *how_done = CL_FAILED;
+      *how_done = CL_FAILED;
 
-	  ClCloseConnection (connection);
+      ClCloseConnection (connection);
 
-	  return 0;
+      return 0;
 
-	}
     }
+  }
 
   /*
    * Try max 3 pollings at one call. This makes loading faster but does not
    * get too much cpu
    */
-  for (continues = 3; continues > 0; continues--)
-    {
+  for (continues = 3; continues > 0; continues--) {
 
-      tmpf = *connection->function;
+    tmpf = *connection->function;
 
-      if (*connection->function)
-	(void) (*connection->function) ();
-
-      /*
-       * If mode is going to change to poll, set it now
-       */
-      if (*connection->function == WWWErwiseSetPoll)
-	(void) WWWErwiseSetPoll ();
-
-      /*
-       * Can we try next polling?
-       */
-      if ((*connection->function == tmpf) || (*how_done != CL_CONTINUES) ||
-	  (connection->select_fd))
-	{
-
-	  continues = 0;
-	}
+    if (*connection->function) {
+      (void) (*connection->function) ();
     }
+
+    /*
+     * If mode is going to change to poll, set it now
+     */
+    if (*connection->function == WWWErwiseSetPoll) {
+      (void) WWWErwiseSetPoll ();
+    }
+
+    /*
+     * Can we try next polling?
+     */
+    if ((*connection->function == tmpf) || (*how_done != CL_CONTINUES) ||
+        (connection->select_fd)) {
+
+      continues = 0;
+    }
+  }
 
   *how_done = WWWErwiseStatus;
 
   *fd = connection->select_fd;
 
-  if (*how_done == CL_FAILED)
-    {
+  if (*how_done == CL_FAILED) {
 
-      ClCloseConnection (connection);
+    ClCloseConnection (connection);
 
-      return NULL;
-    }
+    return NULL;
+  }
 
-  if (*how_done == CL_COMPLETED)
-    {
+  if (*how_done == CL_COMPLETED) {
 
-      ClCloseConnection (connection);
+    ClCloseConnection (connection);
 
-      return HtLocalText;	/* global variable because @#$#$ <censored> */
-    }
+    return HtLocalText;	/* global variable because @#$#$ <censored> */
+  }
 
   return NULL;
 }
@@ -216,27 +209,24 @@ ClReadData (ClConnection_t *connection, int *how_done, int *fd)
 void
 ClCloseConnection (ClConnection_t *connection)
 {
-  if (connection->load_to_file)
-    {
+  if (connection->load_to_file) {
 
-      close (connection->load_to_file_fd);
-    }
+    close (connection->load_to_file_fd);
+  }
 
-  if (connection->fd)
-    {
+  if (connection->fd) {
 
-      shutdown (connection->fd, 2);
+    shutdown (connection->fd, 2);
 
-      close (connection->fd);
-    }
+    close (connection->fd);
+  }
 
-  if (connection->secondary_fd)
-    {
+  if (connection->secondary_fd) {
 
-      shutdown (connection->secondary_fd, 2);
+    shutdown (connection->secondary_fd, 2);
 
-      close (connection->secondary_fd);
-    }
+    close (connection->secondary_fd);
+  }
 
   cl_free_connection (connection);
 }
@@ -255,47 +245,39 @@ cl_read_data (int fd, char *data, int length)
 
   int howmuch = 0;
 
-  if (p->buffer_last)
-    {
-      if (!b)
-	return 0;
-
-      if (length < b->size)
-	{
-
-	  memcpy (data, b->data, length);
-
-	  howmuch = length;
-
-	  b->size -= length;
-
-	  b->data += length;
-	}
-      else
-	{
-
-	  memcpy (data, b->data, b->size);
-
-	  howmuch = b->size;
-
-	  free (b->freeptr);
-
-	  if (b->next)
-	    {
-	      b->next->prev = 0;
-	      p->buffer_first = b->next;
-	    }
-	  else
-	    {
-	      p->buffer_first = 0;
-	    }
-	  free (b);
-	}
+  if (p->buffer_last) {
+    if (!b) {
+      return 0;
     }
-  else
-    {
-      return NETREAD (fd, data, length);
+
+    if (length < b->size) {
+
+      memcpy (data, b->data, length);
+
+      howmuch = length;
+
+      b->size -= length;
+
+      b->data += length;
+    } else {
+
+      memcpy (data, b->data, b->size);
+
+      howmuch = b->size;
+
+      free (b->freeptr);
+
+      if (b->next) {
+	b->next->prev = 0;
+	p->buffer_first = b->next;
+      } else {
+	p->buffer_first = 0;
+      }
+      free (b);
     }
+  } else {
+    return NETREAD (fd, data, length);
+  }
   return howmuch;
 }
 
@@ -307,31 +289,34 @@ cl_read_data (int fd, char *data, int length)
 void
 cl_free_connection (ClConnection_t *connection)
 {
-  if (connection->address)
+  if (connection->address) {
     free (connection->address);
-  
-  if (connection->addr)
+  }
+
+  if (connection->addr) {
     free (connection->addr);
-  
-  if (connection->command)
+  }
+
+  if (connection->command) {
     free (connection->command);
-  
+  }
+
   if (connection->buffer_first) {
     cl_data_t *p = connection->buffer_first;
-    
+
     while (p) {
       
       cl_data_t *p2 = p;
-      
+
       free (p->freeptr);
-      
+
       struct cl_data_s *pnext = p2->next;
       free (p);
-      
+
       p = pnext;
     }
   }
-  
+
   /*
    * NOTE!
    * anAnchor or diag should not be freed (at least they are not on
@@ -348,28 +333,25 @@ ClCanLoadToFile (const char *address)
 {
   char *access;
 
-  if (!address)
-    {
-      return 0;
-    }
+  if (!address) {
+    return 0;
+  }
 
   access = HTParse (address, "", PARSE_ACCESS);
 
-  if (!strcmp (access, "html"))
-    {
+  if (!strcmp (access, "html")) {
 
-      free (access);
+    free (access);
 
-      return 1;
-    }
+    return 1;
+  }
 
-  if (!strcmp (access, "file"))
-    {
+  if (!strcmp (access, "file")) {
 
-      free (access);
+    free (access);
 
-      return 1;
-    }
+    return 1;
+  }
 
   free (access);
 
@@ -383,8 +365,9 @@ ClCanLoadToFile (const char *address)
 int
 ClConnectionOnLoadToFileMode (ClConnection_t *connection)
 {
-  if (!connection)
+  if (!connection) {
     return 0;
+  }
 
   return connection->load_to_file;
 }
