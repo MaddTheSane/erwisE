@@ -501,15 +501,15 @@ int DoPrint(HText_t *old_htext, int fd, int width, int lmargin, int top, int bot
 	    p = l->Objects;
 
 	    while (p) {
-
+		struct PrintObject_s *pNext = p->Next;
 		free(p);
 
-		p = p->Next;
+		p = pNext;
 	    }
-
+	    struct PrintLine_s *lNext = l->Next;
 	    free(l);
 
-	    l = l->Next;
+	    l = lNext;
 	}
     }
 
