@@ -122,8 +122,9 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
     /*
      * safe
      */
-    if (!htext)
+    if (!htext) {
 	return 0;
+    }
 
 
     /*
@@ -132,8 +133,9 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
 
     s = XlStyles;
 
-    while (s->fontname)
+    while (s->fontname) {
 	s++;
+    }
 
     /*
      * NOTE!!! Add one element because of null element at the end !!!
@@ -143,7 +145,7 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
     s_alloc = s = (XlStyle_t *) malloc(struct_length);
 
     if (!s) {
-	printf("cannot malloc on Xl\n");
+	fprintf(stderr, "cannot malloc on Xl\n");
 
 	exit(1);
     }
@@ -157,8 +159,8 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
 	    (XFontStruct *) XLoadQueryFont(display, s->fontname);
 
 	if (!s->fontinfo) {
-	    printf("XlSetup: Cannot load font %s\nXlSetup: trying 'fixed'.\n",
-		   s->fontname);
+	    fprintf(stderr, "XlSetup: Cannot load font %s\nXlSetup: trying 'fixed'.\n",
+		    s->fontname);
 
 	    s->fontinfo =
 		(XFontStruct *) XLoadQueryFont(display, "fixed");
@@ -179,7 +181,7 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
 
 	    if (!s->fontinfo) {
 
-		printf("XlSetup: Cannot load 'fixed' ... sorry.\n");
+		fprintf(stderr, "XlSetup: Cannot load 'fixed' ... sorry.\n");
 
 		exit(1);
 	    }
@@ -261,7 +263,7 @@ int XlSetupText(Display *display, Window window, unsigned long fg, unsigned long
 	p->xl_data = (XlObjectData_t *) malloc(sizeof(XlObjectData_t));
 
 	if (!p->xl_data) {
-	    printf("cannot malloc in XlSetupText\n");
+	    fprintf(stderr, "cannot malloc in XlSetupText\n");
 	    exit(1);
 	}
 	memset(p->xl_data, 0, sizeof(XlObjectData_t));

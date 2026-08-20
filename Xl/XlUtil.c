@@ -76,7 +76,7 @@ bool xl_can_be_cursor(HTextObject_t *htextobject)
  *  Get pointer to `hypertextobject` nearest to chosen coordinates
  */
 HTextObject_t *
- XlLocateHTextObject(int windowx, int windowy, HText_t *htext)
+XlLocateHTextObject(int windowx, int windowy, HText_t *htext)
 {
     HTextObject_t *p;
     HTextObject_t *p_closest = NULL;
@@ -187,7 +187,7 @@ int xl_nospacelength(HTextObject_t *p, char *data, int len)
 }
 
 
-/*
+/*!
  * Set up stuff needed to format text intelligently
  */
 void XlFormatTextForPrinting(HText_t *htext, int lmargin, int rmargin)

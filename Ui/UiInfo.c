@@ -207,7 +207,7 @@ void uicreateinfolabels(Widget formwdg, Widget bottomwdg)
     label1wdg = XmCreateLabelGadget(formwdg, "InfoLabel1", args, nargs);
     XtManageChild(label1wdg);
 
-    labelstr = XmStringCreateLtoR("WorldWideWeb \n browser \n for the X Window System \n \n Version 1.0 Alpha", XmSTRING_DEFAULT_CHARSET);
+    labelstr = XmStringCreate("WorldWideWeb \n browser \n for the X Window System \n \n Version 1.0 Alpha", XmSTRING_DEFAULT_CHARSET);
     args = uiVaSetArgs(&nargs,
 		       XmNlabelString, labelstr,
 		       XmNtopAttachment, XmATTACH_FORM,
@@ -220,7 +220,7 @@ void uicreateinfolabels(Widget formwdg, Widget bottomwdg)
     XtManageChild(label2wdg);
     XmStringFree(labelstr);
 
-    labelstr = XmStringCreateLtoR("Authors: \n Kim Nyberg, Teemu Rantanen, \n Kati Suominen, Kari Syd{nmaanlakka\n\nE-mail: erwise@cs.hut.fi", XmSTRING_DEFAULT_CHARSET);
+    labelstr = XmStringCreate("Authors: \n Kim Nyberg, Teemu Rantanen, \n Kati Suominen, Kari Syd{nmaanlakka\n\nE-mail: erwise@cs.hut.fi", XmSTRING_DEFAULT_CHARSET);
     args = uiVaSetArgs(&nargs,
 		       XmNlabelString, labelstr,
 		       XmNtopAttachment, XmATTACH_WIDGET,

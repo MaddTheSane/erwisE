@@ -27,7 +27,7 @@
 
 static void xl_draw_object(HText_t *htext, HTextObject_t *object);
 
-/*
+/*!
  * Make cursor positioning more intelligent
  */
 #define Y_MULTIPLIER 50
@@ -140,7 +140,9 @@ void xl_draw_object(HText_t *htext, HTextObject_t *object)
 
 /*!
  * Check is object is on wanted region. Return 0 if point is on region.
- * Otherwise return distance. NOTE. y-distance is multiplied by a big
+ * Otherwise return distance.
+ *
+ * \NOTE y-distance is multiplied by a big
  * number because this way cursor positioning works more intelligently than
  * without it.
  */

@@ -10,18 +10,18 @@
  *
  */
 
-/*
+/*!
  * This structure consists of all Xl specific object data
  */
 typedef struct XlObjectData {
-    /*
+    /*!
      * X11 info. This graphical context has all information about
      * the used font. Text sizes can be calculated when font is
      * known.
      */
     GC gc;
 
-    /*
+    /*!
      * Pointer to XlStyle table.
      */
     struct XlStyle *style;

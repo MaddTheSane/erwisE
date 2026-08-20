@@ -5,8 +5,8 @@ This is an old web browser based on X11/Motif.
 For more info, see the Wikipedia page: https://en.wikipedia.org/wiki/Erwise
 
 Changes:
-* Fixed a few ancient bugs, including one use-after-free.
-* Better headers included.
+* Fixed a few ancient bugs, including many use-after-free.
+* Better header includes.
 * Convert to ANSI C, removed K&R methods. I hate K&R.
 * Removed some legacy cruft.
 * Migrated to `<stdbool.h>` as well as marking some strings as `const char*`.
