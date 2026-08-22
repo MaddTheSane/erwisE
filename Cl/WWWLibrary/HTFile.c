@@ -15,7 +15,9 @@
 
 #define INFINITY 512		/* file name length @@ FIXME */
 
-
+#ifdef __APPLE__
+#define unix 1
+#endif
 
 #ifdef unix                    /* if this is to compile on a UNIX machine */
 #include <sys/types.h>
