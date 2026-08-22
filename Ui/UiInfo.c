@@ -126,7 +126,7 @@ int UiDisplayInfo()
 }
 
 
-static Widget
+Widget
  uicreateinfoform()
 {
     ArgList args;
@@ -148,7 +148,7 @@ static Widget
 }
 
 
-static Widget
+Widget
  uicreateinfook(formwdg)
 Widget formwdg;
 {
@@ -193,7 +193,7 @@ Widget bottomwdg;
 	XCreatePixmapFromBitmapData(dpy, XtWindow(wdg), logo_bits,
 				    logo_height, logo_width,
 				    BlackPixel(dpy, DefaultScreen(dpy)),
-				    uiGetArg(wdg, XmNbackground),
+				    WhitePixel(dpy, DefaultScreen(dpy)),
 				  DefaultDepth(dpy, DefaultScreen(dpy)));
 
     if (logo_pixmap == NULL) {

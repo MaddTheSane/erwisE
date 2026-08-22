@@ -35,7 +35,7 @@
 # $XConsortium: sunLib.rules,v 1.7 91/12/20 11:19:47 rws Exp $
 
 .c.o:
-	$(CC) -c $(CFLAGS) $*.c
+	$(CC) -g -c $(CFLAGS) $*.c
 
 # -------------------------------------------------------------------------
 # site-specific configuration parameters that go after
@@ -48,14 +48,14 @@
               TOP = ../.
       CURRENT_DIR = ./erwise
 
-               AR = ar clq
+               AR = ar cq
   BOOTSTRAPCFLAGS =
-               CC = gcc2 -pipe -fstrength-reduce -fpcc-struct-return
+               CC = gcc -g -Wno-all -Wno-return-mismatch -Wno-implicit-function-declaratio -pipe -pipe -fstrength-reduce -fpcc-struct-return
                AS = as
 
          COMPRESS = compress
               CPP = /lib/cpp $(STD_CPP_DEFINES)
-    PREPROCESSCMD = gcc2 -pipe -fstrength-reduce -fpcc-struct-return -E $(STD_CPP_DEFINES)
+    PREPROCESSCMD = gcc -g -Wno-all -Wno-return-mismatch -Wno-implicit-function-declaratio -pipe -fstrength-reduce -fpcc-struct-return -E $(STD_CPP_DEFINES)
           INSTALL = install
                LD = ld
              LINT = lint
@@ -135,7 +135,7 @@
 # X Window System make variables; this need to be coordinated with rules
 
           PATHSEP = /
-        USRLIBDIR = /v/X11R5/lib
+        USRLIBDIR = /usr/lib
            BINDIR = /v/X11R5/bin
           INCROOT = /v/X11R5/include
      BUILDINCROOT = $(TOP)
@@ -217,17 +217,17 @@ PICFLAGS = -fPIC
           DEPXLIB = $(DEPEXTENSIONLIB)
              XLIB = $(EXTENSIONLIB) -lX11
 
-        DEPXMULIB = $(USRLIBDIR)/libXmu.sa.$(SOXMUREV)
+        DEPXMULIB = $(shell find $(USRLIBDIR) -name 'libXmu.so*' | head -n1)
        XMULIBONLY = -lXmu
            XMULIB = -lXmu
 
        DEPOLDXLIB =
           OLDXLIB = -loldX
 
-      DEPXTOOLLIB = $(USRLIBDIR)/libXt.sa.$(SOXTREV)
+      DEPXTOOLLIB = $(shell find $(USRLIBDIR) -name 'libXt.so*' | head -n1)
          XTOOLLIB = -lXt
 
-        DEPXAWLIB = $(USRLIBDIR)/libXaw.sa.$(SOXAWREV)
+        DEPXAWLIB = $(shell find $(USRLIBDIR) -name 'libXaw*' | head -n1)
            XAWLIB = -lXaw
 
         DEPXILIB =

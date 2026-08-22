@@ -48,14 +48,14 @@
               TOP = ../.
       CURRENT_DIR = ./Xl
 
-               AR = ar clq
+               AR = ar cq
   BOOTSTRAPCFLAGS =
-               CC = gcc2 -pipe -fstrength-reduce -fpcc-struct-return
+               CC = gcc -Wno-implicit-function-declaration -Wno-return-mismatch -pipe -fstrength-reduce -fpcc-struct-return
                AS = as
 
          COMPRESS = compress
               CPP = /lib/cpp $(STD_CPP_DEFINES)
-    PREPROCESSCMD = gcc2 -pipe -fstrength-reduce -fpcc-struct-return -E $(STD_CPP_DEFINES)
+    PREPROCESSCMD = gcc -Wno-implicit-function-declaration -Wno-return-mismatch -pipe -fstrength-reduce -fpcc-struct-return -E $(STD_CPP_DEFINES)
           INSTALL = install
                LD = ld
              LINT = lint

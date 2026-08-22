@@ -479,10 +479,7 @@ void uiUndefineCursor()
 }
 
 
-ArgList
-uiVaSetArgs(nargs, va_alist)
-int *nargs;
-va_dcl
+ArgList uiVaSetArgs(int *nargs, ...)
 {
     static Arg args[50];
     String tmpstr;
@@ -490,7 +487,7 @@ va_dcl
 
     *nargs = 0;
 
-    va_start(pvar);
+    va_start(pvar, nargs);
     tmpstr = va_arg(pvar, String);
     while (tmpstr) {
 	XtSetArg(args[(int) *nargs], tmpstr, va_arg(pvar, XtArgVal));
@@ -509,7 +506,11 @@ Widget wdg;
 String resource;
 {
     Arg args[1];
-
+    return (XtArgVal) 0;
+    if (!wdg || !resource || !XtIsWidget(wdg)) {
+        return (XtArgVal) 0; // avoid stupid crash which happens for no reason
+    }
+    fprintf(stderr, "uiGetArg: resource='%s', widget=0x%p\n", resource, wdg);
     XtSetArg(args[0], resource, (XtArgVal) 0);
     XtGetValues(wdg, args, 1);
 

@@ -15,7 +15,7 @@
 #include "HTAtom.h"
 
 #ifdef SHORT_NAMES
-#define HTAnchor_findChild			HTAnFiCh
+#define static HTAnchor_findChild			HTAnFiCh
 #define HTAnchor_findChildAndLink		HTAnFiLi
 #define HTAnchor_findAddress			HTAnFiAd
 #define HTAnchor_delete				HTAnDele

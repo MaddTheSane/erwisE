@@ -9,7 +9,10 @@ HText_t *htext;
 HTextObject_t *htextobject;
 void *parameter;
 {
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
     UiDisplayWarningDialog("Quit Erwise?", NukeErwiseCB);
+    #pragma GCC diagnostic pop
 }
 
 
@@ -34,7 +37,10 @@ HText_t *htext;
 HTextObject_t *htextobject;
 void *parameter;
 {
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
     UiDisplayInfo();
+    #pragma GCC diagnostic pop
 }
 
 
@@ -44,7 +50,10 @@ HText_t *htext;
 HTextObject_t *htextobject;
 void *parameter;
 {
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
     UiDisplaySelectionBox(GetPageCB);
+    #pragma GCC diagnostic pop
 }
 
 

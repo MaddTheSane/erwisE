@@ -161,7 +161,7 @@ typedef char	BOOLEAN;		/* Logical value */
 #include <varargs.h>
 #endif
 #else
-#include <varargs.h>
+#include <stdarg.h>
 #endif /* ERWISE */
 
 #ifdef CURSES

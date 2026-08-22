@@ -18,21 +18,21 @@ static int ConfigLines = 0;
 
 static Config_t Fonts[] =
 {
-    {RESOURCE, C_FONT_NORMAL, (void *) "-adobe-times-medium-r-normal--12-120-75-75-p-64-iso8859-1"},
-    {RESOURCE, C_FONT_LIST, (void *) "8x13"},
-    {RESOURCE, C_FONT_LISTCOMPACT, (void *) "6x13"},
-    {RESOURCE, C_FONT_GLOSSARY, (void *) "-adobe-times-medium-r-normal--12-120-75-75-p-64-iso8859-1"},
-    {RESOURCE, C_FONT_GLOSSARYCOMPACT, (void *) "-adobe-times-medium-r-normal--12-120-75-75-p-64-iso8859-1"},
-    {RESOURCE, C_FONT_EXAMPLE, (void *) "7x13"},
-    {RESOURCE, C_FONT_LISTING, (void *) "7x13"},
-    {RESOURCE, C_FONT_ADDRESS, (void *) "8x13"},
-    {RESOURCE, C_FONT_HEADER1, (void *) "-adobe-times-medium-r-normal--20-140-100-100-p-96-iso8859-1"},
-    {RESOURCE, C_FONT_HEADER2, (void *) "-adobe-times-medium-r-normal--18-180-75-75-p-94-iso8859-1"},
-    {RESOURCE, C_FONT_HEADER3, (void *) "-adobe-times-medium-r-normal--17-120-100-100-p-84-iso8859-1"},
-    {RESOURCE, C_FONT_HEADER4, (void *) "-adobe-times-medium-r-normal--14-100-100-100-p-74-iso8859-1"},
-    {RESOURCE, C_FONT_HEADER5, (void *) "-adobe-times-medium-r-normal--14-100-100-100-p-74-iso8859-1"},
-    {RESOURCE, C_FONT_HEADER6, (void *) "-adobe-times-medium-r-normal--14-100-100-100-p-74-iso8859-1"},
-    {RESOURCE, C_FONT_HEADER7, (void *) "-adobe-times-medium-r-normal--14-100-100-100-p-74-iso8859-1"},
+    {RESOURCE, C_FONT_NORMAL, (void *) "fixed"},
+    {RESOURCE, C_FONT_LIST, (void *) "fixed"},
+    {RESOURCE, C_FONT_LISTCOMPACT, (void *) "fixed"},
+    {RESOURCE, C_FONT_GLOSSARY, (void *) "fixed"},
+    {RESOURCE, C_FONT_GLOSSARYCOMPACT, (void *) "fixed"},
+    {RESOURCE, C_FONT_EXAMPLE, (void *) "fixed"},
+    {RESOURCE, C_FONT_LISTING, (void *) "fixed"},
+    {RESOURCE, C_FONT_ADDRESS, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER1, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER2, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER3, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER4, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER5, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER6, (void *) "fixed"},
+    {RESOURCE, C_FONT_HEADER7, (void *) "fixed"},
     {EOC, (char *) NULL, (void *) NULL}
 };
 

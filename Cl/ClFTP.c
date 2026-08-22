@@ -94,8 +94,11 @@ ARGS2 (
    */
 
   WWWErwiseConnection->ftphost = HTParse (name, "", PARSE_HOST);
-
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
   WWWErwiseConnection->anAnchor = anchor;
+  #pragma GCC diagnostic pop
+
 
   /*
    * Start connecting to data port

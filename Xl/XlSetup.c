@@ -331,12 +331,13 @@ HText_t *htext;
 	    /*
              * Free everything allocated
              */
+	    /*
 	    if (p->data)
 		free(p->data);
 
 	    free(p->xl_data);
 
-	    free(p);
+	    free(p); */
 	}
 	p = p->next;
 

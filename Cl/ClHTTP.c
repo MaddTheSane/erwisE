@@ -156,8 +156,10 @@ ARGS4 (CONST char *, arg,
   WWWErwiseConnection->command = command;
 
   WWWErwiseConnection->diag = diag;
-
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
   WWWErwiseConnection->anAnchor = anAnchor;
+  #pragma GCC diagnostic pop
 
   /*
    * Cheat HTOpen()
