@@ -1,5 +1,3 @@
-static char *rcsid = "$Id$";
-
 #include "UiIncludes.h"
 
 static Widget uicreateconnectionsform(void);

@@ -218,7 +218,7 @@ PRIVATE void deleteLinks(HTAnchor *this)
 {
   if (! this)
     return;
-  
+
   /* Recursively try to delete target anchors */
   if (this->mainLink.dest) {
     HTParentAnchor *parent = this->mainLink.dest->parent;

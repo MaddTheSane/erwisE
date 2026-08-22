@@ -154,7 +154,10 @@ PUBLIC int HTLoadHTTP(const char * arg,
 
   WWWErwiseConnection->diag = diag;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
   WWWErwiseConnection->anAnchor = anAnchor;
+#pragma GCC diagnostic pop
 
   /*
    * Cheat HTOpen()

@@ -34,7 +34,7 @@ static void cl_free_connection (ClConnection_t *connection);
  * Where to load this file ?
  */
 
-char *WWWErwiseFileLoadName = 0;
+static char *WWWErwiseFileLoadName = NULL;
 
 /*!
  * Open connection. Allocate strutures.
@@ -100,13 +100,12 @@ ClOpenConnection (const char *address)
   p->status = HTLoadAbsolute (address, 0);
 
   if ((WWWErwiseStatus == CL_FAILED) ||
-      (WWWErwiseStatus == CL_ALREADY_LOADED))
-    {
+      (WWWErwiseStatus == CL_ALREADY_LOADED)) {
 
-      ClCloseConnection (p);
+    ClCloseConnection (p);
 
-      return NULL;
-    }
+    return NULL;
+  }
 
   return p;
 }
@@ -374,10 +373,11 @@ ClConnectionOnLoadToFileMode (ClConnection_t *connection)
 
 
 void
-ClSetFileNameForLoadingToFile (char *filename)
+ClSetFileNameForLoadingToFile (const char *filename)
 {
-  if (filename)
-    WWWErwiseFileLoadName = (char *) strdup (filename);
-  else
+  if (filename) {
+    WWWErwiseFileLoadName = strdup (filename);
+  } else {
     WWWErwiseFileLoadName = NULL;
+  }
 }

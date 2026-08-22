@@ -1,5 +1,3 @@
-static char *rcsid = "$Id: Misc.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
-
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "../HText/HText.h"

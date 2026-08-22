@@ -1,5 +1,3 @@
-static char *rcsid = "$Id: Page.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
-
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "../HText/HText.h"
@@ -70,8 +68,9 @@ void PageListCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobje
 		items[i - 1][j - 1] = '\0';
 		tmphtextobject = tmphtextobject->next;
 	    }
-	} else
+	} else {
 	    tmphtextobject = tmphtextobject->next;
+	}
 
     UiDisplayListDialog(items, addresses, i, StartLoading);
 }
@@ -86,11 +85,12 @@ void PageLoadToFileCB(const char *topaddress, HText_t *htext, HTextObject_t *hte
 	return;
     }
     destanchor = HTAnchor_followMainLink((HTAnchor *) htextobject->anchor);
-    if (ClCanLoadToFile(HTAnchor_address(destanchor)))
+    if (ClCanLoadToFile(HTAnchor_address(destanchor))) {
 	UiDisplayFileSelection(PageGetPageCB);
-    else
+    } else {
 	UiDisplayWarningDialog("Load to file not supported for this tag",
 			       (void (*) (int)) NULL);
+    }
 }
 
 
@@ -161,14 +161,19 @@ void PageCloseCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobj
 
     UiDeletePage(toppage->Address, htext);
     page->HText = (HText_t *) NULL;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
     HText_free(htext);
+#pragma GCC diagnostic pop
 
     page = toppage->Children;
-    while (page)
-	if (page->HText)
+    while (page) {
+	if (page->HText) {
 	    return;
-	else
+	} else {
 	    page = page->Next;
+	}
+    }
 
     HierarchyClose(topaddress, htext, htextobject, parameter);
 }
@@ -178,16 +183,19 @@ void PagePrevWordCB(const char *topaddress, HText_t *htext, HTextObject_t *htext
 {
     HTextObject_t *tmphtextobject;
 
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     tmphtextobject = htextobject->prev;
 
-    while (tmphtextobject && !CanBeCursor(tmphtextobject))
+    while (tmphtextobject && !CanBeCursor(tmphtextobject)) {
 	tmphtextobject = tmphtextobject->prev;
+    }
 
-    if (tmphtextobject)
+    if (tmphtextobject) {
 	UiSetCursor(topaddress, htext, tmphtextobject);
+    }
 }
 
 
@@ -210,38 +218,41 @@ void PageNextWordCB(const char *topaddress, HText_t *htext, HTextObject_t *htext
 
 void PagePrevTagCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
-    HTextAnchor_t *tmphtanchor;
-    HTAnchor *tmpanchor, *destanchor;
-    HText_t *newhtext;
-    HTextObject_t *newhtextobject;
+    HTAnchor *tmpanchor;
 
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     tmpanchor = (HTAnchor *) htextobject->anchor;
 
     /* Ignore htextobject with same anchor */
     while (tmpanchor && htextobject &&
-	   ((HTAnchor *) htextobject->anchor == tmpanchor))
+	   ((HTAnchor *) htextobject->anchor == tmpanchor)) {
 	htextobject = htextobject->prev;
+    }
 
     /* Search for previous anchor */
-    while (htextobject && !htextobject->anchor)
+    while (htextobject && !htextobject->anchor) {
 	htextobject = htextobject->prev;
+    }
 
     /* No anchor found */
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     /* We want the first word in the tag to be highlighted */
     while (htextobject->prev &&
-	   (htextobject->anchor == htextobject->prev->anchor))
+	   (htextobject->anchor == htextobject->prev->anchor)) {
 	htextobject = htextobject->prev;
+    }
 
     UiSetCursor(topaddress, htext, htextobject);
 
-    if ((uintptr_t) parameter == NO_AUTOGET)
+    if ((uintptr_t) parameter == NO_AUTOGET) {
 	return;
+    }
 
     getanddisplaypage(topaddress, htext, htextobject);
 }
@@ -250,30 +261,34 @@ void PagePrevTagCB(const char *topaddress, HText_t *htext, HTextObject_t *htexto
 void PageNextTagCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)
 {
     HTAnchor *tmpanchor;
-    HTextObject_t *newhtextobject;
 
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     tmpanchor = (HTAnchor *) htextobject->anchor;
 
     /* Ignore htextobject with same anchor */
     while (tmpanchor && htextobject &&
-	   ((HTAnchor *) htextobject->anchor == tmpanchor))
+	   ((HTAnchor *) htextobject->anchor == tmpanchor)) {
 	htextobject = htextobject->next;
+    }
 
     /* Search for previous anchor */
-    while (htextobject && !htextobject->anchor)
+    while (htextobject && !htextobject->anchor) {
 	htextobject = htextobject->next;
+    }
 
     /* No anchor found */
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     UiSetCursor(topaddress, htext, htextobject);
 
-    if ((uintptr_t) parameter == NO_AUTOGET)
+    if ((uintptr_t) parameter == NO_AUTOGET) {
 	return;
+    }
 
     getanddisplaypage(topaddress, htext, htextobject);
 }
@@ -313,11 +328,12 @@ void PageBackCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobje
     page = FindPage(toppage->Children, address);
 
     if ((parentpage = page->Parents)) {
-	if (parentpage->Next)
+	if (parentpage->Next) {
 	    PageGeneratePopup(parentpage, topaddress);
-	else {
-	    while (parentpage->Next)
+	} else {
+	    while (parentpage->Next) {
 		parentpage = parentpage->Next;
+	    }
 	    StartLoading(parentpage->Address, topaddress, parentpage->Address);
 	}
     }
@@ -370,18 +386,22 @@ void PagePrevPageCB(const char *topaddress, HText_t *htext, HTextObject_t *htext
     page = FindPage(toppage->Children, address);
 
     if ((parentpage = page->Parents)) {
-	if (parentpage->Next)
+	if (parentpage->Next) {
 	    PageGeneratePopup(parentpage, topaddress);
-	while (parentpage->Next)
+	}
+	while (parentpage->Next) {
 	    parentpage = parentpage->Next;
+	}
 	parentpage = parentpage->ParentPage;
 	if (parentpage->HText) {
 	    newhtextobject = FindHTextObject(parentpage->HText, page->Address);
-	    if (newhtextobject)
+	    if (newhtextobject) {
 		PagePrevTagCB(topaddress, parentpage->HText,
 			      newhtextobject, (void *) AUTOGET);
-	} else
-	    StartLoading(parentpage->Address, topaddress, (char *) NULL);
+	    }
+	} else {
+	    StartLoading(parentpage->Address, topaddress, NULL);
+	}
     }
 }
 
@@ -396,18 +416,22 @@ void PageNextPageCB(const char *topaddress, HText_t *htext, HTextObject_t *htext
     page = FindPage(toppage->Children, address);
 
     if ((parentpage = page->Parents)) {
-	if (parentpage->Next)
+	if (parentpage->Next) {
 	    PageGeneratePopup(parentpage, topaddress);
-	while (parentpage->Next)
+	}
+	while (parentpage->Next) {
 	    parentpage = parentpage->Next;
+	}
 	parentpage = parentpage->ParentPage;
 	if (parentpage->HText) {
 	    newhtextobject = FindHTextObject(parentpage->HText, page->Address);
-	    if (newhtextobject)
+	    if (newhtextobject) {
 		PageNextTagCB(topaddress, parentpage->HText,
 			      newhtextobject, (void *) AUTOGET);
-	} else
+	    }
+	} else {
 	    StartLoading(parentpage->Address, topaddress, (char *) NULL);
+	}
     }
 }
 
@@ -438,19 +462,21 @@ void PageClickCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobj
 		state += 1 + (CopyHTextObject == htextobject);
 	    switch (state) {
 		case 2:
-		    if (tmphtextobject->data)
+		    if (tmphtextobject->data) {
 			UiAddStringToCutBuffer(tmphtextobject->data);
-		    else
+		    } else {
 			UiAddStringToCutBuffer("\n");
+		    }
 		    UiAddStringToCutBuffer((char *) NULL);
 		    tmphtextobject = (HTextObject_t *) NULL;
 		    Free(CopyTopAddress);
 		    break;
 		case 1:
-		    if (tmphtextobject->data)
+		    if (tmphtextobject->data) {
 			UiAddStringToCutBuffer(tmphtextobject->data);
-		    else
+		    } else {
 			UiAddStringToCutBuffer("\n");
+		    }
 		    /* Fall through */
 		default:
 		    tmphtextobject = tmphtextobject->next;
@@ -509,7 +535,7 @@ void HierarchyClose(const char *topaddress, HText_t *htext, HTextObject_t *htext
 
     while (toppage->Children) {
 	if (toppage->Children->HText) {
-	    HText_free(toppage->Children->HText);
+	    HText_free((HText*)toppage->Children->HText);
 	    UiDeletePage(toppage->Address, toppage->Children->HText);
 	}
 	while (toppage->Children->Parents)
@@ -526,15 +552,18 @@ void SearchBackwardCB(const char *topaddress, HText_t *htext, HTextObject_t *hte
 {
     HTextObject_t *newhtextobject;
 
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     newhtextobject = htextobject->prev;
-    while (newhtextobject && !matchingstring(newhtextobject->data))
+    while (newhtextobject && !matchingstring(newhtextobject->data)) {
 	newhtextobject = newhtextobject->prev;
+    }
 
-    if (newhtextobject)
+    if (newhtextobject) {
 	UiSetCursor(topaddress, htext, newhtextobject);
+    }
 }
 
 
@@ -542,15 +571,18 @@ void SearchForwardCB(const char *topaddress, HText_t *htext, HTextObject_t *htex
 {
     HTextObject_t *newhtextobject;
 
-    if (!htextobject)
+    if (!htextobject) {
 	return;
+    }
 
     newhtextobject = htextobject->next;
-    while (newhtextobject && !matchingstring(newhtextobject->data))
+    while (newhtextobject && !matchingstring(newhtextobject->data)) {
 	newhtextobject = newhtextobject->next;
+    }
 
-    if (newhtextobject)
+    if (newhtextobject) {
 	UiSetCursor(topaddress, htext, newhtextobject);
+    }
 }
 
 

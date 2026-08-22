@@ -1,8 +1,7 @@
-static char *rcsid = "$Id: TopLevel.c,v 1.1 1992/05/18 21:43:03 tvr Exp $";
-
 #include "Includes.h"
 
 extern int UiDisplayInfo(void);
+static void NukeErwiseCB(int button);
 
 
 void TopQuitCB(const char *topaddress, HText_t *htext, HTextObject_t *htextobject, void *parameter)

@@ -1,5 +1,3 @@
-static char *rcsid = "$Id: UiInit.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
-
 #include "UiIncludes.h"
 
 

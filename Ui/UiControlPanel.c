@@ -1,5 +1,3 @@
-static char *rcsid = "$Id$";
-
 #include "UiIncludes.h"
 
 static Widget uicreatecpform(void);
@@ -22,7 +20,6 @@ int UiDisplayControlPanel(void)
 {
     ArgList args;
     Cardinal nargs;
-    uiTopLevelGfx_t *topgfx = &uiTopLevel.TopGfx;
     uiControlPanelGfx_t *controlpanelgfx = &uiTopLevel.ControlPanelGfx;
 
     if (controlpanelgfx->FormWdg) {

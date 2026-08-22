@@ -261,9 +261,12 @@ WWWErwiseParse (void)
    * XXXXXX If saving to file, don't parse
    */
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
   HTParseFormat (WWWErwiseConnection->diag ? WWW_PLAINTEXT : WWW_HTML,
 		 WWWErwiseConnection->anAnchor,
 		 WWWErwiseConnection->fd);
+#pragma GCC diagnostic pop
 
   (void) HTClose (WWWErwiseConnection->fd);
 

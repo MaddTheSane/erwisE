@@ -1,5 +1,3 @@
-static char *rcsid = "$Id: UiSearch.c,v 1.1 1992/03/26 18:13:50 kny Exp kss $";
-
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "../HText/HText.h"

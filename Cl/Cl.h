@@ -138,7 +138,7 @@ void ClCloseConnection (ClConnection_t * connection);
 
 int ClCanLoadToFile (const char *address);
 
-void ClSetFileNameForLoadingToFile (char *filename);
+void ClSetFileNameForLoadingToFile (const char *filename);
 
 int ClConnectionOnLoadToFileMode (ClConnection_t * connection);
 

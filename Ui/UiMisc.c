@@ -1,5 +1,3 @@
-static char *rcsid = "$Id: UiMisc.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
-
 #include "HTAnchor.h"
 #include "HTStyle.h"
 #include "../HText/HText.h"
@@ -11,7 +9,7 @@ static char *rcsid = "$Id: UiMisc.c,v 1.3 1992/03/26 18:13:50 kny Exp kny $";
 static void uitimeouthandler(XtPointer data, XtIntervalId * id);
 static void uifdinputhandler(XtPointer data, int *fd, XtInputId * id);
 static void uipopupcb(Widget wdg, char *address,
-		       XmAnyCallbackStruct * calldata);
+		      XmAnyCallbackStruct * calldata);
 
 
 void (*uiHelpOnActionCB) (const char *actionstring) = NULL;
@@ -27,7 +25,8 @@ static const char *uipopuptopaddress;
 
 int UiAttachCallback(const char *actionname,
 		     void (*callback) (const char *address, HText_t * htext,
-				       HTextObject_t * htextobject, void *parameter), void *parameter)
+				       HTextObject_t * htextobject, void *parameter),
+		     void *parameter)
 {
     uiAction_t *tmpaction;
 
@@ -55,7 +54,8 @@ int UiAttachCallback(const char *actionname,
 
 int UiBindKey(const char *keyname, int modifier,
 	      void (*callback) (const char *address, HText_t * htext,
-				HTextObject_t * htextobject, void *parameter), void *parameter)
+				HTextObject_t * htextobject, void *parameter),
+	      void *parameter)
 {
     uiKey_t *tmpkey;
 
@@ -482,7 +482,7 @@ uiGetArg(Widget wdg, String resource)
 
 
 void *
- uiMalloc(size_t size)
+uiMalloc(size_t size)
 {
     void *tmpptr;
 
@@ -495,7 +495,7 @@ void *
 
 
 void *
- uiReAlloc(void *ptr, size_t size)
+uiReAlloc(void *ptr, size_t size)
 {
     void *tmpptr;
 
@@ -511,8 +511,9 @@ void *
 
 void uiFree(void *ptr)
 {
-    if (ptr)
+    if (ptr) {
 	free(ptr);
+    }
 }
 
 

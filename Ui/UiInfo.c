@@ -1,6 +1,3 @@
-static char *rcsid = "$Id: UiInfo.c,v 1.1 1992/03/26 18:13:50 kny Exp kny $";
-
-
 #include "UiIncludes.h"
 
 #define logo_width 90
@@ -190,7 +187,7 @@ void uicreateinfolabels(Widget formwdg, Widget bottomwdg)
 	XCreatePixmapFromBitmapData(dpy, XtWindow(wdg), logo_bits,
 				    logo_height, logo_width,
 				    BlackPixel(dpy, DefaultScreen(dpy)),
-				    uiGetArg(wdg, XmNbackground),
+				    WhitePixel(dpy, DefaultScreen(dpy)),
 				  DefaultDepth(dpy, DefaultScreen(dpy)));
 
     if (logo_pixmap == 0) {

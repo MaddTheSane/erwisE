@@ -33,7 +33,6 @@ extern void BindVariables(void);
 
 extern void TopQuitCB(const char *topaddress, HText_t * htext,
 		       HTextObject_t * htextobject, void *parameter);
-extern void NukeErwiseCB(int button);
 extern void TopInfoCB(const char *topaddress, HText_t * htext,
 		       HTextObject_t * htextobject, void *parameter);
 extern void TopOpenCB(const char *topaddress, HText_t * htext,
